@@ -1,0 +1,2453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLA // ARCHITECT OF RECLAIM</title>
+    <meta name="description"
+        content="Isla — Architect of Reclaim. The autopsy of silence. A weaponized frequency archive.">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════
+           CSS DESIGN SYSTEM — HOSTILE AESTHETIC
+           ═══════════════════════════════════════════════════════ */
+        :root {
+            --red-600: #dc2626;
+            --red-500: #ef4444;
+            --cyan-500: #06b6d4;
+            --bg-void: #050505;
+            --bg-card: #0a0a0a;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1aa;
+            --text-muted: #71717a;
+            --text-ghost: #3f3f46;
+            --border-dim: rgba(255, 255, 255, 0.05);
+            --border-red: rgba(220, 38, 38, 0.5);
+            --font-sans: 'Inter', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background: #000;
+            color: var(--text-secondary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--red-600);
+            color: white;
+        }
+
+        /* ── FLUID CANVAS ── */
+        #fluid-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* ── CRT SCANLINE OVERLAY ── */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.04;
+            background:
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        /* ── BOOT SCREEN ── */
+        #boot-screen {
+            position: fixed;
+            inset: 0;
+            z-index: 200;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            color: var(--red-600);
+            transition: opacity 0.8s ease;
+        }
+
+        #boot-screen svg {
+            animation: pulse-glow 1.5s infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes pulse-glow {
+
+            0%,
+            100% {
+                opacity: 0.4;
+                filter: drop-shadow(0 0 4px var(--red-600));
+            }
+
+            50% {
+                opacity: 1;
+                filter: drop-shadow(0 0 12px var(--red-600));
+            }
+        }
+
+        #boot-lines {
+            text-align: left;
+            max-width: 500px;
+            width: 100%;
+            font-size: 0.75rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            line-height: 2;
+        }
+
+        #boot-lines .line {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        #boot-lines .line.visible {
+            opacity: 1;
+        }
+
+        #boot-lines .line.success {
+            color: #22c55e;
+        }
+
+        .boot-bar {
+            width: 16rem;
+            height: 2px;
+            background: #18181b;
+            overflow: hidden;
+            position: relative;
+            margin-top: 1rem;
+        }
+
+        .boot-bar-fill {
+            position: absolute;
+            inset: 0;
+            background: var(--red-600);
+            width: 50%;
+            animation: loading 1.5s infinite linear;
+        }
+
+        @keyframes loading {
+            0% {
+                transform: translateX(-100%);
+            }
+
+            100% {
+                transform: translateX(200%);
+            }
+        }
+
+        /* ── MAIN CONTENT ── */
+        #main-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            display: none;
+        }
+
+        #main-content.visible {
+            opacity: 1;
+        }
+
+        /* ── NAV ── */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-dim);
+            padding: 1rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-logo {
+            width: 2.5rem;
+            height: 2.5rem;
+            background: var(--red-600);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.25rem;
+            color: #000;
+        }
+
+        .nav-id {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: -0.02em;
+        }
+
+        .nav-id-name {
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .nav-id-status {
+            color: var(--red-500);
+        }
+
+        .nav-tabs {
+            display: none;
+            gap: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        @media (min-width: 768px) {
+            .nav-tabs {
+                display: flex;
+            }
+        }
+
+        .nav-tab {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-muted);
+            font-family: inherit;
+            font-size: inherit;
+            letter-spacing: inherit;
+            text-transform: inherit;
+            padding: 0.25rem 0;
+            transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-tab.active {
+            color: var(--red-500);
+            text-decoration: underline;
+        }
+
+        /* ── GLITCH TEXT ── */
+        .glitch-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .glitch-text::before {
+            color: var(--red-500);
+            z-index: -1;
+        }
+
+        .glitch-text::after {
+            color: var(--cyan-500);
+            z-index: -2;
+        }
+
+        .glitch-text:hover::before {
+            opacity: 0.7;
+            transform: translate(4px, -4px);
+            transition: all 75ms;
+        }
+
+        .glitch-text:hover::after {
+            opacity: 0.7;
+            transform: translate(-4px, 4px);
+            transition: all 75ms;
+        }
+
+        /* ── GLITCH TEAR (NAV CLICK) ── */
+        @keyframes glitch-tear {
+            0% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+
+            7% {
+                clip-path: polygon(0 10%, 100% 10%, 100% 40%, 0 40%);
+                transform: translate(-10px, 2px);
+            }
+
+            14% {
+                clip-path: polygon(0 50%, 100% 50%, 100% 80%, 0 80%);
+                transform: translate(8px, -3px);
+            }
+
+            21% {
+                clip-path: polygon(0 20%, 100% 20%, 100% 55%, 0 55%);
+                transform: translate(-6px, 1px);
+            }
+
+            28% {
+                clip-path: polygon(0 65%, 100% 65%, 100% 90%, 0 90%);
+                transform: translate(12px, -2px);
+            }
+
+            35% {
+                clip-path: polygon(0 5%, 100% 5%, 100% 35%, 0 35%);
+                transform: translate(-15px, 4px);
+            }
+
+            50% {
+                clip-path: polygon(0 40%, 100% 40%, 100% 70%, 0 70%);
+                transform: translate(7px, -1px);
+            }
+
+            65% {
+                clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+                transform: translate(-4px, 3px);
+            }
+
+            80% {
+                clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+                transform: translate(5px, -2px);
+            }
+
+            100% {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+                transform: translate(0);
+            }
+        }
+
+        .glitch-tear::before,
+        .glitch-tear::after {
+            opacity: 0.8 !important;
+            animation: glitch-tear 300ms steps(1) forwards;
+        }
+
+        /* ── PULSE INDICATOR ── */
+        .nav-pulse {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+
+        .nav-pulse svg {
+            color: var(--red-600);
+            animation: pulse-glow 1.5s infinite;
+        }
+
+        .nav-pulse-text {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            transition: color 0.3s;
+        }
+
+        .nav-pulse-text.danger {
+            color: var(--red-500);
+        }
+
+        /* ── SECTION LAYOUT ── */
+        .page-content {
+            padding: 6rem 1.5rem 5rem;
+            max-width: 80rem;
+            margin: 0 auto;
+        }
+
+        .section {
+            margin-bottom: 6rem;
+        }
+
+        .section-header {
+            margin-bottom: 3rem;
+            border-left: 4px solid var(--red-600);
+            padding-left: 1.5rem;
+        }
+
+        .section-meta {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: var(--red-500);
+            margin-bottom: 0.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.75rem);
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: -0.04em;
+            color: var(--text-primary);
+            line-height: 0.95;
+        }
+
+        .section-subtitle {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* ── HERO ── */
+        .hero {
+            margin-bottom: 6rem;
+            display: flex;
+            flex-direction: column;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .hero {
+                flex-direction: row;
+            }
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: var(--red-600);
+            color: #000;
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.25rem 0.5rem;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+        }
+
+        .hero-title {
+            font-size: clamp(3.5rem, 10vw, 7rem);
+            font-weight: 900;
+            letter-spacing: -0.06em;
+            color: var(--text-primary);
+            line-height: 0.8;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-title-sub {
+            color: var(--text-ghost);
+            font-style: italic;
+        }
+
+        .hero-quote {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            font-weight: 300;
+            line-height: 1.7;
+            max-width: 28rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: var(--font-sans);
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: #000;
+        }
+
+        .btn-primary:hover {
+            background: var(--red-600);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-primary);
+            border: 1px solid #27272a;
+        }
+
+        .btn-outline:hover {
+            background: #27272a;
+        }
+
+        .hero-image-wrap {
+            flex: 1;
+            position: relative;
+        }
+
+        .hero-glow {
+            position: absolute;
+            inset: 0;
+            background: rgba(220, 38, 38, 0.15);
+            filter: blur(48px);
+            border-radius: 50%;
+        }
+
+        .hero-image-wrap img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            filter: grayscale(1) contrast(1.25);
+            border: 1px solid var(--border-dim);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-meta {
+            display: none;
+            position: absolute;
+            bottom: -1.5rem;
+            right: -1.5rem;
+            z-index: 2;
+            background: #18181b;
+            border: 1px solid var(--border-dim);
+            padding: 1rem;
+            font-family: var(--font-mono);
+        }
+
+        @media (min-width: 768px) {
+            .hero-meta {
+                display: block;
+            }
+        }
+
+        .hero-meta-label {
+            font-size: 0.6rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .hero-meta-file {
+            font-size: 0.7rem;
+            color: white;
+            font-weight: 700;
+        }
+
+        .hero-meta-flag {
+            font-size: 0.6rem;
+            color: var(--red-500);
+            margin-top: 0.5rem;
+        }
+
+        /* ── PLACEHOLDER SECTIONS (Chunks 2 & 3) ── */
+        .dossier-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .dossier-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .dossier-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-dim);
+            padding: 2rem;
+            transition: border-color 0.3s;
+        }
+
+        .dossier-card:hover {
+            border-color: var(--border-red);
+        }
+
+        .dossier-card svg {
+            color: var(--red-600);
+            margin-bottom: 1rem;
+        }
+
+        .dossier-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .dossier-card p {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .dossier-stamp {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-ghost);
+            background: rgba(255, 255, 255, 0.03);
+            padding: 0.5rem;
+            border-left: 2px solid var(--red-600);
+        }
+
+        /* ── COMMAND TERMINAL MEDIA PLAYER ── */
+        .cmd-player {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0;
+            border: 1px solid var(--border-dim);
+            background: rgba(0, 0, 0, 0.6);
+            min-height: 28rem;
+        }
+
+        @media (min-width: 768px) {
+            .cmd-player {
+                grid-template-columns: 1fr 1.5fr;
+            }
+        }
+
+        /* Left pane — Decryption Log (Tracklist) */
+        .cmd-tracklist {
+            max-height: 32rem;
+            overflow-y: auto;
+            border-right: 1px solid var(--border-dim);
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .cmd-tracklist::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        .cmd-tracklist::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .cmd-tracklist::-webkit-scrollbar-thumb {
+            background: rgba(220, 38, 38, 0.3);
+        }
+
+        .cmd-track {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+            border-left: 4px solid transparent;
+            cursor: pointer;
+            transition: all 0.15s;
+            font-family: var(--font-mono);
+            gap: 0.5rem;
+        }
+
+        .cmd-track:hover {
+            background: rgba(220, 38, 38, 0.06);
+            border-left-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .cmd-track.active {
+            background: rgba(220, 38, 38, 0.1);
+            border-left-color: var(--red-600);
+        }
+
+        .cmd-track-info {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+            min-width: 0;
+            flex: 1;
+        }
+
+        .cmd-track-title {
+            font-size: 0.75rem;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.02em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .cmd-track-date {
+            font-size: 0.6rem;
+            color: var(--text-ghost);
+        }
+
+        .cmd-track-type {
+            font-size: 0.55rem;
+            font-weight: 700;
+            padding: 0.1rem 0.4rem;
+            text-transform: uppercase;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .cmd-track-type.audio {
+            background: rgba(34, 197, 94, 0.12);
+            color: #22c55e;
+        }
+
+        .cmd-track-type.video {
+            background: rgba(6, 182, 212, 0.12);
+            color: var(--cyan-500);
+        }
+
+        .cmd-track-streaming {
+            font-size: 0.55rem;
+            color: var(--red-500);
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: none;
+        }
+
+        .cmd-track.active .cmd-track-streaming {
+            display: inline;
+            animation: flicker 1.5s infinite steps(3);
+        }
+
+        /* Right pane — The Payload */
+        .cmd-payload {
+            display: flex;
+            flex-direction: column;
+            background: #000;
+        }
+
+        /* Surveillance Monitor */
+        .cmd-monitor {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #0a0a0a;
+            overflow: hidden;
+        }
+
+        .cmd-monitor-frame {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .cmd-monitor-frame iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            mix-blend-mode: luminosity;
+        }
+
+        .cmd-monitor-scanlines {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0.08;
+            background:
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.35) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.04), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.04));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        .cmd-monitor-idle {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            z-index: 1;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+
+        .cmd-monitor-idle.hidden {
+            opacity: 0;
+        }
+
+        .cmd-monitor-idle svg {
+            color: var(--red-600);
+            opacity: 0.4;
+            animation: pulse-glow 2s infinite;
+        }
+
+        .cmd-monitor-idle-text {
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-ghost);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+
+        /* Telemetry Data */
+        .cmd-telemetry {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding: 0.75rem 1rem;
+            border-top: 1px solid var(--border-dim);
+            border-bottom: 1px solid var(--border-dim);
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            background: rgba(0, 0, 0, 0.9);
+            flex-wrap: wrap;
+        }
+
+        .cmd-tele-label {
+            color: var(--text-ghost);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .cmd-tele-value {
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .cmd-tele-type {
+            color: var(--red-500);
+            font-weight: 700;
+        }
+
+        /* Lyric Terminal */
+        .cmd-lyric-terminal {
+            padding: 1.25rem 1rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            min-height: 4rem;
+            font-style: italic;
+            background: rgba(0, 0, 0, 0.7);
+            flex: 1;
+            position: relative;
+        }
+
+        .cmd-lyric-char {
+            opacity: 0;
+            transition: opacity 0.03s;
+        }
+
+        .cmd-lyric-char.vis {
+            opacity: 1;
+        }
+
+        .cmd-lyric-cursor {
+            color: var(--red-500);
+            animation: flicker 1s infinite steps(2);
+        }
+
+        /* Red flash overlay for Enter The Pit */
+        .breach-flash {
+            position: fixed;
+            inset: 0;
+            background: var(--red-600);
+            z-index: 300;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        .breach-flash.active {
+            opacity: 1;
+        }
+
+        /* ── OPS LOG ── */
+        .ops-layout {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+
+        @media (min-width: 1024px) {
+            .ops-layout {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        .ops-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-dim);
+            padding: 0.75rem 0.5rem;
+            font-family: var(--font-mono);
+            transition: background 0.2s;
+        }
+
+        .ops-row:hover {
+            background: rgba(255, 255, 255, 0.01);
+        }
+
+        .ops-time {
+            font-size: 0.7rem;
+            color: var(--text-ghost);
+            margin-right: 1rem;
+        }
+
+        .ops-task {
+            font-size: 0.8rem;
+            color: white;
+            letter-spacing: -0.02em;
+        }
+
+        .ops-status {
+            font-size: 0.6rem;
+            font-weight: 700;
+            padding: 0.15rem 0.5rem;
+        }
+
+        .ops-status.good {
+            background: rgba(34, 197, 94, 0.15);
+            color: #22c55e;
+        }
+
+        .ops-status.bad {
+            background: rgba(220, 38, 38, 0.15);
+            color: var(--red-500);
+        }
+
+        .perf-wrap {
+            position: relative;
+        }
+
+        .perf-frame {
+            position: absolute;
+            inset: 0;
+            border: 2px solid rgba(220, 38, 38, 0.2);
+            margin: 1rem;
+            z-index: 0;
+            transition: margin 0.3s;
+        }
+
+        .perf-wrap:hover .perf-frame {
+            margin: 0.5rem;
+        }
+
+        .perf-wrap img {
+            width: 100%;
+            filter: grayscale(1);
+            border: 1px solid var(--border-dim);
+            position: relative;
+            z-index: 1;
+        }
+
+        .perf-caption {
+            padding: 1.5rem;
+            background: #000;
+            border: 1px solid var(--border-dim);
+            border-top: none;
+            position: relative;
+            z-index: 1;
+        }
+
+        .perf-caption h4 {
+            color: white;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        .perf-caption p {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        /* ── WITNESS — NEURAL HANDSHAKE ── */
+        .witness {
+            padding: 6rem 0;
+            border-top: 1px solid var(--border-dim);
+            border-bottom: 1px solid var(--border-dim);
+            position: relative;
+            overflow: hidden;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .witness-bg-text {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(6rem, 18vw, 14rem);
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.02);
+            text-transform: uppercase;
+            pointer-events: none;
+            user-select: none;
+        }
+
+        .witness-image-cage {
+            position: relative;
+            width: min(80vw, 32rem);
+            aspect-ratio: 4/3;
+            margin: 0 auto 2.5rem;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        .witness-image-cage img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.3);
+            border: 1px solid var(--border-dim);
+            display: block;
+        }
+
+        /* Noise overlay — strips away on hold */
+        .witness-noise {
+            position: absolute;
+            inset: 0;
+            background:
+                repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.15) 0px, transparent 2px),
+                repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.08) 0px, transparent 3px);
+            mix-blend-mode: multiply;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 2;
+        }
+
+        .witness-static {
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.7);
+            pointer-events: none;
+            transition: opacity 0.8s;
+            z-index: 3;
+        }
+
+        .witness-image-cage.revealing .witness-static {
+            opacity: 0;
+        }
+
+        .witness-image-cage.revealing .witness-noise {
+            opacity: 0.2;
+        }
+
+        .witness-image-cage.revealed .witness-static {
+            opacity: 0;
+        }
+
+        .witness-image-cage.revealed .witness-noise {
+            opacity: 0;
+        }
+
+        .witness-image-cage.revealed img {
+            filter: grayscale(0.3) contrast(1.1);
+        }
+
+        /* Progress ring */
+        .witness-progress {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 5;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .witness-image-cage.revealing .witness-progress {
+            opacity: 1;
+        }
+
+        .witness-image-cage.revealed .witness-progress {
+            opacity: 0;
+        }
+
+        .witness-progress circle {
+            fill: none;
+            stroke-width: 3;
+        }
+
+        .witness-progress .track {
+            stroke: rgba(255, 255, 255, 0.1);
+        }
+
+        .witness-progress .fill {
+            stroke: var(--red-600);
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.1s;
+        }
+
+        .witness-cta {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--red-500);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .witness-image-cage.revealed+.witness-cta-wrap .witness-cta {
+            opacity: 0;
+        }
+
+        @keyframes flicker {
+
+            0%,
+            100% {
+                opacity: 0.7;
+            }
+
+            50% {
+                opacity: 0.3;
+            }
+
+            75% {
+                opacity: 0.9;
+            }
+        }
+
+        .witness-cta {
+            animation: flicker 2s infinite steps(3);
+        }
+
+        .witness-transcript {
+            max-width: 36rem;
+            margin: 0 auto;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.8;
+            text-align: left;
+            min-height: 4rem;
+            font-style: italic;
+        }
+
+        .witness-transcript .revealed-char {
+            opacity: 0;
+            transition: opacity 0.03s;
+        }
+
+        .witness-transcript .revealed-char.vis {
+            opacity: 1;
+        }
+
+        .witness-post {
+            margin-top: 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            color: var(--text-ghost);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .witness-post.visible {
+            opacity: 1;
+        }
+
+        /* ── DOSSIER CRYPTO BYPASS ── */
+        .dossier-card {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dossier-card.locked .dossier-real-text {
+            display: none;
+        }
+
+        .dossier-card.unlocked .dossier-hex-text {
+            display: none;
+        }
+
+        .dossier-card.unlocked .dossier-redaction {
+            display: none;
+        }
+
+        .dossier-hex-text {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: var(--red-500);
+            opacity: 0.6;
+            line-height: 1.6;
+            word-break: break-all;
+            letter-spacing: 0.05em;
+            margin-bottom: 1.5rem;
+            min-height: 4rem;
+        }
+
+        .dossier-redaction {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: var(--red-600);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            text-align: center;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1px solid rgba(220, 38, 38, 0.15);
+            padding: 0.75rem 1.5rem;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .dossier-real-text {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.6;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Sieve cascade — letter-by-letter reveal */
+        .sieve-char {
+            display: inline;
+            opacity: 0;
+            transition: opacity 0.05s;
+        }
+
+        .sieve-char.revealed {
+            opacity: 1;
+        }
+
+        /* Card unlock flash */
+        @keyframes card-breach {
+            0% {
+                border-color: var(--red-600);
+                box-shadow: 0 0 20px rgba(220, 38, 38, 0.6);
+            }
+
+            50% {
+                border-color: var(--cyan-500);
+                box-shadow: 0 0 40px rgba(6, 182, 212, 0.4);
+            }
+
+            100% {
+                border-color: var(--border-dim);
+                box-shadow: none;
+            }
+        }
+
+        .dossier-card.breaching {
+            animation: card-breach 400ms ease-out;
+        }
+
+        /* ── TERMINAL PROMPT ── */
+        .terminal-prompt-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 60;
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 0.75rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            display: none;
+            align-items: center;
+            gap: 0;
+        }
+
+        .terminal-prompt-bar.active {
+            display: flex;
+        }
+
+        .terminal-prefix {
+            color: var(--red-500);
+            white-space: nowrap;
+        }
+
+        .terminal-input {
+            color: #22c55e;
+            flex: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            caret-color: #22c55e;
+            text-transform: uppercase;
+        }
+
+        .terminal-feedback {
+            position: fixed;
+            bottom: 2.5rem;
+            left: 0;
+            right: 0;
+            z-index: 59;
+            padding: 0.5rem 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--red-500);
+            background: rgba(0, 0, 0, 0.9);
+            text-align: center;
+            display: none;
+            border-top: 1px solid rgba(220, 38, 38, 0.15);
+        }
+
+        .terminal-feedback.visible {
+            display: block;
+        }
+
+        /* ── (Album CRT overlay removed — replaced by cmd-monitor-scanlines) ── */
+
+        /* ── OPS LOG TERMINAL STYLE ── */
+        #ops-log {
+            max-height: 24rem;
+            overflow-y: auto;
+            border: 1px solid rgba(34, 197, 94, 0.1);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem;
+        }
+
+        #ops-log::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        #ops-log::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        #ops-log::-webkit-scrollbar-thumb {
+            background: rgba(34, 197, 94, 0.3);
+        }
+
+        .ops-row {
+            font-size: 0.7rem;
+        }
+
+        .ops-time {
+            color: #22c55e;
+            opacity: 0.5;
+        }
+
+        .ops-task {
+            color: #22c55e;
+            opacity: 0.8;
+            letter-spacing: -0.02em;
+        }
+
+        /* ── FOOTER ── */
+        .footer {
+            background: #000;
+            padding: 4rem 1.5rem;
+            border-top: 1px solid var(--border-dim);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer-isla {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            opacity: 0.03;
+            font-size: clamp(10rem, 30vw, 20rem);
+            font-weight: 900;
+            color: white;
+            line-height: 1;
+        }
+
+        .footer-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer-lyric {
+            font-size: clamp(2rem, 5vw, 4rem);
+            font-weight: 900;
+            color: white;
+            text-transform: uppercase;
+            font-style: italic;
+            letter-spacing: -0.04em;
+            margin-bottom: 2rem;
+        }
+
+        .footer-disclaimer {
+            color: var(--text-ghost);
+            font-family: var(--font-mono);
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            max-width: 36rem;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        .footer-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .footer-icons svg {
+            color: #27272a;
+        }
+
+        .footer-sysid {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            color: #27272a;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- FLUID CANVAS (BACKGROUND) -->
+    <canvas id="fluid-canvas"></canvas>
+
+    <!-- CRT SCANLINES -->
+    <div class="scanlines"></div>
+
+    <!-- ═══════ BOOT SCREEN ═══════ -->
+    <div id="boot-screen">
+        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="4 17 10 11 4 5"></polyline>
+            <line x1="12" y1="19" x2="20" y2="19"></line>
+        </svg>
+        <div id="boot-lines"></div>
+        <div class="boot-bar">
+            <div class="boot-bar-fill"></div>
+        </div>
+    </div>
+
+    <!-- ═══════ MAIN CONTENT ═══════ -->
+    <div id="main-content">
+
+        <!-- NAV -->
+        <nav class="nav">
+            <div class="nav-left">
+                <div class="nav-logo">I</div>
+                <div class="nav-id">
+                    <div class="nav-id-name">Subject: ISLA</div>
+                    <div class="nav-id-status">STATUS: OPERATIONAL</div>
+                </div>
+            </div>
+            <div class="nav-tabs" id="nav-tabs">
+                <button class="nav-tab active glitch-text" data-text="DOSSIER"
+                    data-section="section-dossier">DOSSIER</button>
+                <button class="nav-tab glitch-text" data-text="DISCOGRAPHY"
+                    data-section="section-disco">DISCOGRAPHY</button>
+                <button class="nav-tab glitch-text" data-text="LOGS" data-section="section-logs">LOGS</button>
+                <button class="nav-tab glitch-text" data-text="WITNESS" data-section="section-witness">WITNESS</button>
+            </div>
+            <div class="nav-pulse">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                </svg>
+                <span class="nav-pulse-text" id="pulse-display">PULSE_98BPM</span>
+            </div>
+        </nav>
+
+        <main class="page-content">
+
+            <!-- ═══════ HERO ═══════ -->
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="hero-badge">Heritage: REJECTED</div>
+                    <h1 class="hero-title">
+                        <span class="glitch-text" data-text="ARCHITECT">ARCHITECT</span>
+                        <br>
+                        <span class="hero-title-sub">OF RECLAIM</span>
+                    </h1>
+                    <p class="hero-quote">
+                        "My mother was an anesthetist jailed for malpractice.
+                        I turned her silence into a frequency that shatters glass."
+                    </p>
+                    <div class="hero-buttons">
+                        <button class="btn btn-primary" id="btn-enter-pit">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M9 18V5l12-2v13"></path>
+                                <circle cx="6" cy="18" r="3"></circle>
+                                <circle cx="18" cy="16" r="3"></circle>
+                            </svg>
+                            ENTER THE PIT
+                        </button>
+                        <button class="btn btn-outline">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            LOGS
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image-wrap">
+                    <div class="hero-glow"></div>
+                    <img src="https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/7f12e128b71aeff42d84ddffbe11be58827426cc/Isla_misc/isla_0000_723d75_f9a222e632f54d999f2bca0baa96e466.jpg"
+                        alt="Isla">
+                    <div class="hero-meta">
+                        <div class="hero-meta-label">METADATA_EXTRACT</div>
+                        <div class="hero-meta-file">Subject_isla_LIVE_2025.jpg</div>
+                        <div class="hero-meta-flag">ENCRYPTED ORIGIN</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════ DOSSIER ═══════ -->
+            <div class="section" id="section-dossier">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        <span>Partition // 0x742</span>
+                    </div>
+                    <h2 class="section-title">THE DOSSIER</h2>
+                    <p class="section-subtitle">Forensics of a Pymble childhood.</p>
+                </div>
+                <div class="dossier-grid" id="dossier-grid"></div>
+            </div>
+
+            <!-- TERMINAL PROMPT BAR -->
+            <div class="terminal-prompt-bar" id="terminal-bar">
+                <span class="terminal-prefix">isla_root@pymble_archive:~$&nbsp;</span>
+                <input class="terminal-input" id="terminal-input" type="text" autocomplete="off" spellcheck="false"
+                    placeholder="ENTER ACCESS CODE...">
+            </div>
+            <div class="terminal-feedback" id="terminal-feedback"></div>
+
+            <!-- ═══════ DISCOGRAPHY ═══════ -->
+            <div class="section" id="section-disco">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 18V5l12-2v13"></path>
+                            <circle cx="6" cy="18" r="3"></circle>
+                            <circle cx="18" cy="16" r="3"></circle>
+                        </svg>
+                        <span>Partition // 0x319</span>
+                    </div>
+                    <h2 class="section-title">ART AS WEAPON</h2>
+                    <p class="section-subtitle">Converting trauma to sound pressure.</p>
+                </div>
+                <div class="cmd-player" id="cmd-player">
+                    <div class="cmd-tracklist" id="cmd-tracklist"></div>
+                    <div class="cmd-payload">
+                        <div class="cmd-monitor">
+                            <div class="cmd-monitor-frame" id="cmd-monitor-frame">
+                                <div id="isla-yt-player"></div>
+                            </div>
+                            <div class="cmd-monitor-scanlines"></div>
+                            <div class="cmd-monitor-idle" id="cmd-monitor-idle">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                </svg>
+                                <div class="cmd-monitor-idle-text">SELECT TRACK TO INITIATE DECRYPTION</div>
+                            </div>
+                        </div>
+                        <div class="cmd-telemetry" id="cmd-telemetry">
+                            <span><span class="cmd-tele-label">TRACK: </span><span class="cmd-tele-value"
+                                    id="tele-title">&mdash;</span></span>
+                            <span><span class="cmd-tele-label">DATE: </span><span class="cmd-tele-value"
+                                    id="tele-date">&mdash;</span></span>
+                            <span class="cmd-tele-type" id="tele-type">&mdash;</span>
+                        </div>
+                        <div class="cmd-lyric-terminal" id="cmd-lyric-terminal">
+                            <span class="cmd-lyric-cursor">&#9611;</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════ OPERATIONAL LOGS ═══════ -->
+            <div class="section" id="section-logs">
+                <div class="ops-layout">
+                    <div>
+                        <div class="section-header">
+                            <div class="section-meta">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="4" y1="9" x2="20" y2="9"></line>
+                                    <line x1="4" y1="15" x2="20" y2="15"></line>
+                                    <line x1="10" y1="3" x2="8" y2="21"></line>
+                                    <line x1="16" y1="3" x2="14" y2="21"></line>
+                                </svg>
+                                <span>Partition // 0x087</span>
+                            </div>
+                            <h2 class="section-title">OPERATIONAL LOGS</h2>
+                            <p class="section-subtitle">High-wire acts in the dark.</p>
+                        </div>
+                        <div id="ops-log"></div>
+                    </div>
+                    <div class="perf-wrap">
+                        <div class="perf-frame"></div>
+                        <img src="https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/7f12e128b71aeff42d84ddffbe11be58827426cc/Isla_misc/isla_0004_723d75_a5726aa8c61e4849a5ba9c994c50ba4b.jpg"
+                            alt="Performance">
+                        <div class="perf-caption">
+                            <h4>LIVE AT THE PIT</h4>
+                            <p>"The stage is the only place where the noise is honest. I don't sing for catharsis; I
+                                sing through it."</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══════ WITNESS — NEURAL HANDSHAKE ═══════ -->
+            <div class="section witness" id="section-witness">
+                <div class="witness-bg-text">Witness</div>
+
+                <div class="witness-image-cage" id="witness-cage">
+                    <img src="https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/7f12e128b71aeff42d84ddffbe11be58827426cc/Isla_misc/isla_0005_723d75_71a8d710d7054d4f9981b763b3bf0bf6.jpg"
+                        alt="Ethel and Isla">
+                    <div class="witness-static"></div>
+                    <div class="witness-noise"></div>
+                    <svg class="witness-progress" width="80" height="80" viewBox="0 0 80 80">
+                        <circle class="track" cx="40" cy="40" r="36"></circle>
+                        <circle class="fill" id="witness-ring" cx="40" cy="40" r="36" stroke-dasharray="226.2"
+                            stroke-dashoffset="226.2" transform="rotate(-90 40 40)"></circle>
+                    </svg>
+                </div>
+
+                <div class="witness-cta-wrap">
+                    <div class="witness-cta" id="witness-cta">[ INITIATE NEURAL HANDSHAKE TO CARRY THE LOAD ]</div>
+                </div>
+
+                <div class="witness-transcript" id="witness-transcript"></div>
+                <div class="witness-post" id="witness-post">COGNITIVE ENGINEERING: SUCCESSFUL &mdash; SILENCE IS THE
+                    TRAUMA &mdash; WITNESSES BRING YOU BACK</div>
+            </div>
+
+        </main>
+
+        <!-- ═══════ FOOTER — THE VOID ═══════ -->
+        <footer class="footer">
+            <div class="footer-isla">ISLA</div>
+            <div class="footer-content">
+                <div class="footer-lyric">I'm the misprint that makes the line stay.</div>
+                <p class="footer-disclaimer">
+                    Ethel &amp; Isla are characters from PixelStortion's fictional crime drama series.<br>
+                    All names, incidents, and recordings are protected under the frequency of reclamation.
+                </p>
+                <div class="footer-sysid" id="system-id"></div>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- ═══════ FLUID SIMULATOR ═══════ -->
+    <script src="js/isla-fluid-simulator.js"></script>
+
+    <!-- ═══════ YOUTUBE IFRAME API ═══════ -->
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <!-- BREACH FLASH OVERLAY -->
+    <div class="breach-flash" id="breach-flash"></div>
+
+    <!-- ═══════ PAGE LOGIC ═══════ -->
+    <script>
+        (function () {
+            'use strict';
+
+            // ──────────────────────────────────────
+            // 1. BOOT SEQUENCE
+            // ──────────────────────────────────────
+            const bootLines = [
+                "INITIALIZING BYPASS...",
+                "DECRYPTING JUDGE'S_ARCHIVES...",
+                "EXTRACTING DOMINIC_RYKER_TERABYTE...",
+                "BYPASSING HIGH_COURT_FIREWALL...",
+                "LOCATING 'POLISHED_VOMIT' ASSETS...",
+                "LOADING NAVIER-STOKES ENGINE...",
+                "RECLAIMING VOICE...",
+                "ACCESS GRANTED."
+            ];
+
+            const bootContainer = document.getElementById('boot-lines');
+            bootLines.forEach(text => {
+                const el = document.createElement('div');
+                el.className = 'line';
+                el.textContent = '> ' + text;
+                bootContainer.appendChild(el);
+            });
+
+            const lineEls = bootContainer.querySelectorAll('.line');
+            let bootStep = 0;
+
+            const bootInterval = setInterval(() => {
+                if (bootStep < lineEls.length) {
+                    const el = lineEls[bootStep];
+                    el.classList.add('visible');
+                    if (bootStep === lineEls.length - 1) el.classList.add('success');
+                    bootStep++;
+                } else {
+                    clearInterval(bootInterval);
+                    setTimeout(() => {
+                        const bootScreen = document.getElementById('boot-screen');
+                        const mainContent = document.getElementById('main-content');
+                        bootScreen.style.opacity = '0';
+                        setTimeout(() => {
+                            bootScreen.style.display = 'none';
+                            mainContent.style.display = 'block';
+                            requestAnimationFrame(() => {
+                                mainContent.classList.add('visible');
+                                initFluid();
+                            });
+                        }, 800);
+                    }, 600);
+                }
+            }, 500);
+
+            // ──────────────────────────────────────
+            // 2. FLUID SIMULATOR INIT
+            // ──────────────────────────────────────
+            function initFluid() {
+                const canvas = document.getElementById('fluid-canvas');
+                canvas.width = canvas.clientWidth;
+                canvas.height = canvas.clientHeight;
+
+                if (window.FluidSimulator) {
+                    window.fluidSim = new FluidSimulator(canvas, null);
+                    window.fluidSim.updateConfig('ISLA');
+                }
+            }
+
+            // ──────────────────────────────────────
+            // 3. NAV TAB NAVIGATION + GLITCH TEAR
+            // ──────────────────────────────────────
+            document.querySelectorAll('.nav-tab').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Update active state
+                    document.querySelectorAll('.nav-tab').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Trigger glitch tear
+                    btn.classList.add('glitch-tear');
+                    setTimeout(() => btn.classList.remove('glitch-tear'), 350);
+
+                    // Scroll to section
+                    const targetId = btn.dataset.section;
+                    const target = document.getElementById(targetId);
+                    if (target) target.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // ──────────────────────────────────────
+            // 4. SCROLL VELOCITY → BPM PULSE
+            // ──────────────────────────────────────
+            let prevScrollY = window.scrollY;
+            let smoothedVelocity = 0;
+            const pulseEl = document.getElementById('pulse-display');
+
+            window.addEventListener('scroll', () => {
+                const delta = Math.abs(window.scrollY - prevScrollY);
+                prevScrollY = window.scrollY;
+                smoothedVelocity += (delta - smoothedVelocity) * 0.15; // EMA
+            });
+
+            setInterval(() => {
+                // Decay when not scrolling
+                smoothedVelocity *= 0.92;
+                const bpm = Math.round(98 + Math.min(smoothedVelocity * 0.8, 42));
+                pulseEl.textContent = 'PULSE_' + bpm + 'BPM';
+                if (bpm >= 130) {
+                    pulseEl.classList.add('danger');
+                } else {
+                    pulseEl.classList.remove('danger');
+                }
+
+                // Fentanyl Strike at 140 BPM — toxic nervous system short-circuit
+                if (bpm >= 140 && window.fluidSim && window.FLUID_CONFIG) {
+                    const cfg = window.FLUID_CONFIG;
+                    cfg.DENSITY_DISSIPATION = 0.999;
+                    cfg.VELOCITY_DISSIPATION = 0.999; // Smear — colors drag like a bad trip
+                    cfg.BLOOM_INTENSITY = 3.0;
+
+                    for (let i = 0; i < 3; i++) {
+                        const x = Math.random();
+                        const y = Math.random();
+                        const angle = Math.random() * Math.PI * 2;
+                        const force = 18000 + Math.random() * 12000;
+                        // Neon Pink/Red — the chemical burn
+                        window.fluidSim.splatStack.push({
+                            x, y,
+                            dx: Math.cos(angle) * force,
+                            dy: Math.sin(angle) * force,
+                            color: { r: 1.0, g: 0.0, b: 0.2 }
+                        });
+                        // Cyan/Teal — the nervous system short-circuit
+                        window.fluidSim.splatStack.push({
+                            x: Math.random(), y: Math.random(),
+                            dx: Math.cos(angle + Math.PI) * force * 0.8,
+                            dy: Math.sin(angle + Math.PI) * force * 0.8,
+                            color: { r: 0.0, g: 1.0, b: 0.8 }
+                        });
+                    }
+                } else if (window.FLUID_CONFIG) {
+                    // Logarithmic decay back to ISLA baseline
+                    const cfg = window.FLUID_CONFIG;
+                    cfg.DENSITY_DISSIPATION += (0.995 - cfg.DENSITY_DISSIPATION) * 0.02;
+                    cfg.VELOCITY_DISSIPATION += (0.98 - cfg.VELOCITY_DISSIPATION) * 0.01; // Slow decay of smear
+                    cfg.BLOOM_INTENSITY += (1.2 - cfg.BLOOM_INTENSITY) * 0.02;
+                }
+            }, 50);
+
+            // ──────────────────────────────────────
+            // 5. SYSTEM ID
+            // ──────────────────────────────────────
+            document.getElementById('system-id').textContent =
+                'SYSTEM_ID: ' + Math.random().toString(36).substring(2, 15).toUpperCase();
+
+            // ══════════════════════════════════════
+            // 6. DOSSIER — CRYPTOGRAPHIC BYPASS
+            // ══════════════════════════════════════
+            const HEX = '0123456789ABCDEF';
+            const randomHex = (len) => Array.from({ length: len }, () => HEX[Math.random() * 16 | 0]).join('');
+
+            const dossierData = [
+                {
+                    icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>',
+                    title: "The Judge's House",
+                    text: 'A High Court Judge not judged. He built a world where love and fear spoke in the same voice. He gave me my mind, and I use it to dismantle men like him.',
+                    stamp: 'STATUS: REDACTED_BY_ORDER_OF_COURT',
+                    password: 'CLEAN_NAME'
+                },
+                {
+                    icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>',
+                    title: "Polished Vomit",
+                    text: 'My mother was an anesthetist jailed for malpractice, dressing her tremor in a façade of grace. I turned her silence into a frequency.',
+                    stamp: 'ANALYSIS: SYSTEMIC_COMPLICITY_100%',
+                    password: 'CHINA_CALM'
+                },
+                {
+                    icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
+                    title: "The Broken Edge",
+                    text: 'Dominic Ryker thought I was just his wife\'s addict kid. He didn\'t realize I brought a Judge\'s paranoia into his criminal empire. When he tried to silence me, I stole his terabytes and handed Ethel the matches.',
+                    stamp: 'CAPABILITY: HYPER_VIGILANCE_LEVEL_S',
+                    password: 'FENTANYL_STRIKE'
+                }
+            ];
+
+            const wrongResponses = [
+                '> ACCESS DENIED. Dominic isn\'t my father. He\'s just the step-trash my mother married. Try to keep up.',
+                '> INCORRECT. My mother was an anesthetist, maybe inject some thought into this.',
+                '> WRONG. You\'re guessing like a married banker trapped in a tunnel.',
+                '> DENIED. The Judge\'s house had better security than your logic.',
+                '> ERROR: That\'s the kind of guess Dominic would make. Lazy. Entitled. Wrong.',
+                '> ACCESS DENIED. I survived a fentanyl overdose. Your password attempt is not going to break me.',
+                '> INCORRECT. The court sealed those records for a reason. This isn\'t it.'
+            ];
+
+            const dossierGrid = document.getElementById('dossier-grid');
+            const dossierCards = [];
+            const hexIntervals = [];
+
+            dossierData.forEach((d, idx) => {
+                const card = document.createElement('div');
+                card.className = 'dossier-card locked';
+                card.dataset.password = d.password;
+                card.dataset.index = idx;
+
+                // Build card with both hex (visible) and real (hidden) text
+                card.innerHTML = `
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${d.icon}</svg>
+                    <h3>${d.title}</h3>
+                    <div class="dossier-hex-text" id="hex-${idx}">${randomHex(120)}</div>
+                    <div class="dossier-real-text" id="real-${idx}"></div>
+                    <div class="dossier-stamp">${d.stamp}</div>
+                    <div class="dossier-redaction">REDACTED_BY_ORDER_OF_COURT</div>
+                `;
+                dossierGrid.appendChild(card);
+                dossierCards.push({ el: card, data: d, unlocked: false });
+
+                // Cycle hex scramble every 80ms
+                const hexEl = card.querySelector('.dossier-hex-text');
+                hexIntervals.push(setInterval(() => {
+                    if (!dossierCards[idx].unlocked) hexEl.textContent = randomHex(120);
+                }, 80));
+            });
+
+            // Show terminal bar when dossier section is in viewport
+            const terminalBar = document.getElementById('terminal-bar');
+            const terminalInput = document.getElementById('terminal-input');
+            const terminalFeedback = document.getElementById('terminal-feedback');
+            let terminalVisible = false;
+
+            const dossierObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    terminalVisible = entry.isIntersecting;
+                    terminalBar.classList.toggle('active', terminalVisible);
+                    if (terminalVisible) terminalInput.focus();
+                });
+            }, { threshold: 0.2 });
+            dossierObserver.observe(document.getElementById('section-dossier'));
+
+            // Sieve cascade: reveal letters one by one
+            function sieveCascade(cardObj) {
+                const realEl = document.getElementById('real-' + cardObj.el.dataset.index);
+                const text = cardObj.data.text;
+                realEl.innerHTML = '';
+                // Wrap each char in a span
+                const chars = [];
+                for (let i = 0; i < text.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'sieve-char';
+                    span.textContent = text[i];
+                    realEl.appendChild(span);
+                    chars.push(span);
+                }
+                // Reveal one by one
+                let ci = 0;
+                const revealInterval = setInterval(() => {
+                    if (ci < chars.length) {
+                        chars[ci].classList.add('revealed');
+                        ci++;
+                    } else {
+                        clearInterval(revealInterval);
+                    }
+                }, 12);
+            }
+
+            // Password handling
+            terminalInput.addEventListener('keydown', (e) => {
+                if (e.key !== 'Enter') return;
+                const val = terminalInput.value.trim().toUpperCase();
+                terminalInput.value = '';
+                if (!val) return;
+
+                // Check all locked cards
+                let matched = false;
+                dossierCards.forEach((cardObj, idx) => {
+                    if (!cardObj.unlocked && val === cardObj.data.password) {
+                        matched = true;
+                        cardObj.unlocked = true;
+                        clearInterval(hexIntervals[idx]);
+
+                        // Visual breach
+                        cardObj.el.classList.add('breaching');
+                        setTimeout(() => cardObj.el.classList.remove('breaching'), 500);
+
+                        // Switch from locked to unlocked
+                        cardObj.el.classList.remove('locked');
+                        cardObj.el.classList.add('unlocked');
+
+                        // Sieve cascade
+                        sieveCascade(cardObj);
+
+                        // Fluid spike
+                        if (window.fluidSim && window.fluidSim.splatStack) {
+                            for (let i = 0; i < 5; i++) {
+                                window.fluidSim.splatStack.push({
+                                    x: Math.random(), y: Math.random(),
+                                    dx: (Math.random() - 0.5) * 15000,
+                                    dy: (Math.random() - 0.5) * 15000,
+                                    color: { r: 0.1, g: 0.8, b: 0.9 }
+                                });
+                            }
+                        }
+
+                        showFeedback('> DECRYPTION SUCCESSFUL: ' + cardObj.data.title.toUpperCase(), '#22c55e');
+                    }
+                });
+
+                if (!matched) {
+                    const msg = wrongResponses[Math.random() * wrongResponses.length | 0];
+                    showFeedback(msg, null);
+
+                    // Punish with red fluid splat
+                    if (window.fluidSim && window.fluidSim.splatStack) {
+                        window.fluidSim.splatStack.push({
+                            x: Math.random(), y: Math.random(),
+                            dx: (Math.random() - 0.5) * 8000,
+                            dy: (Math.random() - 0.5) * 8000,
+                            color: { r: 1.0, g: 0.05, b: 0.05 }
+                        });
+                    }
+                }
+
+                // Check if all unlocked
+                if (dossierCards.every(c => c.unlocked)) {
+                    setTimeout(() => {
+                        terminalBar.classList.remove('active');
+                        showFeedback('> ALL DOSSIERS DECRYPTED. FULL ACCESS GRANTED.', '#22c55e');
+                    }, 1500);
+                }
+            });
+
+            function showFeedback(msg, color) {
+                terminalFeedback.textContent = msg;
+                if (color) terminalFeedback.style.color = color;
+                else terminalFeedback.style.color = '';
+                terminalFeedback.classList.add('visible');
+                clearTimeout(terminalFeedback._timer);
+                terminalFeedback._timer = setTimeout(() => {
+                    terminalFeedback.classList.remove('visible');
+                }, 3000);
+            }
+
+            // ══════════════════════════════════════
+            // 7. COMMAND TERMINAL MEDIA PLAYER
+            // ══════════════════════════════════════
+            const ISLA_TRACKS = [
+                { id: "2hSYNLs7w3w", title: "Polished Vomit", date: "FEB 14, 2019", type: "AUDIO", lyric: "Mother's his mirror. Napkin smile. Polished vomit. I shine mine too." },
+                { id: "lwd7KOScg0k", title: "Burning Dominic's Bridge", date: "AUG 2019", type: "AUDIO", lyric: "He bought me out in needles... Inside, my hands ran the system. Every click mine." },
+                { id: "_gvv_W5_x10", title: "Broken Edge", date: "OCT 2019", type: "VIDEO", lyric: "They call it manic, they name the sin / But clarity cracks when pain breaks in" },
+                { id: "0tzOaukuBns", title: "This Isn't Therapy", date: "AUG 2020", type: "AUDIO", lyric: "You called that unstable? I call it restraint. This isn't therapy. This is proof." },
+                { id: "UFZeKCcSMoE", title: "Shiny Headed Radio Man", date: "SEP 2020", type: "AUDIO", lyric: "I'm dirt layered on nitrate. You're just dirt. Just get me the f***ing audition." },
+                { id: "NwqHLFYR1mA", title: "Don't Wake Him Yet", date: "RETROSPECT", type: "AUDIO", lyric: "Runway beads turn ocean to wire / Wing dips once, the rows go thin / Your eyes keep night like tinted glass" },
+                { id: "nk4Re7OjTTM", title: "Memory Under Water", date: "RETROSPECT", type: "AUDIO", lyric: "She dressed her tremor like a grace / China calm on a borrowed face." },
+                { id: "ey20cJsY82M", title: "Raise The Fourth", date: "RETROSPECT", type: "AUDIO", lyric: "Raise the fourth, cut the room, leave the hinge singing / I'm fine, I'm fine, hear the porcelain lie." },
+                { id: "Aw2ZAkxp6b0", title: "Give It Back", date: "RETROSPECT", type: "AUDIO", lyric: "Give it back, the year you pressed flat, give it back / I sing the cut, I feed it air, give it back." },
+                { id: "Y4VC6mh37NI", title: "What You Don't See", date: "RETROSPECT", type: "VIDEO", lyric: "It said the world was run by those who know the rules / And me, I learnt not to cry." },
+                { id: "a4TpIhna55k", title: "Melody of Normality", date: "RETROSPECT", type: "VIDEO", lyric: "Not just to heal. This is proof. You can bleed... and still find truth." },
+                { id: "hm2kp7LOhsg", title: "What You Don't See (Symphony)", date: "OCT 21, 2025", type: "AUDIO", lyric: "I'll split the fracture / Tear the frame / Keep the fire / But forget the name." },
+                { id: "7UOZCk5vvbA", title: "Drop From the Fourth (Symphony)", date: "OCT 21, 2025", type: "VIDEO", lyric: "If the door won't answer, I'll become the ringing." },
+                { id: "X9EUb1_QC9c", title: "What This Was Always For", date: "RETROSPECT", type: "AUDIO", lyric: "You wrote the wall / I crack the wall / This was always waiting for me." }
+            ];
+
+            const cmdTracklist = document.getElementById('cmd-tracklist');
+            const cmdLyricTerminal = document.getElementById('cmd-lyric-terminal');
+            const cmdMonitorIdle = document.getElementById('cmd-monitor-idle');
+            const teleTitle = document.getElementById('tele-title');
+            const teleDate = document.getElementById('tele-date');
+            const teleType = document.getElementById('tele-type');
+            let activeTrackIdx = -1;
+            let islaPlayer = null;
+            let islaPlayerReady = false;
+            let lyricInterval = null;
+
+            // Build tracklist
+            ISLA_TRACKS.forEach((track, idx) => {
+                const row = document.createElement('div');
+                row.className = 'cmd-track glitch-text';
+                row.setAttribute('data-text', track.title);
+                row.dataset.index = idx;
+                row.innerHTML = `
+                    <div class="cmd-track-info">
+                        <span class="cmd-track-title">${track.title}</span>
+                        <span class="cmd-track-date">${track.date}</span>
+                    </div>
+                    <span class="cmd-track-type ${track.type.toLowerCase()}">${track.type}</span>
+                    <span class="cmd-track-streaming">[ STREAMING ]</span>
+                `;
+                row.addEventListener('click', () => loadTrack(idx));
+                cmdTracklist.appendChild(row);
+            });
+
+            function loadTrack(idx) {
+                if (idx === activeTrackIdx && islaPlayer && islaPlayerReady) {
+                    // Toggle play/pause
+                    const state = islaPlayer.getPlayerState();
+                    if (state === 1) islaPlayer.pauseVideo();
+                    else islaPlayer.playVideo();
+                    return;
+                }
+
+                activeTrackIdx = idx;
+                const track = ISLA_TRACKS[idx];
+
+                // Update active track UI
+                document.querySelectorAll('.cmd-track').forEach(t => t.classList.remove('active'));
+                cmdTracklist.children[idx].classList.add('active');
+
+                // Scroll active track into view
+                cmdTracklist.children[idx].scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+                // Update telemetry
+                teleTitle.textContent = track.title.toUpperCase();
+                teleDate.textContent = track.date;
+                teleType.textContent = track.type;
+                teleType.className = 'cmd-tele-type';
+
+                // Hide idle state
+                cmdMonitorIdle.classList.add('hidden');
+
+                // Load video
+                if (islaPlayerReady && islaPlayer) {
+                    islaPlayer.loadVideoById(track.id);
+                } else {
+                    // Player not ready yet — queue it
+                    window._pendingIslaTrackId = track.id;
+                }
+
+                // Typeout lyric
+                typeOutLyric(track.lyric);
+            }
+
+            function typeOutLyric(text) {
+                if (lyricInterval) clearInterval(lyricInterval);
+                cmdLyricTerminal.innerHTML = '';
+                const chars = [];
+                for (let i = 0; i < text.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'cmd-lyric-char';
+                    span.textContent = text[i];
+                    cmdLyricTerminal.appendChild(span);
+                    chars.push(span);
+                }
+                // Add cursor at the end
+                const cursor = document.createElement('span');
+                cursor.className = 'cmd-lyric-cursor';
+                cursor.innerHTML = '&#9611;';
+                cmdLyricTerminal.appendChild(cursor);
+
+                let ci = 0;
+                lyricInterval = setInterval(() => {
+                    if (ci < chars.length) {
+                        chars[ci].classList.add('vis');
+                        ci++;
+                    } else {
+                        clearInterval(lyricInterval);
+                        lyricInterval = null;
+                    }
+                }, 25);
+            }
+
+            // YouTube Player — global callback
+            window.onYouTubeIframeAPIReady = function () {
+                islaPlayer = new YT.Player('isla-yt-player', {
+                    height: '100%',
+                    width: '100%',
+                    playerVars: {
+                        autoplay: 0,
+                        controls: 1,
+                        modestbranding: 1,
+                        rel: 0,
+                        iv_load_policy: 3,
+                        fs: 1,
+                        playsinline: 1
+                    },
+                    events: {
+                        onReady: function () {
+                            islaPlayerReady = true;
+                            // If a track was queued before player was ready
+                            if (window._pendingIslaTrackId) {
+                                islaPlayer.loadVideoById(window._pendingIslaTrackId);
+                                delete window._pendingIslaTrackId;
+                            }
+                        },
+                        onStateChange: function (event) {
+                            const state = event.data;
+                            if (state === YT.PlayerState.PLAYING) {
+                                // PLAYING — weaponize the fluid
+                                pulseEl.textContent = 'PULSE_160BPM_CRITICAL';
+                                pulseEl.classList.add('danger');
+                                if (window.FLUID_CONFIG) {
+                                    window.FLUID_CONFIG.CURL = 60;
+                                    window.FLUID_CONFIG.BLOOM_INTENSITY = 2.5;
+                                }
+                            } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
+                                // PAUSED/ENDED — comedown
+                                pulseEl.textContent = 'PULSE_98BPM';
+                                pulseEl.classList.remove('danger');
+                                if (window.FLUID_CONFIG) {
+                                    window.FLUID_CONFIG.CURL = 55;
+                                    window.FLUID_CONFIG.BLOOM_INTENSITY = 1.2;
+                                }
+                            }
+                            if (state === YT.PlayerState.ENDED) {
+                                // Auto-advance to next track
+                                const nextIdx = (activeTrackIdx + 1) % ISLA_TRACKS.length;
+                                loadTrack(nextIdx);
+                            }
+                        }
+                    }
+                });
+            };
+
+            // "ENTER THE PIT" — red flash + scroll + auto-play first track
+            const enterPitBtn = document.getElementById('btn-enter-pit');
+            const breachFlash = document.getElementById('breach-flash');
+
+            if (enterPitBtn) {
+                enterPitBtn.addEventListener('click', () => {
+                    // Red flash
+                    breachFlash.classList.add('active');
+                    setTimeout(() => {
+                        breachFlash.classList.remove('active');
+                    }, 50);
+
+                    // Scroll to discography
+                    setTimeout(() => {
+                        const disco = document.getElementById('section-disco');
+                        if (disco) disco.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+
+                    // Auto-trigger first track after scroll settles
+                    setTimeout(() => {
+                        loadTrack(0);
+                    }, 800);
+                });
+            }
+
+            // ══════════════════════════════════════
+            // 8. OPERATIONAL LOGS — AUTO-SCROLL TERMINAL
+            // ══════════════════════════════════════
+            const allOps = [
+                // ACT I — Surviving the Judge (Pymble)
+                { task: "Pymble_Mansion_Audio_Scrub", status: "FAILED" },
+                { task: "Judge_Chambers_Evasion_Protocol", status: "SUCCESS" },
+                { task: "Ceiling_Crack_Count_v1147", status: "COMPLETE" },
+                { task: "High_Court_Sealed_Record_Locate", status: "BLOCKED" },
+                { task: "Anesthetist_Malpractice_File_Exfil", status: "INTERCEPTED" },
+                { task: "China_Calm_Frequency_Isolate", status: "LOCKED" },
+                // ACT II — Destroying Dominic Ryker
+                { task: "Ryker_Property_Empire_Recon", status: "COMPLETE" },
+                { task: "Ryker_Terabyte_Archive_Exfil", status: "EXFIL_COMPLETE" },
+                { task: "Fentanyl_Countermeasures_Active", status: "SURVIVED" },
+                { task: "Dominic_Phone_Clone_v3", status: "SUCCESS" },
+                { task: "Married_Banker_Bypass_Tunnel_7", status: "TRAPPED" },
+                { task: "Ethel_Match_Delivery_Confirmed", status: "CONFIRMED" },
+                { task: "Banker_Asset_Trace_Layer_12", status: "FAILED" },
+                // ACT III — Isla as Musician/Disruptor
+                { task: "Polished_Vomit_Master_Encrypt", status: "SUCCESS" },
+                { task: "Turntable_Theatre_Audio_Rig", status: "OVERCLOCKED" },
+                { task: "Silence_Zone_Frequency_Weaponize", status: "SUCCESS" },
+                { task: "Kinley_Surveillance_Bypass", status: "ACTIVE" },
+                { task: "Neural_Handshake_Init", status: "STANDBY" },
+                { task: "Witness_Protocol_Engage", status: "PENDING" }
+            ];
+
+            const opsLog = document.getElementById('ops-log');
+            let opsIndex = 0;
+
+            function generateTime() {
+                const h = String(Math.random() * 24 | 0).padStart(2, '0');
+                const m = String(Math.random() * 60 | 0).padStart(2, '0');
+                return h + ':' + m;
+            }
+
+            function addOpsRow(data) {
+                const isGood = ['SUCCESS', 'EXFIL_COMPLETE', 'CONFIRMED', 'COMPLETE', 'OVERCLOCKED', 'ACTIVE', 'SURVIVED'].includes(data.status);
+                const row = document.createElement('div');
+                row.className = 'ops-row';
+                row.style.opacity = '0';
+                row.innerHTML = `
+                    <div style="display:flex;align-items:center;gap:1rem;">
+                        <span class="ops-time">${generateTime()}</span>
+                        <span class="ops-task">${data.task}</span>
+                    </div>
+                    <span class="ops-status ${isGood ? 'good' : 'bad'}">${data.status}</span>
+                `;
+                opsLog.appendChild(row);
+                requestAnimationFrame(() => { row.style.transition = 'opacity 0.5s'; row.style.opacity = '1'; });
+                opsLog.scrollTop = opsLog.scrollHeight;
+            }
+
+            // Load initial batch
+            for (let i = 0; i < 4; i++) addOpsRow(allOps[opsIndex++ % allOps.length]);
+
+            // Auto-append new logs
+            setInterval(() => {
+                addOpsRow(allOps[opsIndex++ % allOps.length]);
+            }, 4000 + Math.random() * 3000);
+
+            // ══════════════════════════════════════
+            // 9. WITNESS — NEURAL HANDSHAKE
+            // ══════════════════════════════════════
+            const witnessCage = document.getElementById('witness-cage');
+            const witnessRing = document.getElementById('witness-ring');
+            const witnessCta = document.getElementById('witness-cta');
+            const witnessTranscript = document.getElementById('witness-transcript');
+            const witnessPost = document.getElementById('witness-post');
+            const CIRCUMFERENCE = 226.2; // 2 * π * 36
+            const HOLD_DURATION = 2000; // 2 seconds to reveal
+
+            const witnessText = '"When I tell you my story... and when you understand it... ' +
+                'The relief is the biological relief of finally putting down a weight ' +
+                'I was never meant to carry alone."';
+
+            let witnessHolding = false;
+            let witnessStartTime = 0;
+            let witnessRevealed = false;
+            let witnessRAF = null;
+
+            function witnessHoldStart(e) {
+                if (witnessRevealed) return;
+                e.preventDefault();
+                witnessHolding = true;
+                witnessStartTime = performance.now();
+                witnessCage.classList.add('revealing');
+
+                // Shift fluid to WITNESS vibe (dense, sluggish)
+                if (window.fluidSim) {
+                    window.fluidSim.updateConfig('WITNESS');
+                }
+
+                witnessRAF = requestAnimationFrame(witnessHoldLoop);
+            }
+
+            function witnessHoldLoop(now) {
+                if (!witnessHolding) return;
+                const elapsed = now - witnessStartTime;
+                const progress = Math.min(elapsed / HOLD_DURATION, 1.0);
+
+                // Update progress ring
+                const offset = CIRCUMFERENCE * (1 - progress);
+                witnessRing.setAttribute('stroke-dashoffset', offset.toFixed(1));
+
+                if (progress >= 1.0) {
+                    // REVEAL COMPLETE
+                    witnessRevealed = true;
+                    witnessHolding = false;
+                    witnessCage.classList.remove('revealing');
+                    witnessCage.classList.add('revealed');
+
+                    // Hide CTA
+                    witnessCta.style.opacity = '0';
+                    witnessCta.style.transition = 'opacity 0.5s';
+
+                    // Inject centrifugal splats (fluid rushes outward)
+                    if (window.fluidSim && window.fluidSim.splatStack) {
+                        for (let i = 0; i < 8; i++) {
+                            const angle = (i / 8) * Math.PI * 2;
+                            window.fluidSim.splatStack.push({
+                                x: 0.5, y: 0.5,
+                                dx: Math.cos(angle) * 20000,
+                                dy: Math.sin(angle) * 20000,
+                                color: { r: 0.3, g: 0.5, b: 0.8 }
+                            });
+                        }
+                    }
+
+                    // Fluid stays in WITNESS vibe during typeout
+                    // SILENCE snap happens when transcript finishes (in typeOutTranscript)
+
+                    // Typeout transcript
+                    typeOutTranscript();
+
+                    return;
+                }
+
+                witnessRAF = requestAnimationFrame(witnessHoldLoop);
+            }
+
+            function witnessHoldEnd() {
+                if (witnessRevealed) return;
+                witnessHolding = false;
+                witnessCage.classList.remove('revealing');
+                cancelAnimationFrame(witnessRAF);
+
+                // Reset ring
+                witnessRing.setAttribute('stroke-dashoffset', CIRCUMFERENCE.toFixed(1));
+
+                // Reset fluid
+                if (window.fluidSim) {
+                    window.fluidSim.updateConfig('ISLA');
+                }
+            }
+
+            function typeOutTranscript() {
+                witnessTranscript.innerHTML = '';
+                const chars = [];
+                for (let i = 0; i < witnessText.length; i++) {
+                    const span = document.createElement('span');
+                    span.className = 'revealed-char';
+                    span.textContent = witnessText[i];
+                    witnessTranscript.appendChild(span);
+                    chars.push(span);
+                }
+
+                let ci = 0;
+                const typeInterval = setInterval(() => {
+                    if (ci < chars.length) {
+                        chars[ci].classList.add('vis');
+                        ci++;
+                    } else {
+                        clearInterval(typeInterval);
+                        // Biological exhalation — fluid snaps to SILENCE the instant the sentence ends
+                        if (window.fluidSim) {
+                            window.fluidSim.updateConfig('SILENCE');
+                        }
+                        // Show post-witness status
+                        setTimeout(() => {
+                            witnessPost.classList.add('visible');
+                        }, 800);
+                    }
+                }, 20);
+            }
+
+            // Mouse events
+            witnessCage.addEventListener('mousedown', witnessHoldStart);
+            window.addEventListener('mouseup', witnessHoldEnd);
+
+            // Touch events
+            witnessCage.addEventListener('touchstart', witnessHoldStart, { passive: false });
+            window.addEventListener('touchend', witnessHoldEnd);
+            window.addEventListener('touchcancel', witnessHoldEnd);
+
+            // Fluid mode shift when witness section enters viewport
+            const witnessObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && !witnessRevealed && window.fluidSim) {
+                        // Make fluid feel heavier when approaching witness
+                        if (window.FLUID_CONFIG) {
+                            window.FLUID_CONFIG.DENSITY_DISSIPATION = 0.998;
+                            window.FLUID_CONFIG.CURL = 15;
+                        }
+                    }
+                });
+            }, { threshold: 0.1 });
+            witnessObserver.observe(document.getElementById('section-witness'));
+
+        })();
+    </script>
+</body>
+
+</html>
