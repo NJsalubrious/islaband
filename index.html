@@ -1169,6 +1169,56 @@
             transition: stroke-dashoffset 0.1s;
         }
 
+        /* ── WITNESS BRANDING OVERLAY ── */
+        .witness-brand-overlay {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.75) 100%);
+            text-decoration: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1.2s ease;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        .witness-brand-overlay.visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .witness-brand-text {
+            font-family: var(--font-sans);
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            color: #fff;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            text-shadow: 0 0 30px rgba(220, 38, 38, 0.6), 0 0 60px rgba(220, 38, 38, 0.3);
+            transition: text-shadow 0.3s;
+        }
+
+        .witness-brand-overlay:hover .witness-brand-text {
+            text-shadow: 0 0 40px rgba(220, 38, 38, 0.9), 0 0 80px rgba(220, 38, 38, 0.5), 0 0 120px rgba(220, 38, 38, 0.2);
+        }
+
+        .witness-brand-accent {
+            color: var(--red-500);
+        }
+
+        .witness-brand-sub {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+        }
+
         .witness-cta {
             font-family: var(--font-mono);
             font-size: 0.65rem;
@@ -1752,6 +1802,11 @@
                         <circle class="fill" id="witness-ring" cx="40" cy="40" r="36" stroke-dasharray="226.2"
                             stroke-dashoffset="226.2" transform="rotate(-90 40 40)"></circle>
                     </svg>
+                    <a href="https://pixelstortion.com" target="_blank" rel="noopener" class="witness-brand-overlay"
+                        id="witness-brand-overlay">
+                        <div class="witness-brand-text">PIXEL<span class="witness-brand-accent">STORTION</span></div>
+                        <div class="witness-brand-sub">THE ARCHITECTURE OF RECLAIM</div>
+                    </a>
                 </div>
 
                 <div class="witness-cta-wrap">
@@ -2801,6 +2856,14 @@
                     witnessCta.style.opacity = '0';
                     witnessCta.style.transition = 'opacity 0.5s';
 
+                    // ── FADE OUT ALL SOUNDS ──
+                    enginePaused = true;
+                    if (currentAudio && !currentAudio.paused) { currentAudio.pause(); }
+                    fadeLoop(0, 500);
+                    if (islaPlayerReady && islaPlayer && islaPlayer.getPlayerState() === 1) {
+                        islaPlayer.pauseVideo();
+                    }
+
                     // Inject centrifugal splats (fluid rushes outward)
                     if (window.fluidSim && window.fluidSim.splatStack) {
                         for (let i = 0; i < 8; i++) {
@@ -2859,7 +2922,7 @@
                         ci++;
                     } else {
                         clearInterval(typeInterval);
-                        // Biological exhalation — fluid snaps to SILENCE the instant the sentence ends
+                        // Biological exhalation — fluid snaps to SILENCE
                         if (window.fluidSim) {
                             window.fluidSim.updateConfig('SILENCE');
                         }
@@ -2867,6 +2930,24 @@
                         setTimeout(() => {
                             witnessPost.classList.add('visible');
                         }, 800);
+
+                        // Play the Isla witness audio
+                        const witnessAudio = new Audio(
+                            'https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/main/library/Silence_CharactersInTeirOwnWords/Isla_witnessesBringYouBackIntoTheHumanRace.mp3'
+                        );
+                        witnessAudio.play().catch(() => { });
+                        witnessAudio.onended = () => {
+                            // Show the PixelStortion branding overlay
+                            const overlay = document.getElementById('witness-brand-overlay');
+                            if (overlay) overlay.classList.add('visible');
+                        };
+                        witnessAudio.onerror = () => {
+                            // Fallback: show overlay anyway after 5s
+                            setTimeout(() => {
+                                const overlay = document.getElementById('witness-brand-overlay');
+                                if (overlay) overlay.classList.add('visible');
+                            }, 5000);
+                        };
                     }
                 }, 20);
             }
