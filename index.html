@@ -2298,6 +2298,8 @@
                                 if (currentAudio && !currentAudio.paused) {
                                     currentAudio.pause();
                                 }
+                                // Fade out the background loop
+                                fadeLoop(0, 500);
                             } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
                                 // PAUSED/ENDED — comedown
                                 pulseEl.textContent = 'PULSE_98BPM';
@@ -2309,6 +2311,8 @@
                                 // RESUME the chronological engine
                                 if (enginePaused) {
                                     enginePaused = false;
+                                    // Fade background loop back in
+                                    if (bgLoop) { bgLoop.play().catch(() => { }); fadeLoop(BG_LOOP_VOLUME, 800); }
                                     if (currentAudio && currentAudio.paused && currentAudio.currentTime > 0) {
                                         // Resume where the trauma audio left off
                                         currentAudio.play().catch(() => { });
@@ -2578,6 +2582,29 @@
             let enginePaused = false;
             let enginePendingResume = false;
 
+            // ── BACKGROUND AMBIENT LOOP ──
+            const BG_LOOP_URL = AUDIO_BASE_URL + 'Isla_LOOP_ON_BACKGROUND.mp3';
+            let bgLoop = null;
+            const BG_LOOP_VOLUME = 0.4; // Ambient level — sits behind the trauma clips
+
+            function fadeLoop(targetVol, durationMs) {
+                if (!bgLoop) return;
+                const steps = 20;
+                const stepTime = durationMs / steps;
+                const startVol = bgLoop.volume;
+                const delta = (targetVol - startVol) / steps;
+                let step = 0;
+                const fade = setInterval(() => {
+                    step++;
+                    bgLoop.volume = Math.max(0, Math.min(1, startVol + delta * step));
+                    if (step >= steps) {
+                        clearInterval(fade);
+                        bgLoop.volume = targetVol;
+                        if (targetVol === 0) bgLoop.pause();
+                    }
+                }, stepTime);
+            }
+
             // Preload the next track while the current one plays
             function preloadAudioFor(idx) {
                 const data = SHOUT_MAP[allOps[idx % allOps.length].task];
@@ -2691,6 +2718,13 @@
 
                 // Preload first audio and start the engine
                 nextAudioPreload = preloadAudioFor(0);
+
+                // Start the background ambient loop
+                bgLoop = new Audio(BG_LOOP_URL);
+                bgLoop.loop = true;
+                bgLoop.volume = BG_LOOP_VOLUME;
+                bgLoop.play().catch(() => { });
+
                 processNextLog();
             }
 
