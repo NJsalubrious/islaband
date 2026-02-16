@@ -841,12 +841,14 @@
             justify-content: center;
             gap: 0.75rem;
             z-index: 1;
-            pointer-events: none;
+            pointer-events: auto;
+            cursor: pointer;
             transition: opacity 0.5s;
         }
 
         .cmd-monitor-idle.hidden {
             opacity: 0;
+            pointer-events: none;
         }
 
         .cmd-monitor-idle svg {
@@ -2259,6 +2261,17 @@
                     }
                 }, 25);
             }
+
+            // Make the idle overlay and monitor frame clickable
+            document.getElementById('cmd-monitor-idle').addEventListener('click', () => {
+                loadTrack(activeTrackIdx >= 0 ? activeTrackIdx : 0);
+            });
+            document.getElementById('cmd-monitor-frame').addEventListener('click', (e) => {
+                // Only fire if the click was on the frame itself, not the iframe
+                if (e.target.id === 'cmd-monitor-frame') {
+                    loadTrack(activeTrackIdx >= 0 ? activeTrackIdx : 0);
+                }
+            });
 
             // YouTube Player — global callback
             window.onYouTubeIframeAPIReady = function () {
