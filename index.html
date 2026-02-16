@@ -197,6 +197,46 @@
             gap: 1rem;
         }
 
+        /* ── PIXELSTORTION MANAGEMENT BRAND ── */
+        .ps-brand {
+            font-family: var(--font-mono);
+            font-size: 0.5rem;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-ghost);
+            text-decoration: none;
+            transition: color 0.2s, text-shadow 0.2s;
+            position: relative;
+        }
+
+        .ps-brand:hover {
+            color: var(--red-500);
+            text-shadow: 0 0 8px rgba(220, 38, 38, 0.5);
+        }
+
+        .ps-brand::after {
+            content: '';
+            display: block;
+            width: 100%;
+            height: 1px;
+            background: var(--red-600);
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .ps-brand:hover::after {
+            opacity: 0.6;
+            transform: scaleX(1);
+        }
+
+        .nav-id-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+
         .nav-logo {
             width: 2.5rem;
             height: 2.5rem;
@@ -778,7 +818,6 @@
             height: 100%;
             border: none;
             display: block;
-            mix-blend-mode: luminosity;
         }
 
         .cmd-monitor-scanlines {
@@ -970,7 +1009,6 @@
 
         .perf-wrap img {
             width: 100%;
-            filter: grayscale(1);
             border: 1px solid var(--border-dim);
             position: relative;
             z-index: 1;
@@ -1001,17 +1039,22 @@
 
         /* ── WITNESS — NEURAL HANDSHAKE ── */
         .witness {
-            padding: 6rem 0;
+            padding: 4rem 1.5rem;
             border-top: 1px solid var(--border-dim);
             border-bottom: 1px solid var(--border-dim);
             position: relative;
             overflow: hidden;
-            min-height: 80vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
+        }
+
+        @media (max-width: 768px) {
+            .witness {
+                padding: 3rem 1.5rem;
+            }
         }
 
         .witness-bg-text {
@@ -1219,9 +1262,12 @@
             opacity: 0.6;
             line-height: 1.6;
             word-break: break-all;
+            overflow-wrap: break-word;
             letter-spacing: 0.05em;
             margin-bottom: 1.5rem;
             min-height: 4rem;
+            position: relative;
+            z-index: 0;
         }
 
         .dossier-redaction {
@@ -1235,11 +1281,13 @@
             text-transform: uppercase;
             letter-spacing: 0.15em;
             text-align: center;
-            background: rgba(220, 38, 38, 0.08);
-            border: 1px solid rgba(220, 38, 38, 0.15);
+            background: rgba(0, 0, 0, 0.92);
+            border: 1px solid rgba(220, 38, 38, 0.4);
             padding: 0.75rem 1.5rem;
             pointer-events: none;
             white-space: nowrap;
+            z-index: 2;
+            box-shadow: 0 0 30px 10px rgba(0, 0, 0, 0.8);
         }
 
         .dossier-real-text {
@@ -1446,6 +1494,39 @@
             color: #27272a;
             margin-top: 2rem;
         }
+
+        /* ── AUDIO INTERCEPT (SHOUT LOG) ── */
+        .ops-shout {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--red-500);
+            padding: 0.5rem 0.5rem 0.75rem 1.5rem;
+            border-left: 2px solid var(--red-600);
+            background: rgba(220, 38, 38, 0.05);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.8);
+            animation: pulse-shout 0.1s infinite;
+        }
+
+        @keyframes pulse-shout {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(1px);
+            }
+        }
+
+        .ops-log-container-breach {
+            border-color: var(--red-600) !important;
+            box-shadow: 0 0 20px rgba(220, 38, 38, 0.2) inset !important;
+            transition: all 0.1s;
+        }
     </style>
 </head>
 
@@ -1477,9 +1558,13 @@
         <nav class="nav">
             <div class="nav-left">
                 <div class="nav-logo">I</div>
-                <div class="nav-id">
-                    <div class="nav-id-name">Subject: ISLA</div>
-                    <div class="nav-id-status">STATUS: OPERATIONAL</div>
+                <div class="nav-id-group">
+                    <a href="https://pixelstortion.com" target="_blank" rel="noopener"
+                        class="ps-brand">PIXELSTORTION</a>
+                    <div class="nav-id">
+                        <div class="nav-id-name">Subject: ISLA</div>
+                        <div class="nav-id-status">STATUS: OPERATIONAL</div>
+                    </div>
                 </div>
             </div>
             <div class="nav-tabs" id="nav-tabs">
@@ -1504,7 +1589,9 @@
             <!-- ═══════ HERO ═══════ -->
             <div class="hero">
                 <div class="hero-text">
-                    <div class="hero-badge">Heritage: REJECTED</div>
+                    <div class="hero-badge">Heritage: REJECTED // <a href="https://pixelstortion.com" target="_blank"
+                            rel="noopener" style="color:var(--red-500);text-decoration:none;">pixelstortion.com</a>
+                    </div>
                     <h1 class="hero-title">
                         <span class="glitch-text" data-text="ARCHITECT">ARCHITECT</span>
                         <br>
@@ -1524,7 +1611,7 @@
                             </svg>
                             ENTER THE PIT
                         </button>
-                        <button class="btn btn-outline">
+                        <button class="btn btn-outline" id="btn-logs">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
@@ -1540,7 +1627,7 @@
                         alt="Isla">
                     <div class="hero-meta">
                         <div class="hero-meta-label">METADATA_EXTRACT</div>
-                        <div class="hero-meta-file">Subject_isla_LIVE_2025.jpg</div>
+                        <div class="hero-meta-file">Young ISLA</div>
                         <div class="hero-meta-flag">ENCRYPTED ORIGIN</div>
                     </div>
                 </div>
@@ -2003,6 +2090,20 @@
                         }
 
                         showFeedback('> DECRYPTION SUCCESSFUL: ' + cardObj.data.title.toUpperCase(), '#22c55e');
+
+                        // Wire dossier to media player — push relevant track
+                        const trackMap = {
+                            'Polished Vomit': 0,
+                            'The Broken Edge': 2
+                        };
+                        const trackIdx = trackMap[cardObj.data.title];
+                        if (trackIdx !== undefined) {
+                            setTimeout(() => {
+                                const disco = document.getElementById('section-disco');
+                                if (disco) disco.scrollIntoView({ behavior: 'smooth' });
+                                setTimeout(() => loadTrack(trackIdx), 600);
+                            }, 1200);
+                        }
                     }
                 });
 
@@ -2236,67 +2337,343 @@
                 });
             }
 
-            // ══════════════════════════════════════
-            // 8. OPERATIONAL LOGS — AUTO-SCROLL TERMINAL
-            // ══════════════════════════════════════
-            const allOps = [
-                // ACT I — Surviving the Judge (Pymble)
-                { task: "Pymble_Mansion_Audio_Scrub", status: "FAILED" },
-                { task: "Judge_Chambers_Evasion_Protocol", status: "SUCCESS" },
-                { task: "Ceiling_Crack_Count_v1147", status: "COMPLETE" },
-                { task: "High_Court_Sealed_Record_Locate", status: "BLOCKED" },
-                { task: "Anesthetist_Malpractice_File_Exfil", status: "INTERCEPTED" },
-                { task: "China_Calm_Frequency_Isolate", status: "LOCKED" },
-                // ACT II — Destroying Dominic Ryker
-                { task: "Ryker_Property_Empire_Recon", status: "COMPLETE" },
-                { task: "Ryker_Terabyte_Archive_Exfil", status: "EXFIL_COMPLETE" },
-                { task: "Fentanyl_Countermeasures_Active", status: "SURVIVED" },
-                { task: "Dominic_Phone_Clone_v3", status: "SUCCESS" },
-                { task: "Married_Banker_Bypass_Tunnel_7", status: "TRAPPED" },
-                { task: "Ethel_Match_Delivery_Confirmed", status: "CONFIRMED" },
-                { task: "Banker_Asset_Trace_Layer_12", status: "FAILED" },
-                // ACT III — Isla as Musician/Disruptor
-                { task: "Polished_Vomit_Master_Encrypt", status: "SUCCESS" },
-                { task: "Turntable_Theatre_Audio_Rig", status: "OVERCLOCKED" },
-                { task: "Silence_Zone_Frequency_Weaponize", status: "SUCCESS" },
-                { task: "Kinley_Surveillance_Bypass", status: "ACTIVE" },
-                { task: "Neural_Handshake_Init", status: "STANDBY" },
-                { task: "Witness_Protocol_Engage", status: "PENDING" }
-            ];
-
-            const opsLog = document.getElementById('ops-log');
-            let opsIndex = 0;
-
-            function generateTime() {
-                const h = String(Math.random() * 24 | 0).padStart(2, '0');
-                const m = String(Math.random() * 60 | 0).padStart(2, '0');
-                return h + ':' + m;
+            // "LOGS" button — smooth scroll to #section-logs
+            const logsBtn = document.getElementById('btn-logs');
+            if (logsBtn) {
+                logsBtn.addEventListener('click', () => {
+                    const logs = document.getElementById('section-logs');
+                    if (logs) logs.scrollIntoView({ behavior: 'smooth' });
+                });
             }
 
-            function addOpsRow(data) {
-                const isGood = ['SUCCESS', 'EXFIL_COMPLETE', 'CONFIRMED', 'COMPLETE', 'OVERCLOCKED', 'ACTIVE', 'SURVIVED'].includes(data.status);
+            // ══════════════════════════════════════
+            // 8. OPERATIONAL LOGS — AUTO-SCROLL TERMINAL (ISLA TRUE TIMELINE)
+            // ══════════════════════════════════════
+            const allOps = [
+                // PRE-2016: The Judge's House (Pymble Childhood)
+                { time: "[2009.XX]", task: "Judge Chambers Dissociation Protocol", status: "ACTIVE" },
+                { time: "[2011.XX]", task: "Pymble Ceiling Crack Count", status: "COMPLETE" },
+                { time: "[2014.XX]", task: "Anesthetist Malpractice Record Purge", status: "BLOCKED" },
+
+                // 2016: The Night Flight (Age 15 - Don't Wake Him Yet)
+                { time: "[2016.11]", task: "Judge Credit Card Flight Tragedy", status: "SUCCESS" },
+                { time: "[2016.11]", task: "Night Flight Cabin Air Monitor", status: "LOGGED" },
+                { time: "[2016.11]", task: "Passenger Narcotic Intervention", status: "FAILED" },
+
+                // 2019: The Collision (Dominic's World & Ethel)
+                { time: "[2019.02]", task: "Mother Wedding Projector Hijack", status: "SUCCESS" },
+                { time: "[2019.02]", task: "DBT Rehab Containment Facility", status: "ESCAPED" },
+                { time: "[2019.03]", task: "Mosman Driveway Ethel Collision", status: "INITIATED" },
+                { time: "[2019.03]", task: "Sydney CBD Wallet Theft Decoy", status: "SUCCESS" },
+                { time: "[2019.05]", task: "Married Banker Tunnel Bypass", status: "TRAPPED" },
+
+                // 2019: The Takedown (Burning the Bridge)
+                { time: "[2019.08]", task: "Fentanyl Overdose Countermeasure", status: "SURVIVED" },
+                { time: "[2019.08]", task: "Ryker Mansion Smart Lock Override", status: "LOCKED" },
+                { time: "[2019.08]", task: "Ryker Terabyte Archive Exfil", status: "EXFIL_COMPLETE" },
+                { time: "[2019.10]", task: "Broken Edge Sanity Stutter", status: "OVERRIDDEN" },
+
+                // 2020: The Reset (Stanmore & The Music)
+                { time: "[2020.08]", task: "Sydney Conservatorium Expulsion", status: "REJECTED" },
+                { time: "[2020.09]", task: "Shiny Headed Gatekeeper Bypass", status: "OVERCLOCKED" },
+                { time: "[2020.12]", task: "Stanmore Flat Abandonment", status: "COMPLETE" },
+
+                // 2022-2025: Retrospect & The Stage
+                { time: "[2022.XX]", task: "Maternal Autopsy of Silence Logged", status: "COMPLETE" },
+                { time: "[2024.XX]", task: "Melody Of Normality Reckoning", status: "SUCCESS" },
+                { time: "[2025.10]", task: "Turntable Theatre - Isla & Symphony", status: "OVERCLOCKED" },
+                { time: "[2025.10]", task: "Neural Handshake Witness Protocol", status: "ENGAGED" }
+            ];
+
+            // ── HOSTILE BROADCAST: Audio + Visual Scream Payloads ──
+            const AUDIO_BASE_URL = "https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/main/library/isla_audio_trauma/";
+
+            const SHOUT_MAP = {
+                "Judge Chambers Dissociation Protocol": { audio: "Isla_iUsedToCountTheCracks.mp3", text: "I USED TO COUNT THE CRACKS" },
+                "Pymble Ceiling Crack Count": { audio: "Isla_threeThreeOutsideMyForm.mp3", text: "THREE THREE, TWO TWO TWO! I LEARNED TO FLOAT OUTSIDE MY FORM!" },
+                "Anesthetist Malpractice Record Purge": { audio: "Isla_dearestMotherTremor.mp3", text: "DEAREST MOTHER - POLISHED VOMIT - DRESS THAT MENTAL TREMOR" },
+                "Judge Credit Card Flight Tragedy": { audio: "Isla_aRedEyeFlightWontBuyAnExit.mp3", text: "A RED-EYE FLIGHT ON HIS DIME WON'T BUY AN EXIT!" },
+                "Night Flight Cabin Air Monitor": { audio: "Isla_dontWakeHimyetmightSwitch.mp3", text: "DON'T WAKE HIM YET! THE CABIN AIR MIGHT SWITCH!" },
+                "Passenger Narcotic Intervention": { audio: "Isla_nightGoneDidntWakeUp.mp3", text: "NIGHT GONE! NOISE WINS! HE DIDN'T WAKE UP!" },
+                "Mother Wedding Projector Hijack": { audio: "Isla_enjoytheSlideshowEasyToHack.mp3", text: "ENJOY THE SLIDESHOW, DOMINIC! YOUR NETWORK IS EASY TO HACK!" },
+                "DBT Rehab Containment Facility": { audio: "Isla_youCallitTherapyIcallItRestraint.mp3", text: "YOU CALL THIS THERAPY? I CALL IT RESTRAINT!" },
+                "Mosman Driveway Ethel Collision": { audio: "Isla_newgirlPeekABoo.mp3", text: "NEW GIRL IN THE CRAZY HOUSE! PEEK-A-BOO!" },
+                "Sydney CBD Wallet Theft Decoy": { audio: "Isla_sheTookthekeysSisterInArms.mp3", text: "I TOOK THE KEYS! SHE TOOK THE FALL! SISTER IN ARMS" },
+                "Married Banker Tunnel Bypass": { audio: "Isla_youSuitWontBanker.mp3", text: "YOUR SUIT WON'T SAVE YOU IN THE DARK, BANKER!" },
+                "Fentanyl Overdose Countermeasure": { audio: "Isla_youBoughtmeThePyre.mp3", text: "YOU BOUGHT ME OUT IN NEEDLES, BUT I WALKED THROUGH THE PYRE!" },
+                "Ryker Mansion Smart Lock Override": { audio: "Isla_NiceToMeetYouCold.mp3", text: "NICE TO MEET YOU! NOW DIE IN THE COLD!" },
+                "Ryker Terabyte Archive Exfil": { audio: "Isla_empireBleedingBrokenEdge.mp3", text: "EMPIRE BLEEDING IN MY HANDS! I AM YOUR BROKEN EDGE!" },
+                "Broken Edge Sanity Stutter": { audio: "Isla_sanityStuttersChaosWins.mp3", text: "SANITY STUTTERS BETWEEN THE SEAMS! LET CHAOS WIN!" },
+                "Sydney Conservatorium Expulsion": { audio: "Isla_iDidnetBegSpeakingInKey.mp3", text: "I DIDN'T BEG! I DIDN'T BREAK! I JUST STOPPED SPEAKING IN KEY!" },
+                "Shiny Headed Gatekeeper Bypass": { audio: "Isla_imDirtLayeredOnNitrateJustDirt.mp3", text: "I'M DIRT LAYERED ON NITRATE! YOU'RE JUST DIRT!" },
+                "Stanmore Flat Abandonment": { audio: "Isla_theSafteyNetRunway.mp3", text: "THE SAFETY NET KNOTS AROUND THE ANKLE! I TASTE RUNWAY!" },
+                "Maternal Autopsy of Silence Logged": { audio: "Isla_iKeepHerNoonAndStone.mp3", text: "I KEEP HER ABSENCE FOLDED SMALL! NO SPEECHES THEN, JUST NOON AND STONE!" },
+                "Melody Of Normality Reckoning": { audio: "Isla_niceLittlemelodyArtIsPain.mp3", text: "A NICE LITTLE MELODY OF NORMALITY? HELL NO! ART IS PAIN!" },
+                "Turntable Theatre - Isla & Symphony": { audio: "Isla_iAmTheMisprintHingeSinging.mp3", text: "I AM THE MISPRINT THAT MAKES THE LINE STAY! LEAVE THE HINGE SINGING!" },
+                "Neural Handshake Witness Protocol": { audio: "Isla_SilenceIsTheTraumaFindTruth.mp3", text: "SILENCE IS THE TRAUMA! YOU CAN BLEED AND STILL FIND TRUTH!" }
+            };
+
+            // ── THE PROTOCOL DIRECTOR: Maps Log Events to Fluid Physics ──
+            function triggerFluidProtocol(taskName) {
+                if (!window.fluidSim || !window.FLUID_CONFIG) return;
+
+                const pushSplat = (x, y, dx, dy, color) => {
+                    window.fluidSim.splatStack.push({ x, y, dx, dy, color });
+                };
+
+                // Helper to instantly clear screen to black
+                const voidScreen = () => { window.FLUID_CONFIG.DENSITY_DISSIPATION = 0.5; };
+                const restoreScreen = () => { setTimeout(() => { window.FLUID_CONFIG.DENSITY_DISSIPATION = 0.995; }, 100); };
+
+                // Set default base parameters just in case
+                window.FLUID_CONFIG.CURL = 40;
+                window.FLUID_CONFIG.BLOOM_INTENSITY = 1.2;
+
+                switch (taskName) {
+                    case "Judge Chambers Dissociation Protocol":
+                    case "Pymble Ceiling Crack Count":
+                        // Full fluid explosion (Cyan/Blue dissociation)
+                        for (let i = 0; i < 4; i++) pushSplat(0.5, 0.5, (Math.random() - 0.5) * 20000, (Math.random() - 0.5) * 20000, { r: 0.1, g: 0.5, b: 1.0 });
+                        break;
+                    case "Anesthetist Malpractice Record Purge":
+                        // Total black - subtle white at bottom
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => pushSplat(0.5, 0.95, 0, -5000, { r: 0.15, g: 0.15, b: 0.15 }), 150);
+                        break;
+                    case "Judge Credit Card Flight Tragedy":
+                        // Blue fluid sky
+                        pushSplat(0.5, 0.2, 0, 8000, { r: 0.2, g: 0.6, b: 1.0 });
+                        break;
+                    case "Night Flight Cabin Air Monitor":
+                        // Red fluid flash
+                        window.FLUID_CONFIG.BLOOM_INTENSITY = 3.0;
+                        pushSplat(0.5, 0.5, (Math.random() - 0.5) * 15000, (Math.random() - 0.5) * 15000, { r: 1.0, g: 0.0, b: 0.0 });
+                        break;
+                    case "Passenger Narcotic Intervention":
+                        // Total black - subtle white at bottom
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => pushSplat(0.5, 0.95, 0, -2000, { r: 0.2, g: 0.2, b: 0.2 }), 150);
+                        break;
+                    case "Mother Wedding Projector Hijack":
+                        // Fluid gold explosion
+                        for (let i = 0; i < 3; i++) pushSplat(0.5, 0.5, (Math.random() - 0.5) * 25000, (Math.random() - 0.5) * 25000, { r: 1.0, g: 0.8, b: 0.1 });
+                        break;
+                    case "DBT Rehab Containment Facility":
+                        // Somber light blue with subtle white at bottom
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => {
+                            pushSplat(0.5, 0.5, 0, 0, { r: 0.1, g: 0.3, b: 0.5 }); // Center dim blue
+                            pushSplat(0.5, 0.95, 0, -3000, { r: 0.2, g: 0.2, b: 0.2 }); // Bottom white
+                        }, 150);
+                        break;
+                    case "Mosman Driveway Ethel Collision":
+                        // Red hair - orange/red fluid explosion
+                        pushSplat(0.5, 0.5, (Math.random() - 0.5) * 20000, (Math.random() - 0.5) * 20000, { r: 1.0, g: 0.3, b: 0.0 });
+                        break;
+                    case "Sydney CBD Wallet Theft Decoy":
+                        // Red/Blue collision (Red left, Blue right)
+                        pushSplat(0.2, 0.5, 15000, 0, { r: 1.0, g: 0.0, b: 0.0 });
+                        pushSplat(0.8, 0.5, -15000, 0, { r: 0.0, g: 0.2, b: 1.0 });
+                        break;
+                    case "Married Banker Tunnel Bypass":
+                        // Chaos color hits & fast movements
+                        window.FLUID_CONFIG.CURL = 60;
+                        for (let i = 0; i < 5; i++) pushSplat(Math.random(), Math.random(), (Math.random() - 0.5) * 30000, (Math.random() - 0.5) * 30000, { r: Math.random(), g: Math.random(), b: Math.random() });
+                        break;
+                    case "Fentanyl Overdose Countermeasure":
+                        // Total black - subtle white at bottom
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => pushSplat(0.5, 0.95, 0, -2000, { r: 0.2, g: 0.2, b: 0.2 }), 150);
+                        break;
+                    case "Ryker Mansion Smart Lock Override":
+                        // Total black builds up with red and blue
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => {
+                            pushSplat(0.3, 0.5, 0, 5000, { r: 0.8, g: 0.0, b: 0.1 });
+                            pushSplat(0.7, 0.5, 0, 5000, { r: 0.0, g: 0.3, b: 0.8 });
+                        }, 200);
+                        break;
+                    case "Ryker Terabyte Archive Exfil":
+                        // Red and blue full force
+                        pushSplat(0.5, 0.5, 20000, 20000, { r: 1.0, g: 0.0, b: 0.2 });
+                        pushSplat(0.5, 0.5, -20000, -20000, { r: 0.0, g: 0.4, b: 1.0 });
+                        break;
+                    case "Broken Edge Sanity Stutter":
+                        // Gothic purples and blue fluids
+                        pushSplat(0.4, 0.5, (Math.random() - 0.5) * 15000, (Math.random() - 0.5) * 15000, { r: 0.4, g: 0.0, b: 0.8 });
+                        pushSplat(0.6, 0.5, (Math.random() - 0.5) * 15000, (Math.random() - 0.5) * 15000, { r: 0.1, g: 0.0, b: 0.5 });
+                        break;
+                    case "Sydney Conservatorium Expulsion":
+                        // Elegant fluids (Teal/Purple smooth)
+                        window.FLUID_CONFIG.CURL = 10; // Smooth
+                        pushSplat(0.5, 0.5, 5000, 5000, { r: 0.0, g: 0.8, b: 0.8 });
+                        pushSplat(0.5, 0.5, -5000, -5000, { r: 0.6, g: 0.0, b: 0.6 });
+                        break;
+                    case "Shiny Headed Gatekeeper Bypass":
+                        // Gold and blue collision, violent
+                        window.FLUID_CONFIG.CURL = 65;
+                        pushSplat(0.3, 0.5, 20000, 0, { r: 1.0, g: 0.8, b: 0.0 });
+                        pushSplat(0.7, 0.5, -20000, 0, { r: 0.0, g: 0.2, b: 1.0 });
+                        break;
+                    case "Stanmore Flat Abandonment":
+                        // Elegant white from bottom -> turns blue -> orange force
+                        window.FLUID_CONFIG.CURL = 15;
+                        pushSplat(0.5, 0.9, 0, -10000, { r: 0.8, g: 0.8, b: 0.8 }); // White launch
+                        setTimeout(() => pushSplat(0.5, 0.5, 0, -15000, { r: 0.0, g: 0.4, b: 1.0 }), 300); // Blue shift
+                        setTimeout(() => pushSplat(0.5, 0.3, (Math.random() - 0.5) * 20000, (Math.random() - 0.5) * 20000, { r: 1.0, g: 0.4, b: 0.0 }), 600); // Orange explode
+                        break;
+                    case "Maternal Autopsy of Silence Logged":
+                        // Total black - subtle white at bottom
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => pushSplat(0.5, 0.95, 0, -2000, { r: 0.15, g: 0.15, b: 0.15 }), 150);
+                        break;
+                    case "Melody Of Normality Reckoning":
+                        // Total black -> subtle white -> orange -> red force (Awakening)
+                        voidScreen(); restoreScreen();
+                        setTimeout(() => pushSplat(0.5, 0.9, 0, -3000, { r: 0.2, g: 0.2, b: 0.2 }), 100);
+                        setTimeout(() => pushSplat(0.5, 0.7, 0, -8000, { r: 1.0, g: 0.6, b: 0.0 }), 500);
+                        setTimeout(() => pushSplat(0.5, 0.4, (Math.random() - 0.5) * 25000, -15000, { r: 1.0, g: 0.0, b: 0.0 }), 900);
+                        break;
+                    case "Turntable Theatre - Isla & Symphony":
+                        // Elegant fluids
+                        window.FLUID_CONFIG.CURL = 5;
+                        pushSplat(0.3, 0.5, 3000, 3000, { r: 0.0, g: 0.5, b: 0.8 });
+                        pushSplat(0.7, 0.5, -3000, -3000, { r: 0.8, g: 0.6, b: 0.8 });
+                        break;
+                    case "Neural Handshake Witness Protocol":
+                        // Calm red and blue settle
+                        window.FLUID_CONFIG.CURL = 2;
+                        window.FLUID_CONFIG.VELOCITY_DISSIPATION = 0.95; // Settles fast
+                        pushSplat(0.4, 0.5, 0, 0, { r: 0.6, g: 0.0, b: 0.1 });
+                        pushSplat(0.6, 0.5, 0, 0, { r: 0.0, g: 0.2, b: 0.6 });
+                        break;
+                }
+            }
+
+            // ── CHRONOLOGICAL ENGINE: Audio-Driven, Gesture-Gated ──
+            const opsLog = document.getElementById('ops-log');
+            let opsIndex = 0;
+            let currentAudio = null;
+            let engineStarted = false;
+
+            // Preload the next track while the current one plays
+            function preloadAudioFor(idx) {
+                const data = SHOUT_MAP[allOps[idx % allOps.length].task];
+                if (data) {
+                    const a = new Audio(AUDIO_BASE_URL + data.audio);
+                    a.preload = 'auto';
+                    return a;
+                }
+                return null;
+            }
+            let nextAudioPreload = null;
+
+            // Advance: preload next, then fire after a 1.5s breathing gap
+            function advanceToNext() {
+                opsIndex++;
+                nextAudioPreload = preloadAudioFor(opsIndex);
+                setTimeout(processNextLog, 1500);
+            }
+
+            function processNextLog() {
+                if (opsIndex >= allOps.length) {
+                    opsIndex = 0;
+                }
+
+                const data = allOps[opsIndex];
+                const shoutData = SHOUT_MAP[data.task];
+
+                // 1. Append the operational log row
+                const isGood = ['SUCCESS', 'EXFIL_COMPLETE', 'CONFIRMED', 'COMPLETE', 'OVERCLOCKED', 'ACTIVE', 'SURVIVED', 'WITNESSED', 'INTERCEPTED'].includes(data.status);
                 const row = document.createElement('div');
                 row.className = 'ops-row';
                 row.style.opacity = '0';
                 row.innerHTML = `
                     <div style="display:flex;align-items:center;gap:1rem;">
-                        <span class="ops-time">${generateTime()}</span>
+                        <span class="ops-time">${data.time}</span>
                         <span class="ops-task">${data.task}</span>
                     </div>
                     <span class="ops-status ${isGood ? 'good' : 'bad'}">${data.status}</span>
                 `;
                 opsLog.appendChild(row);
                 requestAnimationFrame(() => { row.style.transition = 'opacity 0.5s'; row.style.opacity = '1'; });
+
+                // 2. Trigger fluid reaction
+                triggerFluidProtocol(data.task);
+
+                // 3. Handle Audio + Intercept Text
+                if (shoutData) {
+                    // Append intercept text
+                    const shoutRow = document.createElement('div');
+                    shoutRow.className = 'ops-shout glitch-text';
+                    shoutRow.setAttribute('data-text', ">> INTERCEPT: " + shoutData.text);
+                    shoutRow.textContent = ">> INTERCEPT: " + shoutData.text;
+                    opsLog.appendChild(shoutRow);
+
+                    // Flash terminal red
+                    opsLog.classList.add('ops-log-container-breach');
+                    setTimeout(() => opsLog.classList.remove('ops-log-container-breach'), 2500);
+
+                    // Kill previous audio
+                    if (currentAudio) { currentAudio.pause(); currentAudio.currentTime = 0; }
+
+                    // Use preloaded audio if it matches, otherwise create fresh
+                    if (nextAudioPreload && nextAudioPreload.src.includes(shoutData.audio)) {
+                        currentAudio = nextAudioPreload;
+                        nextAudioPreload = null;
+                    } else {
+                        currentAudio = new Audio(AUDIO_BASE_URL + shoutData.audio);
+                    }
+
+                    // AUDIO DRIVES THE CLOCK: advance only when the voice finishes
+                    currentAudio.onended = advanceToNext;
+                    // Safety: if audio fails to load, don't stall forever
+                    currentAudio.onerror = () => { setTimeout(advanceToNext, 2000); };
+
+                    // If YT music is playing, skip audio, advance after 3s
+                    const ytPlaying = typeof islaPlayerReady !== 'undefined' && islaPlayerReady && islaPlayer && islaPlayer.getPlayerState() === 1;
+                    if (ytPlaying) {
+                        setTimeout(advanceToNext, 3000);
+                    } else {
+                        currentAudio.play().catch(() => {
+                            // Should never happen after gesture unlock, but safety fallback
+                            setTimeout(advanceToNext, 3000);
+                        });
+                    }
+                } else {
+                    // No shout data — advance after 3s
+                    setTimeout(advanceToNext, 3000);
+                }
+
+                // Auto-scroll
                 opsLog.scrollTop = opsLog.scrollHeight;
             }
 
-            // Load initial batch
-            for (let i = 0; i < 4; i++) addOpsRow(allOps[opsIndex++ % allOps.length]);
+            // ── GESTURE GATE: Engine starts ONLY after the user interacts ──
+            // This guarantees the browser's autoplay policy is satisfied.
+            function armEngine() {
+                if (engineStarted) return;
+                engineStarted = true;
 
-            // Auto-append new logs
-            setInterval(() => {
-                addOpsRow(allOps[opsIndex++ % allOps.length]);
-            }, 4000 + Math.random() * 3000);
+                // Unlock audio context (Chrome's standard trick)
+                try {
+                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                    const buf = ctx.createBuffer(1, 1, 22050);
+                    const src = ctx.createBufferSource();
+                    src.buffer = buf;
+                    src.connect(ctx.destination);
+                    src.start(0);
+                } catch (e) { }
+
+                // Preload first audio and start the engine
+                nextAudioPreload = preloadAudioFor(0);
+                processNextLog();
+            }
+
+            // Listen for ANY user gesture — click, touch, or key
+            ['click', 'touchstart', 'keydown'].forEach(evt => {
+                window.addEventListener(evt, armEngine, { once: true });
+            });
 
             // ══════════════════════════════════════
             // 9. WITNESS — NEURAL HANDSHAKE
@@ -2448,6 +2825,7 @@
 
         })();
     </script>
+
 </body>
 
 </html>
