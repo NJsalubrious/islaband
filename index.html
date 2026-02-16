@@ -2293,6 +2293,11 @@
                                     window.FLUID_CONFIG.CURL = 60;
                                     window.FLUID_CONFIG.BLOOM_INTENSITY = 2.5;
                                 }
+                                // PAUSE the chronological engine — music takes priority
+                                enginePaused = true;
+                                if (currentAudio && !currentAudio.paused) {
+                                    currentAudio.pause();
+                                }
                             } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
                                 // PAUSED/ENDED — comedown
                                 pulseEl.textContent = 'PULSE_98BPM';
@@ -2300,6 +2305,21 @@
                                 if (window.FLUID_CONFIG) {
                                     window.FLUID_CONFIG.CURL = 55;
                                     window.FLUID_CONFIG.BLOOM_INTENSITY = 1.2;
+                                }
+                                // RESUME the chronological engine
+                                if (enginePaused) {
+                                    enginePaused = false;
+                                    if (currentAudio && currentAudio.paused && currentAudio.currentTime > 0) {
+                                        // Resume where the trauma audio left off
+                                        currentAudio.play().catch(() => { });
+                                    } else if (enginePendingResume) {
+                                        // Engine tried to advance while paused — do it now
+                                        enginePendingResume = false;
+                                        advanceToNext();
+                                    } else if (engineStarted) {
+                                        // Engine was idle while paused — kick it forward
+                                        processNextLog();
+                                    }
                                 }
                             }
                             if (state === YT.PlayerState.ENDED) {
@@ -2555,6 +2575,8 @@
             let opsIndex = 0;
             let currentAudio = null;
             let engineStarted = false;
+            let enginePaused = false;
+            let enginePendingResume = false;
 
             // Preload the next track while the current one plays
             function preloadAudioFor(idx) {
@@ -2570,12 +2592,14 @@
 
             // Advance: preload next, then fire after a 1.5s breathing gap
             function advanceToNext() {
+                if (enginePaused) { enginePendingResume = true; return; }
                 opsIndex++;
                 nextAudioPreload = preloadAudioFor(opsIndex);
                 setTimeout(processNextLog, 1500);
             }
 
             function processNextLog() {
+                if (enginePaused) { enginePendingResume = true; return; }
                 if (opsIndex >= allOps.length) {
                     opsIndex = 0;
                 }
