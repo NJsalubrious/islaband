@@ -2654,6 +2654,19 @@
             const BG_LOOP_URL = AUDIO_BASE_URL + 'Isla_LOOP_ON_BACKGROUND.mp3';
             let bgLoop = null;
             const BG_LOOP_VOLUME = 0.4; // Ambient level — sits behind the trauma clips
+            let sharedAudioCtx = null; // Shared AudioContext for mobile unlock
+
+            // Pre-create the bgLoop element so it's warm when the gesture fires.
+            // On mobile, elements created *before* the gesture can still play
+            // IF .play() is called inside that gesture handler.
+            (function prewarmLoop() {
+                bgLoop = new Audio(BG_LOOP_URL);
+                bgLoop.loop = true;
+                bgLoop.volume = 0; // Silent until armed
+                bgLoop.preload = 'auto';
+                bgLoop.setAttribute('playsinline', '');
+                bgLoop.setAttribute('webkit-playsinline', '');
+            })();
 
             function fadeLoop(targetVol, durationMs) {
                 if (!bgLoop) return;
@@ -2679,6 +2692,8 @@
                 if (data) {
                     const a = new Audio(AUDIO_BASE_URL + data.audio);
                     a.preload = 'auto';
+                    a.setAttribute('playsinline', '');
+                    a.setAttribute('webkit-playsinline', '');
                     return a;
                 }
                 return null;
@@ -2742,6 +2757,8 @@
                         nextAudioPreload = null;
                     } else {
                         currentAudio = new Audio(AUDIO_BASE_URL + shoutData.audio);
+                        currentAudio.setAttribute('playsinline', '');
+                        currentAudio.setAttribute('webkit-playsinline', '');
                     }
 
                     // AUDIO DRIVES THE CLOCK: advance only when the voice finishes
@@ -2755,7 +2772,7 @@
                         setTimeout(advanceToNext, 3000);
                     } else {
                         currentAudio.play().catch(() => {
-                            // Should never happen after gesture unlock, but safety fallback
+                            // Mobile fallback: if play() is rejected, advance anyway
                             setTimeout(advanceToNext, 3000);
                         });
                     }
@@ -2770,29 +2787,58 @@
 
             // ── GESTURE GATE: Engine starts ONLY after the user interacts ──
             // This guarantees the browser's autoplay policy is satisfied.
+            // MOBILE FIX: All audio .play() calls MUST happen synchronously
+            // inside this gesture handler for iOS Safari / mobile Chrome to allow them.
             function armEngine() {
                 if (engineStarted) return;
                 engineStarted = true;
 
-                // Unlock audio context (Chrome's standard trick)
+                // 1. Create & resume a shared AudioContext (covers Chrome + Safari)
                 try {
-                    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-                    const buf = ctx.createBuffer(1, 1, 22050);
-                    const src = ctx.createBufferSource();
+                    sharedAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    // If suspended (common on mobile), resume it inside this gesture
+                    if (sharedAudioCtx.state === 'suspended') {
+                        sharedAudioCtx.resume();
+                    }
+                    // Play a silent buffer to fully unlock the context
+                    const buf = sharedAudioCtx.createBuffer(1, 1, 22050);
+                    const src = sharedAudioCtx.createBufferSource();
                     src.buffer = buf;
-                    src.connect(ctx.destination);
+                    src.connect(sharedAudioCtx.destination);
                     src.start(0);
                 } catch (e) { }
 
-                // Preload first audio and start the engine
+                // 2. Preload first trauma audio
                 nextAudioPreload = preloadAudioFor(0);
 
-                // Start the background ambient loop
-                bgLoop = new Audio(BG_LOOP_URL);
-                bgLoop.loop = true;
+                // 3. Start the background ambient loop
+                // bgLoop was pre-created at page load — now play it in the gesture context.
+                // Set the volume and play. On iOS this MUST happen synchronously here.
                 bgLoop.volume = BG_LOOP_VOLUME;
-                bgLoop.play().catch(() => { });
+                const loopPlayPromise = bgLoop.play();
+                if (loopPlayPromise) {
+                    loopPlayPromise.catch(() => {
+                        // Retry: some mobile browsers need a fresh element after gesture.
+                        // Re-create and immediately play inside a microtask (still in gesture).
+                        bgLoop = new Audio(BG_LOOP_URL);
+                        bgLoop.loop = true;
+                        bgLoop.volume = BG_LOOP_VOLUME;
+                        bgLoop.setAttribute('playsinline', '');
+                        bgLoop.setAttribute('webkit-playsinline', '');
+                        bgLoop.play().catch(() => {
+                            // Final fallback: try again on next user interaction
+                            const retryPlay = () => {
+                                bgLoop.play().catch(() => { });
+                                window.removeEventListener('touchstart', retryPlay);
+                                window.removeEventListener('click', retryPlay);
+                            };
+                            window.addEventListener('touchstart', retryPlay, { once: true });
+                            window.addEventListener('click', retryPlay, { once: true });
+                        });
+                    });
+                }
 
+                // 4. Start the chronological engine
                 processNextLog();
             }
 
@@ -2935,6 +2981,8 @@
                         const witnessAudio = new Audio(
                             'https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/main/library/Silence_CharactersInTeirOwnWords/Isla_witnessesBringYouBackIntoTheHumanRace.mp3'
                         );
+                        witnessAudio.setAttribute('playsinline', '');
+                        witnessAudio.setAttribute('webkit-playsinline', '');
                         witnessAudio.play().catch(() => { });
                         witnessAudio.onended = () => {
                             // Show the PixelStortion branding overlay
