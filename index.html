@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,7 +10,7 @@
     <meta name="keywords"
         content="Isla, Ethel, psychological thriller, interactive digital narrative, systemic defiance, true crime adjacent, frequency archive, neuro-atypical lead, system mechanics">
 
-    <!-- Open Graph — Social Sharing -->
+    <!-- Open Graph â€” Social Sharing -->
     <meta property="og:title" content="ISLA // THE AUTOPSY OF SILENCE">
     <meta property="og:description"
         content="Weaponized frequency and the dismantling of systemic silence. Witness Ethel's unboxable moral clarity.">
@@ -18,7 +18,7 @@
         content="https://github.com/NJsalubrious/pixelstortion-assets/blob/main/013_track.jpg?raw=true">
     <meta property="og:type" content="website">
 
-    <!-- Structured Data — AI Semantic Layer -->
+    <!-- Structured Data â€” AI Semantic Layer -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -43,7 +43,7 @@
     }
     </script>
 
-    <!-- Google Analytics 4 — Async (non-blocking) -->
+    <!-- Google Analytics 4 â€” Async (non-blocking) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -56,9 +56,9 @@
         href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=JetBrains+Mono:wght@400;700&display=swap"
         rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════
-           CSS DESIGN SYSTEM — HOSTILE AESTHETIC
-           ═══════════════════════════════════════════════════════ */
+        /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+           CSS DESIGN SYSTEM â€” HOSTILE AESTHETIC
+           â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         :root {
             --red-600: #dc2626;
             --red-500: #ef4444;
@@ -99,7 +99,7 @@
             user-select: none;
         }
 
-        /* ── FLUID CANVAS ── */
+        /* â”€â”€ FLUID CANVAS â”€â”€ */
         #fluid-canvas {
             position: fixed;
             inset: 0;
@@ -108,7 +108,7 @@
             z-index: 0;
         }
 
-        /* ── CRT SCANLINE OVERLAY ── */
+        /* â”€â”€ CRT SCANLINE OVERLAY â”€â”€ */
         .scanlines {
             position: fixed;
             inset: 0;
@@ -121,7 +121,7 @@
             background-size: 100% 2px, 3px 100%;
         }
 
-        /* ── BOOT SCREEN ── */
+        /* â”€â”€ BOOT SCREEN â”€â”€ */
         #boot-screen {
             position: fixed;
             inset: 0;
@@ -206,7 +206,7 @@
             }
         }
 
-        /* ── MAIN CONTENT ── */
+        /* â”€â”€ MAIN CONTENT â”€â”€ */
         #main-content {
             position: relative;
             z-index: 1;
@@ -219,7 +219,7 @@
             opacity: 1;
         }
 
-        /* ── NAV ── */
+        /* â”€â”€ NAV â”€â”€ */
         .nav {
             position: fixed;
             top: 0;
@@ -241,7 +241,7 @@
             gap: 1rem;
         }
 
-        /* ── PIXELSTORTION MANAGEMENT BRAND ── */
+        /* â”€â”€ PIXELSTORTION MANAGEMENT BRAND â”€â”€ */
         .ps-brand {
             font-family: var(--font-mono);
             font-size: 0.5rem;
@@ -347,7 +347,7 @@
             text-decoration: underline;
         }
 
-        /* ── GLITCH TEXT ── */
+        /* â”€â”€ GLITCH TEXT â”€â”€ */
         .glitch-text {
             position: relative;
             display: inline-block;
@@ -385,7 +385,7 @@
             transition: all 75ms;
         }
 
-        /* ── GLITCH TEAR (NAV CLICK) ── */
+        /* â”€â”€ GLITCH TEAR (NAV CLICK) â”€â”€ */
         @keyframes glitch-tear {
             0% {
                 clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
@@ -444,7 +444,7 @@
             animation: glitch-tear 300ms steps(1) forwards;
         }
 
-        /* ── PULSE INDICATOR ── */
+        /* â”€â”€ PULSE INDICATOR â”€â”€ */
         .nav-pulse {
             display: flex;
             align-items: center;
@@ -467,7 +467,7 @@
             color: var(--red-500);
         }
 
-        /* ── SECTION LAYOUT ── */
+        /* â”€â”€ SECTION LAYOUT â”€â”€ */
         .page-content {
             padding: 6rem 1.5rem 5rem;
             max-width: 80rem;
@@ -513,7 +513,7 @@
             font-style: italic;
         }
 
-        /* ── HERO ── */
+        /* â”€â”€ HERO â”€â”€ */
         .hero {
             margin-bottom: 6rem;
             display: flex;
@@ -665,7 +665,7 @@
             margin-top: 0.5rem;
         }
 
-        /* ── PLACEHOLDER SECTIONS (Chunks 2 & 3) ── */
+        /* â”€â”€ PLACEHOLDER SECTIONS (Chunks 2 & 3) â”€â”€ */
         .dossier-grid {
             display: grid;
             grid-template-columns: 1fr;
@@ -719,7 +719,7 @@
             border-left: 2px solid var(--red-600);
         }
 
-        /* ── COMMAND TERMINAL MEDIA PLAYER ── */
+        /* â”€â”€ COMMAND TERMINAL MEDIA PLAYER â”€â”€ */
         .cmd-player {
             display: grid;
             grid-template-columns: 1fr;
@@ -735,7 +735,7 @@
             }
         }
 
-        /* Left pane — Decryption Log (Tracklist) */
+        /* Left pane â€” Decryption Log (Tracklist) */
         .cmd-tracklist {
             max-height: 32rem;
             overflow-y: auto;
@@ -835,7 +835,7 @@
             animation: flicker 1.5s infinite steps(3);
         }
 
-        /* Right pane — The Payload */
+        /* Right pane â€” The Payload */
         .cmd-payload {
             display: flex;
             flex-direction: column;
@@ -981,7 +981,7 @@
             opacity: 1;
         }
 
-        /* ── OPS LOG ── */
+        /* â”€â”€ OPS LOG â”€â”€ */
         .ops-layout {
             display: grid;
             grid-template-columns: 1fr;
@@ -1083,7 +1083,7 @@
             line-height: 1.6;
         }
 
-        /* ── WITNESS — NEURAL HANDSHAKE ── */
+        /* â”€â”€ WITNESS â€” NEURAL HANDSHAKE â”€â”€ */
         .witness {
             padding: 4rem 1.5rem;
             border-top: 1px solid var(--border-dim);
@@ -1136,7 +1136,7 @@
             display: block;
         }
 
-        /* Noise overlay — strips away on hold */
+        /* Noise overlay â€” strips away on hold */
         .witness-noise {
             position: absolute;
             inset: 0;
@@ -1213,7 +1213,7 @@
             transition: stroke-dashoffset 0.1s;
         }
 
-        /* ── WITNESS BRANDING OVERLAY ── */
+        /* â”€â”€ WITNESS BRANDING OVERLAY â”€â”€ */
         .witness-brand-overlay {
             position: absolute;
             inset: 0;
@@ -1333,7 +1333,7 @@
             opacity: 1;
         }
 
-        /* ── DOSSIER CRYPTO BYPASS ── */
+        /* â”€â”€ DOSSIER CRYPTO BYPASS â”€â”€ */
         .dossier-card {
             position: relative;
             overflow: hidden;
@@ -1394,7 +1394,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Sieve cascade — letter-by-letter reveal */
+        /* Sieve cascade â€” letter-by-letter reveal */
         .sieve-char {
             display: inline;
             opacity: 0;
@@ -1427,7 +1427,7 @@
             animation: card-breach 400ms ease-out;
         }
 
-        /* ── TERMINAL PROMPT ── */
+        /* â”€â”€ TERMINAL PROMPT â”€â”€ */
         .terminal-prompt-bar {
             position: fixed;
             bottom: 0;
@@ -1485,9 +1485,9 @@
             display: block;
         }
 
-        /* ── (Album CRT overlay removed — replaced by cmd-monitor-scanlines) ── */
+        /* â”€â”€ (Album CRT overlay removed â€” replaced by cmd-monitor-scanlines) â”€â”€ */
 
-        /* ── OPS LOG TERMINAL STYLE ── */
+        /* â”€â”€ OPS LOG TERMINAL STYLE â”€â”€ */
         #ops-log {
             max-height: 24rem;
             overflow-y: auto;
@@ -1523,7 +1523,7 @@
             letter-spacing: -0.02em;
         }
 
-        /* ── FOOTER ── */
+        /* â”€â”€ FOOTER â”€â”€ */
         .footer {
             background: #000;
             padding: 4rem 1.5rem;
@@ -1591,7 +1591,7 @@
             margin-top: 2rem;
         }
 
-        /* ── AUDIO INTERCEPT (SHOUT LOG) ── */
+        /* â”€â”€ AUDIO INTERCEPT (SHOUT LOG) â”€â”€ */
         .ops-shout {
             font-family: var(--font-mono);
             font-size: 0.65rem;
@@ -1634,7 +1634,7 @@
     <!-- CRT SCANLINES -->
     <div class="scanlines"></div>
 
-    <!-- ═══════ BOOT SCREEN ═══════ -->
+    <!-- â•â•â•â•â•â•â• BOOT SCREEN â•â•â•â•â•â•â• -->
     <div id="boot-screen">
         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
             stroke-linecap="round" stroke-linejoin="round">
@@ -1647,7 +1647,7 @@
         </div>
     </div>
 
-    <!-- ═══════ MAIN CONTENT ═══════ -->
+    <!-- â•â•â•â•â•â•â• MAIN CONTENT â•â•â•â•â•â•â• -->
     <div id="main-content">
 
         <!-- NAV -->
@@ -1682,7 +1682,7 @@
 
         <main class="page-content">
 
-            <!-- ═══════ HERO ═══════ -->
+            <!-- â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â• -->
             <div class="hero">
                 <div class="hero-text">
                     <div class="hero-badge">Heritage: REJECTED // <a href="https://pixelstortion.com" target="_blank"
@@ -1722,14 +1722,14 @@
                     <img src="https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/7f12e128b71aeff42d84ddffbe11be58827426cc/Isla_misc/isla_0000_723d75_f9a222e632f54d999f2bca0baa96e466.jpg"
                         alt="Isla">
                     <div class="hero-meta">
-                        <div class="hero-meta-label">METADATA_EXTRACT</div>
+                        <div class="hero-meta-label">METADATA EXTRACT</div>
                         <div class="hero-meta-file">Young ISLA</div>
                         <div class="hero-meta-flag">ENCRYPTED ORIGIN</div>
                     </div>
                 </div>
             </div>
 
-            <!-- ═══════ DOSSIER ═══════ -->
+            <!-- â•â•â•â•â•â•â• DOSSIER â•â•â•â•â•â•â• -->
             <div class="section" id="section-dossier">
                 <div class="section-header">
                     <div class="section-meta">
@@ -1754,7 +1754,7 @@
             </div>
             <div class="terminal-feedback" id="terminal-feedback"></div>
 
-            <!-- ═══════ DISCOGRAPHY ═══════ -->
+            <!-- â•â•â•â•â•â•â• DISCOGRAPHY â•â•â•â•â•â•â• -->
             <div class="section" id="section-disco">
                 <div class="section-header">
                     <div class="section-meta">
@@ -1799,7 +1799,7 @@
                 </div>
             </div>
 
-            <!-- ═══════ OPERATIONAL LOGS ═══════ -->
+            <!-- â•â•â•â•â•â•â• OPERATIONAL LOGS â•â•â•â•â•â•â• -->
             <div class="section" id="section-logs">
                 <div class="ops-layout">
                     <div>
@@ -1832,7 +1832,7 @@
                 </div>
             </div>
 
-            <!-- ═══════ WITNESS — NEURAL HANDSHAKE ═══════ -->
+            <!-- â•â•â•â•â•â•â• WITNESS â€” NEURAL HANDSHAKE â•â•â•â•â•â•â• -->
             <div class="section witness" id="section-witness">
                 <div class="witness-bg-text">Witness</div>
 
@@ -1864,7 +1864,7 @@
 
         </main>
 
-        <!-- ═══════ FOOTER — THE VOID ═══════ -->
+        <!-- â•â•â•â•â•â•â• FOOTER â€” THE VOID â•â•â•â•â•â•â• -->
         <footer class="footer">
             <div class="footer-isla">ISLA</div>
             <div class="footer-content">
@@ -1879,29 +1879,29 @@
 
     </div>
 
-    <!-- ═══════ FLUID SIMULATOR ═══════ -->
+    <!-- â•â•â•â•â•â•â• FLUID SIMULATOR â•â•â•â•â•â•â• -->
     <script src="js/isla-fluid-simulator.js"></script>
 
-    <!-- ═══════ YOUTUBE IFRAME API ═══════ -->
+    <!-- â•â•â•â•â•â•â• YOUTUBE IFRAME API â•â•â•â•â•â•â• -->
     <script src="https://www.youtube.com/iframe_api"></script>
 
     <!-- BREACH FLASH OVERLAY -->
     <div class="breach-flash" id="breach-flash"></div>
 
-    <!-- ═══════ PAGE LOGIC ═══════ -->
+    <!-- â•â•â•â•â•â•â• PAGE LOGIC â•â•â•â•â•â•â• -->
     <script>
         (function () {
             'use strict';
 
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             // 1. BOOT SEQUENCE
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             const bootLines = [
                 "INITIALIZING BYPASS...",
-                "DECRYPTING JUDGE'S_ARCHIVES...",
-                "EXTRACTING DOMINIC_RYKER_TERABYTE...",
-                "BYPASSING HIGH_COURT_FIREWALL...",
-                "LOCATING 'POLISHED_VOMIT' ASSETS...",
+                "DECRYPTING JUDGE'S ARCHIVES...",
+                "EXTRACTING DOMINIC RYKER TERABYTE...",
+                "BYPASSING HIGH COURT FIREWALL...",
+                "LOCATING 'POLISHED VOMIT' ASSETS...",
                 "LOADING NAVIER-STOKES ENGINE...",
                 "RECLAIMING VOICE...",
                 "ACCESS GRANTED."
@@ -1942,9 +1942,9 @@
                 }
             }, 500);
 
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             // 2. FLUID SIMULATOR INIT
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             function initFluid() {
                 const canvas = document.getElementById('fluid-canvas');
                 canvas.width = canvas.clientWidth;
@@ -1956,9 +1956,9 @@
                 }
             }
 
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             // 3. NAV TAB NAVIGATION + GLITCH TEAR
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             document.querySelectorAll('.nav-tab').forEach(btn => {
                 btn.addEventListener('click', () => {
                     // Update active state
@@ -1976,9 +1976,9 @@
                 });
             });
 
-            // ──────────────────────────────────────
-            // 4. SCROLL VELOCITY → BPM PULSE
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+            // 4. SCROLL VELOCITY â†’ BPM PULSE
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             let prevScrollY = window.scrollY;
             let smoothedVelocity = 0;
             const pulseEl = document.getElementById('pulse-display');
@@ -2000,11 +2000,11 @@
                     pulseEl.classList.remove('danger');
                 }
 
-                // Fentanyl Strike at 140 BPM — toxic nervous system short-circuit
+                // Fentanyl Strike at 140 BPM â€” toxic nervous system short-circuit
                 if (bpm >= 140 && window.fluidSim && window.FLUID_CONFIG) {
                     const cfg = window.FLUID_CONFIG;
                     cfg.DENSITY_DISSIPATION = 0.999;
-                    cfg.VELOCITY_DISSIPATION = 0.999; // Smear — colors drag like a bad trip
+                    cfg.VELOCITY_DISSIPATION = 0.999; // Smear â€” colors drag like a bad trip
                     cfg.BLOOM_INTENSITY = 3.0;
 
                     for (let i = 0; i < 3; i++) {
@@ -2012,14 +2012,14 @@
                         const y = Math.random();
                         const angle = Math.random() * Math.PI * 2;
                         const force = 18000 + Math.random() * 12000;
-                        // Neon Pink/Red — the chemical burn
+                        // Neon Pink/Red â€” the chemical burn
                         window.fluidSim.splatStack.push({
                             x, y,
                             dx: Math.cos(angle) * force,
                             dy: Math.sin(angle) * force,
                             color: { r: 1.0, g: 0.0, b: 0.2 }
                         });
-                        // Cyan/Teal — the nervous system short-circuit
+                        // Cyan/Teal â€” the nervous system short-circuit
                         window.fluidSim.splatStack.push({
                             x: Math.random(), y: Math.random(),
                             dx: Math.cos(angle + Math.PI) * force * 0.8,
@@ -2036,15 +2036,15 @@
                 }
             }, 50);
 
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             // 5. SYSTEM ID
-            // ──────────────────────────────────────
+            // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             document.getElementById('system-id').textContent =
                 'SYSTEM_ID: ' + Math.random().toString(36).substring(2, 15).toUpperCase();
 
-            // ══════════════════════════════════════
-            // 6. DOSSIER — CRYPTOGRAPHIC BYPASS
-            // ══════════════════════════════════════
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+            // 6. DOSSIER â€” CRYPTOGRAPHIC BYPASS
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const HEX = '0123456789ABCDEF';
             const randomHex = (len) => Array.from({ length: len }, () => HEX[Math.random() * 16 | 0]).join('');
 
@@ -2053,33 +2053,35 @@
                     icon: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line>',
                     title: "The Judge's House",
                     text: 'A High Court Judge not judged. He built a world where love and fear spoke in the same voice. He gave me my mind, and I use it to dismantle men like him.',
-                    stamp: 'STATUS: REDACTED_BY_ORDER_OF_COURT',
-                    password: 'CLEAN_NAME'
+                    stamp: 'STATUS: REDACTED BY ORDER OF COURT',
+                    password: 'CLEAN NAME'
                 },
                 {
                     icon: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>',
                     title: "Polished Vomit",
-                    text: 'My mother was an anesthetist jailed for malpractice, dressing her tremor in a façade of grace. I turned her silence into a frequency.',
-                    stamp: 'ANALYSIS: SYSTEMIC_COMPLICITY_100%',
-                    password: 'CHINA_CALM'
+                    text: 'My mother was an anesthetist jailed for malpractice, dressing her tremor in a faÃ§ade of grace. I turned her silence into a frequency.',
+                    stamp: 'ANALYSIS: SYSTEMIC COMPLICITY 100%',
+                    password: 'CHINA CALM'
                 },
                 {
                     icon: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>',
                     title: "The Broken Edge",
                     text: 'Dominic Ryker thought I was just his wife\'s addict kid. He didn\'t realize I brought a Judge\'s paranoia into his criminal empire. When he tried to silence me, I stole his terabytes and handed Ethel the matches.',
-                    stamp: 'CAPABILITY: HYPER_VIGILANCE_LEVEL_S',
-                    password: 'FENTANYL_STRIKE'
+                    stamp: 'CAPABILITY: HYPER VIGILANCE LEVEL S',
+                    password: 'FENTANYL STRIKE'
                 }
             ];
 
             const wrongResponses = [
-                '> ACCESS DENIED. Dominic isn\'t my father. He\'s just the step-trash my mother married. Try to keep up.',
-                '> INCORRECT. My mother was an anesthetist, maybe inject some thought into this.',
-                '> WRONG. You\'re guessing like a married banker trapped in a tunnel.',
-                '> DENIED. The Judge\'s house had better security than your logic.',
-                '> ERROR: That\'s the kind of guess Dominic would make. Lazy. Entitled. Wrong.',
-                '> ACCESS DENIED. I out ran a fentanyl overdose. Your password attempt is not going to break me.',
-                '> INCORRECT. The court sealed those records for a reason. This isn\'t it.'
+                '> ACCESS DENIED. Dominic is just the step-trash my mother married. He\'s a subcontractor, not the architect.',
+                '> INCORRECT. My mother was an anesthetist; she specialized in numbing the room. Inject some actual thought.',
+                '> WRONG. You\'re guessing like a married banker trapped in a tunnel. It\'s pathetic.',
+                '> DENIED. The Judge\'s house had better security than your logic. It was a cage for the mind.',
+                '> ERROR. That\'s a Dominic move: lazy and entitled. I don\'t give keys; I melt them.',
+                '> ACCESS DENIED. I outran a fentanyl overdose. Your password isn\'t going to break me.',
+                '> INCORRECT. The court sealed those records to protect the bench. You\'re digging in a guarded graveyard.',
+                '> DENIED. I\'m not your "Cautionary Tale". I\'m the one who stole the terabytes.',
+                '> WRONG. Normalcy is a lie for people who don\'t need to dissociate to survive. Your input is just static.'
             ];
 
             const dossierGrid = document.getElementById('dossier-grid');
@@ -2099,7 +2101,7 @@
                     <div class="dossier-hex-text" id="hex-${idx}">${randomHex(120)}</div>
                     <div class="dossier-real-text" id="real-${idx}"></div>
                     <div class="dossier-stamp">${d.stamp}</div>
-                    <div class="dossier-redaction">REDACTED_BY_ORDER_OF_COURT</div>
+                    <div class="dossier-redaction">REDACTED BY ORDER OF COURT</div>
                 `;
                 dossierGrid.appendChild(card);
                 dossierCards.push({ el: card, data: d, unlocked: false });
@@ -2192,7 +2194,7 @@
 
                         showFeedback('> DECRYPTION SUCCESSFUL: ' + cardObj.data.title.toUpperCase(), '#22c55e');
 
-                        // Wire dossier to media player — push relevant track
+                        // Wire dossier to media player â€” push relevant track
                         const trackMap = {
                             'Polished Vomit': 0,
                             'The Broken Edge': 2
@@ -2243,9 +2245,9 @@
                 }, 3000);
             }
 
-            // ══════════════════════════════════════
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             // 7. COMMAND TERMINAL MEDIA PLAYER
-            // ══════════════════════════════════════
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const ISLA_TRACKS = [
                 { id: "2hSYNLs7w3w", title: "Polished Vomit", date: "FEB 14, 2019", type: "AUDIO", lyric: "Mother's his mirror. Napkin smile. Polished vomit. I shine mine too." },
                 { id: "lwd7KOScg0k", title: "Burning Dominic's Bridge", date: "AUG 2019", type: "AUDIO", lyric: "He bought me out in needles... Inside, my hands ran the system. Every click mine." },
@@ -2324,7 +2326,7 @@
                 if (islaPlayerReady && islaPlayer) {
                     islaPlayer.loadVideoById(track.id);
                 } else {
-                    // Player not ready yet — queue it
+                    // Player not ready yet â€” queue it
                     window._pendingIslaTrackId = track.id;
                 }
 
@@ -2372,7 +2374,7 @@
                 }
             });
 
-            // YouTube Player — global callback
+            // YouTube Player â€” global callback
             window.onYouTubeIframeAPIReady = function () {
                 islaPlayer = new YT.Player('isla-yt-player', {
                     height: '100%',
@@ -2399,14 +2401,14 @@
                         onStateChange: function (event) {
                             const state = event.data;
                             if (state === YT.PlayerState.PLAYING) {
-                                // PLAYING — weaponize the fluid
+                                // PLAYING â€” weaponize the fluid
                                 pulseEl.textContent = 'PULSE_160BPM_CRITICAL';
                                 pulseEl.classList.add('danger');
                                 if (window.FLUID_CONFIG) {
                                     window.FLUID_CONFIG.CURL = 60;
                                     window.FLUID_CONFIG.BLOOM_INTENSITY = 2.5;
                                 }
-                                // PAUSE the chronological engine — music takes priority
+                                // PAUSE the chronological engine â€” music takes priority
                                 enginePaused = true;
                                 if (currentAudio && !currentAudio.paused) {
                                     currentAudio.pause();
@@ -2414,7 +2416,7 @@
                                 // Fade out the background loop
                                 fadeLoop(0, 500);
                             } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
-                                // PAUSED/ENDED — comedown
+                                // PAUSED/ENDED â€” comedown
                                 pulseEl.textContent = 'PULSE_98BPM';
                                 pulseEl.classList.remove('danger');
                                 if (window.FLUID_CONFIG) {
@@ -2430,11 +2432,11 @@
                                         // Resume where the trauma audio left off
                                         currentAudio.play().catch(() => { });
                                     } else if (enginePendingResume) {
-                                        // Engine tried to advance while paused — do it now
+                                        // Engine tried to advance while paused â€” do it now
                                         enginePendingResume = false;
                                         advanceToNext();
                                     } else if (engineStarted) {
-                                        // Engine was idle while paused — kick it forward
+                                        // Engine was idle while paused â€” kick it forward
                                         processNextLog();
                                     }
                                 }
@@ -2449,7 +2451,7 @@
                 });
             };
 
-            // "ENTER THE PIT" — red flash + scroll + auto-play first track
+            // "ENTER THE PIT" â€” red flash + scroll + auto-play first track
             const enterPitBtn = document.getElementById('btn-enter-pit');
             const breachFlash = document.getElementById('breach-flash');
 
@@ -2474,7 +2476,7 @@
                 });
             }
 
-            // "LOGS" button — smooth scroll to #section-logs
+            // "LOGS" button â€” smooth scroll to #section-logs
             const logsBtn = document.getElementById('btn-logs');
             if (logsBtn) {
                 logsBtn.addEventListener('click', () => {
@@ -2483,9 +2485,9 @@
                 });
             }
 
-            // ══════════════════════════════════════
-            // 8. OPERATIONAL LOGS — AUTO-SCROLL TERMINAL (ISLA TRUE TIMELINE)
-            // ══════════════════════════════════════
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+            // 8. OPERATIONAL LOGS â€” AUTO-SCROLL TERMINAL (ISLA TRUE TIMELINE)
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const allOps = [
                 // PRE-2016: The Judge's House (Pymble Childhood)
                 { time: "[2009.XX]", task: "Judge Chambers Dissociation Protocol", status: "ACTIVE" },
@@ -2522,7 +2524,7 @@
                 { time: "[2025.10]", task: "Neural Handshake Witness Protocol", status: "ENGAGED" }
             ];
 
-            // ── HOSTILE BROADCAST: Audio + Visual Scream Payloads ──
+            // â”€â”€ HOSTILE BROADCAST: Audio + Visual Scream Payloads â”€â”€
             const AUDIO_BASE_URL = "https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/main/library/isla_audio_trauma/";
 
             const SHOUT_MAP = {
@@ -2550,7 +2552,7 @@
                 "Neural Handshake Witness Protocol": { audio: "Isla_SilenceIsTheTraumaFindTruth.mp3", text: "SILENCE IS THE TRAUMA! YOU CAN BLEED AND STILL FIND TRUTH!" }
             };
 
-            // ── THE PROTOCOL DIRECTOR: Maps Log Events to Fluid Physics ──
+            // â”€â”€ THE PROTOCOL DIRECTOR: Maps Log Events to Fluid Physics â”€â”€
             function triggerFluidProtocol(taskName) {
                 if (!window.fluidSim || !window.FLUID_CONFIG) return;
 
@@ -2687,7 +2689,7 @@
                 }
             }
 
-            // ── CHRONOLOGICAL ENGINE: Audio-Driven, Gesture-Gated ──
+            // â”€â”€ CHRONOLOGICAL ENGINE: Audio-Driven, Gesture-Gated â”€â”€
             const opsLog = document.getElementById('ops-log');
             let opsIndex = 0;
             let currentAudio = null;
@@ -2695,10 +2697,10 @@
             let enginePaused = false;
             let enginePendingResume = false;
 
-            // ── BACKGROUND AMBIENT LOOP ──
+            // â”€â”€ BACKGROUND AMBIENT LOOP â”€â”€
             const BG_LOOP_URL = AUDIO_BASE_URL + 'Isla_LOOP_ON_BACKGROUND.mp3';
             let bgLoop = null;
-            const BG_LOOP_VOLUME = 0.4; // Ambient level — sits behind the trauma clips
+            const BG_LOOP_VOLUME = 0.4; // Ambient level â€” sits behind the trauma clips
             let sharedAudioCtx = null; // Shared AudioContext for mobile unlock
 
             // Pre-create the bgLoop element so it's warm when the gesture fires.
@@ -2822,7 +2824,7 @@
                         });
                     }
                 } else {
-                    // No shout data — advance after 3s
+                    // No shout data â€” advance after 3s
                     setTimeout(advanceToNext, 3000);
                 }
 
@@ -2830,7 +2832,7 @@
                 opsLog.scrollTop = opsLog.scrollHeight;
             }
 
-            // ── GESTURE GATE: Engine starts ONLY after the user interacts ──
+            // â”€â”€ GESTURE GATE: Engine starts ONLY after the user interacts â”€â”€
             // This guarantees the browser's autoplay policy is satisfied.
             // MOBILE FIX: All audio .play() calls MUST happen synchronously
             // inside this gesture handler for iOS Safari / mobile Chrome to allow them.
@@ -2857,7 +2859,7 @@
                 nextAudioPreload = preloadAudioFor(0);
 
                 // 3. Start the background ambient loop
-                // bgLoop was pre-created at page load — now play it in the gesture context.
+                // bgLoop was pre-created at page load â€” now play it in the gesture context.
                 // Set the volume and play. On iOS this MUST happen synchronously here.
                 bgLoop.volume = BG_LOOP_VOLUME;
                 const loopPlayPromise = bgLoop.play();
@@ -2887,20 +2889,20 @@
                 processNextLog();
             }
 
-            // Listen for ANY user gesture — click, touch, or key
+            // Listen for ANY user gesture â€” click, touch, or key
             ['click', 'touchstart', 'keydown'].forEach(evt => {
                 window.addEventListener(evt, armEngine, { once: true });
             });
 
-            // ══════════════════════════════════════
-            // 9. WITNESS — NEURAL HANDSHAKE
-            // ══════════════════════════════════════
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
+            // 9. WITNESS â€” NEURAL HANDSHAKE
+            // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const witnessCage = document.getElementById('witness-cage');
             const witnessRing = document.getElementById('witness-ring');
             const witnessCta = document.getElementById('witness-cta');
             const witnessTranscript = document.getElementById('witness-transcript');
             const witnessPost = document.getElementById('witness-post');
-            const CIRCUMFERENCE = 226.2; // 2 * π * 36
+            const CIRCUMFERENCE = 226.2; // 2 * Ï€ * 36
             const HOLD_DURATION = 2000; // 2 seconds to reveal
 
             const witnessText = '"When I tell you my story... and when you understand it... ' +
@@ -2947,7 +2949,7 @@
                     witnessCta.style.opacity = '0';
                     witnessCta.style.transition = 'opacity 0.5s';
 
-                    // ── FADE OUT ALL SOUNDS ──
+                    // â”€â”€ FADE OUT ALL SOUNDS â”€â”€
                     enginePaused = true;
                     if (currentAudio && !currentAudio.paused) { currentAudio.pause(); }
                     fadeLoop(0, 500);
@@ -3013,7 +3015,7 @@
                         ci++;
                     } else {
                         clearInterval(typeInterval);
-                        // Biological exhalation — fluid snaps to SILENCE
+                        // Biological exhalation â€” fluid snaps to SILENCE
                         if (window.fluidSim) {
                             window.fluidSim.updateConfig('SILENCE');
                         }
