@@ -2393,6 +2393,7 @@
             // YouTube Player â€” global callback
             window.onYouTubeIframeAPIReady = function () {
                 islaPlayer = new YT.Player('isla-yt-player', {
+                    host: 'https://www.youtube-nocookie.com',
                     height: '100%',
                     width: '100%',
                     playerVars: {
