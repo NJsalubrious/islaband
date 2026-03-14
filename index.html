@@ -2339,10 +2339,15 @@
                 cmdMonitorIdle.classList.add('hidden');
 
                 // Load video
+                // Remove any previous error overlays
+                const existingError = document.getElementById('uplink-error-overlay');
+                if (existingError) existingError.remove();
+
                 if (islaPlayerReady && islaPlayer) {
                     islaPlayer.loadVideoById(track.id);
+                    startUplinkMonitor(track.id);
                 } else {
-                    // Player not ready yet â€” queue it
+                    // Player not ready yet — queue it
                     window._pendingIslaTrackId = track.id;
                 }
 
@@ -2393,7 +2398,7 @@
             // YouTube Player â€” global callback
             window.onYouTubeIframeAPIReady = function () {
                 islaPlayer = new YT.Player('isla-yt-player', {
-                    host: 'https://www.youtube-nocookie.com',
+                    host: 'https://www.youtube.com',
                     videoId: 'MhEeDcdscrs',
                     height: '100%',
                     width: '100%',
@@ -2419,6 +2424,8 @@
                         onStateChange: function (event) {
                             const state = event.data;
                             if (state === YT.PlayerState.PLAYING) {
+                                // SUCCESS! Clear uplink error monitor
+                                if (typeof uplinkTimeout !== 'undefined' && uplinkTimeout) clearTimeout(uplinkTimeout);
                                 // PLAYING â€” weaponize the fluid
                                 pulseEl.textContent = 'PULSE_160BPM_CRITICAL';
                                 pulseEl.classList.add('danger');
@@ -2468,6 +2475,50 @@
                     }
                 });
             };
+
+            // --- UPLINK MONITOR: VPN / BOT-WALL DETECTOR ---
+            let uplinkTimeout = null;
+
+            function startUplinkMonitor(videoId) {
+                if (uplinkTimeout) clearTimeout(uplinkTimeout);
+
+                uplinkTimeout = setTimeout(() => {
+                    let isActuallyPlaying = false;
+                    if (islaPlayer && typeof islaPlayer.getPlayerState === 'function') {
+                        isActuallyPlaying = (islaPlayer.getPlayerState() === 1);
+                    }
+
+                    if (!isActuallyPlaying) {
+                        showUplinkError(videoId);
+                    }
+                }, 4500);
+            }
+
+            function showUplinkError(videoId) {
+                const container = document.getElementById('cmd-monitor-frame');
+                if (!container || document.getElementById('uplink-error-overlay')) return;
+
+                const errorOverlay = document.createElement('div');
+                errorOverlay.id = 'uplink-error-overlay';
+                errorOverlay.style.cssText = 'position:absolute;inset:0;z-index:70;display:flex;flex-direction:column;align-items:center;justify-content:center;background:rgba(10,5,5,0.95);backdrop-filter:blur(8px);text-align:center;padding:24px;border:1px solid rgba(200,30,30,0.3);';
+                errorOverlay.innerHTML = `
+                    <span class="material-symbols-outlined" style="font-size:56px;color:#c81e1e;margin-bottom:16px;animation:pulse 2s infinite">warning</span>
+                    <h2 style="font-size:1.3rem;font-weight:700;color:#c81e1e;font-family:'Courier New',monospace;letter-spacing:0.2em;margin-bottom:16px;text-transform:uppercase">SIGNAL BLOCKED</h2>
+                    <p style="color:#888;font-family:'Courier New',monospace;font-size:0.75rem;max-width:320px;line-height:1.6;margin-bottom:24px">
+                        Your VPN or browser privacy settings are interfering with playback. Try disabling your VPN or adjusting your tracking protection.
+                    </p>
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:16px">
+                        <button onclick="document.getElementById('uplink-error-overlay').remove(); if(islaPlayer) islaPlayer.playVideo(); startUplinkMonitor('${videoId}');" style="border:1px solid #c81e1e;color:#c81e1e;padding:10px 28px;font-family:'Courier New',monospace;font-size:0.7rem;background:transparent;cursor:pointer;text-transform:uppercase;letter-spacing:0.2em;transition:all 0.3s" onmouseover="this.style.background='#c81e1e';this.style.color='#000'" onmouseout="this.style.background='transparent';this.style.color='#c81e1e'">
+                            [ RETRY ]
+                        </button>
+                        <a href="https://www.youtube.com/watch?v=${videoId}" target="_blank" rel="noopener noreferrer" style="color:#666;font-family:'Courier New',monospace;font-size:0.6rem;letter-spacing:0.15em;text-decoration:none;display:flex;align-items:center;gap:6px;transition:color 0.3s" onmouseover="this.style.color='#c81e1e'" onmouseout="this.style.color='#666'">
+                            <span class="material-symbols-outlined" style="font-size:14px">open_in_new</span> WATCH DIRECTLY ON YOUTUBE
+                        </a>
+                    </div>
+                `;
+                container.style.position = 'relative';
+                container.appendChild(errorOverlay);
+            }
 
             // "ENTER THE PIT" â€” red flash + scroll + auto-play first track
             const enterPitBtn = document.getElementById('btn-enter-pit');
