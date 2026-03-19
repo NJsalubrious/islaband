@@ -10,8 +10,11 @@
         :root {
             --red-600: #dc2626;
             --red-500: #ef4444;
+            --red-400: #f87171;
             --cyan-500: #06b6d4;
             --bg-void: #050505;
+            --ps: 300px;          /* panel size */
+            --cam-shift: 210px;   /* ps * 0.7 for camera centering */
         }
 
         body {
@@ -20,193 +23,202 @@
             font-family: 'Inter', sans-serif;
             overflow: hidden;
             height: 100vh;
-            perspective: 2000px; /* Deeper perspective for fold drama */
+            margin: 0;
+            perspective: 2000px;
         }
 
         .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Scanline Overlay */
+        /* === SCANLINE OVERLAY === */
         .scanlines {
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.08;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            position: fixed; inset: 0;
+            pointer-events: none; z-index: 100; opacity: 0.08;
+            background: linear-gradient(rgba(18,16,16,0) 50%, rgba(0,0,0,0.25) 50%),
+                        linear-gradient(90deg, rgba(255,0,0,0.06), rgba(0,255,0,0.02), rgba(0,0,255,0.06));
             background-size: 100% 2px, 3px 100%;
         }
 
+        /* === VIEWPORT & CAMERA === */
         .origami-viewport {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative; width: 100%; height: 100%;
+            display: flex; align-items: center; justify-content: center;
+            transform-style: preserve-3d;
+            transition: transform 0.9s cubic-bezier(0.4, 0, 0.2, 1);
         }
+        .origami-viewport.focus-top    { transform: translate3d(0, var(--cam-shift), 0) scale(0.65); }
+        .origami-viewport.focus-right  { transform: translate3d(calc(var(--cam-shift) * -1), 0, 0) scale(0.65); }
+        .origami-viewport.focus-bottom { transform: translate3d(0, calc(var(--cam-shift) * -1), 0) scale(0.65); }
+        .origami-viewport.focus-left   { transform: translate3d(var(--cam-shift), 0, 0) scale(0.65); }
 
-        /* The Box */
+        /* === ORIGAMI BOX === */
         .origami-box {
             position: relative;
-            width: 320px;
-            height: 320px;
+            width: var(--ps); height: var(--ps);
             transform-style: preserve-3d;
             transition: transform 0.6s ease;
         }
 
-        /* Shared Panel Styling */
-        .panel {
+        /* === PANEL BASE === */
+        .panel, .sub-panel {
             position: absolute;
-            width: 320px;
-            height: 320px;
+            width: var(--ps); height: var(--ps);
             background: #0a0a0a;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            backface-visibility: hidden; /* Hide the back during the flip */
-            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
-            cursor: pointer;
-            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            backface-visibility: hidden;
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s, border-color 0.3s, box-shadow 0.3s;
+            cursor: pointer; overflow: hidden;
             box-shadow: 0 0 40px rgba(0,0,0,0.8);
         }
-
-        /* Simulated Paper Crease Effect */
-        .panel::after {
-            content: '';
-            position: absolute;
-            inset: 0;
+        .panel::after, .sub-panel::after {
+            content: ''; position: absolute; inset: 0;
             background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%, rgba(0,0,0,0.2) 100%);
             pointer-events: none;
         }
-
         .panel-image {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; inset: 0; width: 100%; height: 100%;
             object-fit: cover;
             filter: grayscale(1) contrast(1.5) brightness(0.4);
             transition: filter 0.4s ease, transform 0.4s ease;
             opacity: 0.6;
-        }
-
-        .panel:hover .panel-image {
-            filter: grayscale(0.2) contrast(1.2) brightness(0.6);
-            transform: scale(1.05);
-            opacity: 0.8;
-        }
-
-        .panel-content {
-            position: relative;
-            z-index: 10;
-            padding: 2rem;
-            text-align: center;
             pointer-events: none;
         }
+        /* Explicit click overlay — guarantees a hittable surface inside every panel */
+        .click-zone {
+            position: absolute; inset: 0; z-index: 12;
+            cursor: pointer; background: transparent;
+        }
+        .panel:hover .panel-image, .sub-panel:hover .panel-image {
+            filter: grayscale(0.2) contrast(1.2) brightness(0.6);
+            transform: scale(1.05); opacity: 0.8;
+        }
+        .panel-content {
+            position: relative; z-index: 10;
+            padding: 1.5rem; text-align: center;
+            pointer-events: none; width: 100%;
+        }
 
-        /* --- FOLD LOGIC --- */
-        
-        /* The Core (Center) */
+        /* === HAS-NOOK: Panels that contain sub-panels === */
+        .has-nook {
+            overflow: visible;
+            transform-style: preserve-3d;
+        }
+
+        /* === STAGE 0: CENTER === */
         .panel-center {
             z-index: 50;
             border: 1px solid var(--red-600);
             background: #000;
         }
 
-        /* Top: Folds backward from the top edge of center */
-        .panel-top {
-            top: -320px;
-            transform-origin: bottom;
-            transform: rotateX(-100deg);
-            opacity: 0;
-            z-index: 40;
-        }
+        /* === STAGE 1: PRIMARY PANELS (folded by default) === */
+        .panel-top    { top: calc(var(--ps) * -1); transform-origin: bottom; transform: rotateX(-100deg); opacity: 0; z-index: 40; }
+        .panel-bottom { bottom: calc(var(--ps) * -1); transform-origin: top; transform: rotateX(100deg); opacity: 0; z-index: 40; }
+        .panel-left   { left: calc(var(--ps) * -1); transform-origin: right; transform: rotateY(100deg); opacity: 0; z-index: 40; }
+        .panel-right  { right: calc(var(--ps) * -1); transform-origin: left; transform: rotateY(-100deg); opacity: 0; z-index: 40; }
 
-        /* Bottom: Folds backward from bottom edge of center */
-        .panel-bottom {
-            bottom: -320px;
-            transform-origin: top;
-            transform: rotateX(100deg);
-            opacity: 0;
-            z-index: 40;
-        }
-
-        /* Left: Folds backward from left edge of center */
-        .panel-left {
-            left: -320px;
-            transform-origin: right;
-            transform: rotateY(100deg);
-            opacity: 0;
-            z-index: 40;
-        }
-
-        /* Right: Folds backward from right edge of center */
-        .panel-right {
-            right: -320px;
-            transform-origin: left;
-            transform: rotateY(-100deg);
-            opacity: 0;
-            z-index: 40;
-        }
-
-        /* UNFOLDED STATES - Sequential timing via JS or CSS Delays */
-        .unfolded .panel-top { transform: rotateX(0deg); opacity: 1; transition-delay: 0.1s; }
-        .unfolded .panel-right { transform: rotateY(0deg); opacity: 1; transition-delay: 0.25s; }
+        /* --- UNFOLD Stage 1 --- */
+        .unfolded .panel-top    { transform: rotateX(0deg); opacity: 1; transition-delay: 0.1s; }
+        .unfolded .panel-right  { transform: rotateY(0deg); opacity: 1; transition-delay: 0.25s; }
         .unfolded .panel-bottom { transform: rotateX(0deg); opacity: 1; transition-delay: 0.4s; }
-        .unfolded .panel-left { transform: rotateY(0deg); opacity: 1; transition-delay: 0.55s; }
+        .unfolded .panel-left   { transform: rotateY(0deg); opacity: 1; transition-delay: 0.55s; }
 
-        /* ACTIVE SONG EFFECT */
-        .panel.active-song {
-            border: 2px solid var(--red-500);
-            box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        /* === STAGE 2: SUB-PANELS (folded by default) === */
+        .sub-panel { z-index: 35; pointer-events: none; } /* disabled until nook opens */
+        .sub-up    { bottom: 100%; left: 0; transform-origin: bottom center; transform: rotateX(-100deg); opacity: 0; }
+        .sub-down  { top: 100%; left: 0; transform-origin: top center; transform: rotateX(100deg); opacity: 0; }
+        .sub-left-of  { right: 100%; top: 0; transform-origin: center right; transform: rotateY(100deg); opacity: 0; }
+        .sub-right-of { left: 100%; top: 0; transform-origin: center left; transform: rotateY(-100deg); opacity: 0; }
+
+        /* --- UNFOLD Stage 2 per nook --- */
+        .nook-open-top .panel-top .sub-up       { transform: rotateX(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.35s; }
+        .nook-open-top .panel-top .sub-left-of   { transform: rotateY(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.55s; }
+        .nook-open-right .panel-right .sub-up     { transform: rotateX(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.35s; }
+        .nook-open-right .panel-right .sub-right-of { transform: rotateY(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.55s; }
+        .nook-open-bottom .panel-bottom .sub-down { transform: rotateX(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.35s; }
+        .nook-open-left .panel-left .sub-left-of  { transform: rotateY(0deg); opacity: 1; pointer-events: auto; transition-delay: 0.35s; }
+
+        /* === DIVE BUTTON === */
+        .dive-btn {
+            position: absolute; bottom: 12px; right: 12px; z-index: 20;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem; letter-spacing: 0.15em;
+            color: var(--red-500); background: rgba(0,0,0,0.7);
+            border: 1px solid var(--red-600);
+            padding: 6px 14px; cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            opacity: 0; pointer-events: none;
+            box-shadow: 0 0 12px rgba(220,38,38,0.2);
         }
-        .panel.active-song .panel-image {
-            filter: grayscale(0) contrast(1) brightness(0.8);
-            opacity: 1;
+        .unfolded .dive-btn { opacity: 1; pointer-events: auto; }
+        .dive-btn:hover {
+            background: var(--red-600); color: #fff;
+            box-shadow: 0 0 25px rgba(220,38,38,0.5);
+        }
+        /* Hide dive buttons when in a nook */
+        .origami-viewport[class*="focus-"] .dive-btn { opacity: 0 !important; pointer-events: none !important; }
+
+        /* === ACTIVE SONG EFFECT === */
+        .active-song {
+            border: 2px solid var(--red-500) !important;
+            box-shadow: 0 0 30px rgba(239,68,68,0.4) !important;
+        }
+        .active-song .panel-image {
+            filter: grayscale(0) contrast(1) brightness(0.8) !important;
+            opacity: 1 !important;
         }
 
-        /* AUDIO PLAYER HUD */
+        /* === SURFACE BUTTON === */
+        #surface-btn {
+            position: fixed; top: 50%; left: 2rem;
+            transform: translateY(-50%);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.65rem; letter-spacing: 0.2em;
+            color: var(--red-500); background: rgba(5,5,5,0.9);
+            border: 1px solid var(--red-600);
+            padding: 12px 20px; cursor: pointer;
+            text-transform: uppercase; z-index: 200;
+            transition: all 0.4s ease;
+            opacity: 0; pointer-events: none;
+            backdrop-filter: blur(5px);
+        }
+        #surface-btn.visible { opacity: 1; pointer-events: auto; }
+        #surface-btn:hover { background: var(--red-600); color: #fff; box-shadow: 0 0 30px rgba(220,38,38,0.4); }
+
+        /* === MEDIA BAR HUD === */
         #media-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            position: fixed; bottom: 0; left: 0; right: 0;
             background: rgba(5,5,5,0.98);
-            border-top: 1px solid rgba(220, 38, 38, 0.3);
-            padding: 1.5rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            border-top: 1px solid rgba(220,38,38,0.3);
+            padding: 1rem 2rem;
+            display: flex; align-items: center; justify-content: space-between;
             transform: translateY(100%);
             transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
             z-index: 200;
             backdrop-filter: blur(10px);
         }
-
         #media-bar.visible { transform: translateY(0); }
 
+        .media-info { flex-shrink: 0; max-width: 280px; }
+        .waveform-wrapper { flex: 1; margin: 0 2rem; }
         .waveform-container {
-            flex: 1;
-            margin: 0 3rem;
-            height: 30px;
-            display: flex;
-            align-items: center;
-            gap: 3px;
+            height: 30px; display: flex; align-items: center; gap: 3px;
         }
-
         .wave-bar {
-            width: 4px;
-            height: 10px;
-            background: var(--red-600);
-            border-radius: 2px;
+            width: 3px; height: 4px; background: var(--red-600);
+            border-radius: 1px; transition: none;
         }
-
-        .wave-bar.animating {
-            animation: pulse-wave 0.8s infinite alternate ease-in-out;
+        .progress-bar {
+            width: 100%; height: 3px; background: rgba(255,255,255,0.05);
+            margin-top: 6px; cursor: pointer; border-radius: 1px;
+            position: relative;
+        }
+        .progress-fill {
+            height: 100%; background: var(--red-600);
+            border-radius: 1px; width: 0%; transition: none;
+            box-shadow: 0 0 6px rgba(220,38,38,0.4);
         }
 
         @keyframes pulse-wave {
@@ -214,14 +226,25 @@
             100% { height: 30px; opacity: 1; }
         }
 
-        /* MOBILE TWEAKS */
+        /* === BREADCRUMB === */
+        #breadcrumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.55rem; color: var(--red-600);
+            letter-spacing: 0.2em; text-transform: uppercase;
+            margin-top: 4px; opacity: 0.7;
+        }
+
+        /* === MOBILE === */
         @media (max-width: 768px) {
-            .origami-box, .panel { width: 160px; height: 160px; }
-            .panel-top { top: -160px; }
-            .panel-bottom { bottom: -160px; }
-            .panel-left { left: -160px; }
-            .panel-right { right: -160px; }
-            .panel-content h3 { font-size: 0.75rem; }
+            :root { --ps: 150px; --cam-shift: 105px; }
+            .panel-content h3, .panel-content h2 { font-size: 0.7rem; }
+            .panel-content span { font-size: 0.4rem; }
+            .panel-content { padding: 0.75rem; }
+            .dive-btn { font-size: 0.45rem; padding: 4px 8px; bottom: 6px; right: 6px; }
+            #surface-btn { left: 1rem; padding: 8px 12px; font-size: 0.55rem; }
+            #media-bar { padding: 0.75rem 1rem; flex-wrap: wrap; gap: 0.5rem; }
+            .media-info { max-width: 160px; }
+            .waveform-wrapper { margin: 0 1rem; min-width: 80px; }
         }
     </style>
 </head>
@@ -230,67 +253,141 @@
     <div class="scanlines"></div>
 
     <!-- HUD OVERLAY -->
-    <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-start z-[150] pointer-events-none">
+    <header class="fixed top-0 left-0 w-full p-6 flex justify-between items-start z-[150] pointer-events-none">
         <div>
-            <h1 class="text-3xl font-black tracking-tighter text-white glitch-hover">ISLA // ORIGAMI</h1>
-            <p class="mono text-[0.6rem] text-red-600 uppercase tracking-[0.3em] mt-1">Structural Rupture Sequence // v.4.2</p>
+            <h1 class="text-3xl font-black tracking-tighter text-white">ISLA // ORIGAMI</h1>
+            <p class="mono text-[0.6rem] text-red-600 uppercase tracking-[0.3em] mt-1">Structural Rupture Sequence // v.5.0</p>
+            <a href="https://islaband.com" target="_blank" rel="noopener" class="mono text-[0.5rem] uppercase tracking-[0.2em] mt-2 inline-block pointer-events-auto no-underline" style="color:#3f3f46; text-decoration:none; transition: color 0.3s, text-shadow 0.3s;" onmouseover="this.style.color='#ef4444'; this.style.textShadow='0 0 8px rgba(220,38,38,0.5)';" onmouseout="this.style.color='#3f3f46'; this.style.textShadow='none';">▸ ISLABAND.COM</a>
         </div>
-        <div class="text-right mono text-[0.65rem] text-zinc-500 uppercase leading-relaxed pointer-events-auto bg-black/50 p-2 border-l border-red-900">
+        <div class="text-right mono text-[0.6rem] text-zinc-500 uppercase leading-relaxed pointer-events-auto bg-black/50 p-2 border-l border-red-900">
             <p>Auth: Cipher_Root</p>
             <p>System: Operational</p>
             <p id="clock">00:00:00</p>
+            <p id="breadcrumb">DEPTH: // CORE //</p>
         </div>
     </header>
 
     <!-- CENTER INSTRUCTIONS -->
-    <div id="instr-tag" class="fixed bottom-12 left-1/2 -translate-x-1/2 mono text-[0.7rem] text-zinc-600 uppercase tracking-[0.2em] z-[150] animate-pulse">
+    <div id="instr-tag" class="fixed bottom-14 left-1/2 -translate-x-1/2 mono text-[0.65rem] text-zinc-600 uppercase tracking-[0.2em] z-[150] animate-pulse">
         [ Trigger the core to initiate unfolding ]
     </div>
+
+    <!-- SURFACE BUTTON -->
+    <button id="surface-btn" onclick="surfaceToCore()">◂ SURFACE</button>
 
     <!-- VIEWPORT -->
     <div class="origami-viewport" id="viewport">
         <div class="origami-box" id="origami">
-            
-            <!-- CORE -->
+
+            <!-- ====== STAGE 0: CORE ====== -->
             <div class="panel panel-center" onclick="toggleRupture(event)">
                 <img src="Cover_Images/COVERS_0000_ISLA_Cover.jpg" class="panel-image">
                 <div class="panel-content">
                     <h2 class="text-4xl font-black italic tracking-tighter text-white">ISLA</h2>
-                    <div class="h-px w-12 bg-red-600 mx-auto my-4"></div>
+                    <div class="h-px w-12 bg-red-600 mx-auto my-3"></div>
                     <p class="mono text-[0.55rem] text-red-500 tracking-widest">BREAK THE SEAL</p>
                 </div>
             </div>
 
-            <!-- SEQUENTIAL PANELS -->
-            <div class="panel panel-top" onclick="triggerSong(0)">
-                <img src="Cover_Images/COVERS_0004_ISLA_Face_media.jpg" class="panel-image">
+            <!-- ====== STAGE 1: TOP — Track 1 ====== -->
+            <div class="panel panel-top has-nook" data-song="0">
+                <div class="click-zone"></div>
+                <img src="albumMP3/1. ACOUSTIC_DEGLOVING__MP3.png" class="panel-image">
                 <div class="panel-content">
-                    <span class="mono text-[0.5rem] text-zinc-500">01 // AUDITORY</span>
-                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">INTACT</h3>
+                    <span class="mono text-[0.5rem] text-zinc-500">01 // DERMAL</span>
+                    <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">ACOUSTIC DEGLOVING</h3>
+                </div>
+                <button class="dive-btn" onclick="event.stopPropagation(); diveIntoNook('top')">[ DIVE ▸ ]</button>
+
+                <!-- Sub: Track 5 — unfolds UP -->
+                <div class="sub-panel sub-up" data-song="4">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/5. CANTILEVERED_RUPTURE__MP3.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">05 // FRACTURE</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">CANTILEVERED RUPTURE</h3>
+                    </div>
+                </div>
+                <!-- Sub: Track 6 — unfolds LEFT -->
+                <div class="sub-panel sub-left-of" data-song="5">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/6. JURISDICTIONAL_LIVIDITY__MP3.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">06 // FORENSIC</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">JURISDICTIONAL LIVIDITY</h3>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel panel-right" onclick="triggerSong(1)">
-                <img src="Cover_Images/COVERS_0002_ISLA_explosion.jpg" class="panel-image">
+            <!-- ====== STAGE 1: RIGHT — Track 2 ====== -->
+            <div class="panel panel-right has-nook" data-song="1">
+                <div class="click-zone"></div>
+                <img src="albumMP3/2. ANECHOIC_OVERPRESSURE.png" class="panel-image">
                 <div class="panel-content">
                     <span class="mono text-[0.5rem] text-zinc-500">02 // PRESSURE</span>
-                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">TEAR IT THROUGH</h3>
+                    <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">ANECHOIC OVERPRESSURE</h3>
+                </div>
+                <button class="dive-btn" onclick="event.stopPropagation(); diveIntoNook('right')">[ DIVE ▸ ]</button>
+
+                <!-- Sub: Track 7 — unfolds UP -->
+                <div class="sub-panel sub-up" data-song="6">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">07 // SURGICAL</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1 text-[0.8rem]">ELECTIVE PROCEDURE WITHOUT ANAESTHESIA</h3>
+                    </div>
+                </div>
+                <!-- Sub: Track 8 — unfolds RIGHT -->
+                <div class="sub-panel sub-right-of" data-song="7">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/8. SHEER_FORCE__MP3.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">08 // KINETIC</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">SHEER FORCE</h3>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel panel-bottom" onclick="triggerSong(2)">
-                <img src="Cover_Images/COVERS_0003_ISLA_liveScream_Sing.jpg" class="panel-image">
+            <!-- ====== STAGE 1: BOTTOM — Track 3 ====== -->
+            <div class="panel panel-bottom has-nook" data-song="2">
+                <div class="click-zone"></div>
+                <img src="albumMP3/3. YOUR_PREFRONTAL_LOBE_IS_FUCKED.png" class="panel-image">
                 <div class="panel-content">
-                    <span class="mono text-[0.5rem] text-zinc-500">03 // GRIEF</span>
-                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">ABANDONMENT</h3>
+                    <span class="mono text-[0.5rem] text-zinc-500">03 // CORTICAL</span>
+                    <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1 text-[0.85rem]">YOUR PREFRONTAL LOBE IS FUCKED</h3>
+                </div>
+                <button class="dive-btn" onclick="event.stopPropagation(); diveIntoNook('bottom')">[ DIVE ▸ ]</button>
+
+                <!-- Sub: Track 9 — unfolds DOWN -->
+                <div class="sub-panel sub-down" data-song="8">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/9. LOAD-BEARING SILENCE__MP3.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">09 // ACOUSTIC</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1">LOAD-BEARING SILENCE</h3>
+                    </div>
                 </div>
             </div>
 
-            <div class="panel panel-left" onclick="triggerSong(3)">
-                <img src="Cover_Images/COVERS_0001_ISLA_spine.jpg" class="panel-image">
+            <!-- ====== STAGE 1: LEFT — Track 4 ====== -->
+            <div class="panel panel-left has-nook" data-song="3">
+                <div class="click-zone"></div>
+                <img src="albumMP3/4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3.png" class="panel-image">
                 <div class="panel-content">
-                    <span class="mono text-[0.5rem] text-zinc-500">04 // RUPTURE</span>
-                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">CANTILEVERED</h3>
+                    <span class="mono text-[0.5rem] text-zinc-500">04 // STRUCTURAL</span>
+                    <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1 text-[0.85rem]">CONTROLLED DEMOLITION (OCCUPIED)</h3>
+                </div>
+                <button class="dive-btn" onclick="event.stopPropagation(); diveIntoNook('left')">[ DIVE ▸ ]</button>
+
+                <!-- Sub: Track 10 — unfolds LEFT -->
+                <div class="sub-panel sub-left-of" data-song="9">
+                    <div class="click-zone"></div>
+                    <img src="albumMP3/10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD.png" class="panel-image">
+                    <div class="panel-content">
+                        <span class="mono text-[0.5rem] text-zinc-500">10 // TERMINAL</span>
+                        <h3 class="text-lg font-black tracking-tighter text-white uppercase mt-1 text-[0.8rem]">YOUR A FUCKING SNAKE — CUT THE HEAD</h3>
+                    </div>
                 </div>
             </div>
 
@@ -299,121 +396,303 @@
 
     <!-- MEDIA BAR HUD -->
     <div id="media-bar">
-        <div class="flex-shrink-0">
-            <h4 id="track-name" class="text-2xl font-black tracking-tighter text-white uppercase italic">INTACT</h4>
-            <p id="track-status" class="mono text-[0.6rem] text-red-500 mt-1 uppercase">[ SIGNAL DECODING... ]</p>
+        <div class="media-info">
+            <h4 id="track-name" class="text-xl font-black tracking-tighter text-white uppercase italic">—</h4>
+            <p id="track-note" class="mono text-[0.5rem] text-zinc-500 mt-1 italic" style="display:none;"></p>
+            <p id="track-status" class="mono text-[0.6rem] text-red-500 mt-1 uppercase">[ AWAITING SIGNAL ]</p>
         </div>
-        <div class="waveform-container" id="waveform"></div>
-        <button onclick="closeStream()" class="mono text-[0.65rem] text-zinc-500 hover:text-white transition-colors border border-zinc-800 px-4 py-2 uppercase">
-            Terminate Uplink
+        <div class="waveform-wrapper">
+            <div class="waveform-container" id="waveform"></div>
+            <div class="progress-bar" id="progress-bar">
+                <div class="progress-fill" id="progress-fill"></div>
+            </div>
+        </div>
+        <button onclick="closeStream()" class="mono text-[0.6rem] text-zinc-500 hover:text-white transition-colors border border-zinc-800 px-4 py-2 uppercase flex-shrink-0">
+            Terminate
         </button>
     </div>
 
-    <div id="player-container" class="hidden">
-        <div id="yt-player"></div>
-    </div>
-
-    <script src="https://www.youtube.com/iframe_api"></script>
-
     <script>
+        /* =========================================================
+           ISLA // FRACTAL ORIGAMI AUDIO ENGINE
+           ========================================================= */
+
         const songLibrary = [
-            { title: "INTACT", id: "MhEeDcdscrs", note: "No breach of surface. No visible event." },
-            { title: "TEAR IT THROUGH", id: "_gvv_W5_x10", note: "Frequency pushed through bone and nerve." },
-            { title: "ACUTE ABANDONMENT RESPONSE", id: "nk4Re7OjTTM", note: "I stayed. I stayed. I stayed." },
-            { title: "CANTILEVERED RUPTURE", id: "0tzOaukuBns", note: "Load bearing fracture. Sheer force." }
+            { title: "ACOUSTIC DEGLOVING",    file: "albumMP3/1. ACOUSTIC_DEGLOVING__MP3.mp3",    note: "No anaesthesia. No warning." },
+            { title: "ANECHOIC OVERPRESSURE", file: "albumMP3/2. ANECHOIC_OVERPRESSURE.mp3",      note: "Frequency pushed through bone and nerve." },
+            { title: "YOUR PREFRONTAL LOBE IS FUCKED", file: "albumMP3/3. YOUR_PREFRONTAL_LOBE_IS_FUCKED.mp3", note: "Cognitive severance. No recovery." },
+            { title: "CONTROLLED DEMOLITION (OCCUPIED)", file: "albumMP3/4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3.mp3", note: "Structural erasure. Inhabitants present." },
+            { title: "CANTILEVERED RUPTURE",  file: "albumMP3/5. CANTILEVERED_RUPTURE__MP3.mp3",  note: "Load bearing fracture. Sheer force." },
+            { title: "JURISDICTIONAL LIVIDITY", file: "albumMP3/6. JURISDICTIONAL_LIVIDITY__MP3.mp3", note: "The bruise belongs to no one." },
+            { title: "ELECTIVE PROCEDURE WITHOUT ANAESTHESIA", file: "albumMP3/7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3.mp3", note: "You chose this. Remember." },
+            { title: "SHEER FORCE",           file: "albumMP3/8. SHEER_FORCE__MP3.mp3",           note: "No technique. Just pressure." },
+            { title: "LOAD-BEARING SILENCE",  file: "albumMP3/9. LOAD-BEARING SILENCE__MP3.mp3",  note: "The quiet that holds everything up." },
+            { title: "YOUR A FUCKING SNAKE — CUT THE HEAD", file: "albumMP3/10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD.mp3", note: "Decapitation protocol. Final." }
         ];
 
-        let unfolding = false;
-        let ytPlayer;
+        // ---- STATE ----
+        let isUnfolded = false;
+        let currentFocus = null;   // null | 'top' | 'right' | 'bottom' | 'left'
         let activeIdx = -1;
+        const currentAudio = new Audio();
+        let waveFrameId = null;
 
-        // Waveform Gen
-        const wave = document.getElementById('waveform');
-        for(let i=0; i<40; i++) {
+        // ---- DOM refs ----
+        const viewport  = document.getElementById('viewport');
+        const origami   = document.getElementById('origami');
+        const instrTag  = document.getElementById('instr-tag');
+        const mediaBar  = document.getElementById('media-bar');
+        const trackName = document.getElementById('track-name');
+        const trackNote = document.getElementById('track-note');
+        const trackStatus = document.getElementById('track-status');
+        const surfaceBtn  = document.getElementById('surface-btn');
+        const breadcrumb  = document.getElementById('breadcrumb');
+        const progressFill = document.getElementById('progress-fill');
+        const waveContainer = document.getElementById('waveform');
+
+        // ---- Waveform bars ----
+        for (let i = 0; i < 50; i++) {
             const b = document.createElement('div');
             b.className = 'wave-bar';
-            b.style.animationDelay = `${i * 0.05}s`;
-            wave.appendChild(b);
+            waveContainer.appendChild(b);
         }
+        const waveBars = document.querySelectorAll('.wave-bar');
 
-        function onYouTubeIframeAPIReady() {
-            ytPlayer = new YT.Player('yt-player', {
-                height: '0', width: '0',
-                videoId: songLibrary[0].id,
-                events: { 'onStateChange': onStateChange }
-            });
-        }
-
-        function onStateChange(e) {
-            const bars = document.querySelectorAll('.wave-bar');
-            if (e.data == YT.PlayerState.PLAYING) {
-                bars.forEach(b => b.classList.add('animating'));
-                document.getElementById('track-status').innerText = "[ SIGNAL ACTIVE // RUPTURE IN PROGRESS ]";
-            } else {
-                bars.forEach(b => b.classList.remove('animating'));
-                document.getElementById('track-status').innerText = "[ SIGNAL PAUSED ]";
+        // ---- Progress bar seek ----
+        document.getElementById('progress-bar').addEventListener('click', (e) => {
+            if (currentAudio.src && currentAudio.duration) {
+                const rect = e.currentTarget.getBoundingClientRect();
+                const pct = (e.clientX - rect.left) / rect.width;
+                currentAudio.currentTime = pct * currentAudio.duration;
             }
-        }
+        });
 
+        // ---- DEFINITIVE CLICK HANDLER (bypasses 3D hit-testing) ----
+        // Uses getBoundingClientRect to detect clicks on visually-present panels
+        // regardless of CSS 3D transform context
+        viewport.addEventListener('click', (e) => {
+            // Don't interfere with UI controls
+            if (e.target.closest('#media-bar') || e.target.closest('#surface-btn') ||
+                e.target.closest('header') || e.target.closest('#instr-tag')) return;
+
+            // Check dive buttons first (highest priority)
+            if (isUnfolded && !currentFocus) {
+                const diveBtns = origami.querySelectorAll('.dive-btn');
+                for (const btn of diveBtns) {
+                    if (getComputedStyle(btn).opacity < 0.5) continue;
+                    const r = btn.getBoundingClientRect();
+                    if (e.clientX >= r.left && e.clientX <= r.right &&
+                        e.clientY >= r.top && e.clientY <= r.bottom) {
+                        const dir = btn.closest('.panel-top') ? 'top' :
+                                    btn.closest('.panel-right') ? 'right' :
+                                    btn.closest('.panel-bottom') ? 'bottom' : 'left';
+                        diveIntoNook(dir);
+                        return;
+                    }
+                }
+            }
+
+            // Check core panel (when sealed)
+            if (!isUnfolded) {
+                const center = document.querySelector('.panel-center');
+                const r = center.getBoundingClientRect();
+                if (e.clientX >= r.left && e.clientX <= r.right &&
+                    e.clientY >= r.top && e.clientY <= r.bottom) {
+                    toggleRupture(e);
+                    return;
+                }
+            }
+
+            // Check song panels by bounding rect
+            if (!isUnfolded) return;
+            const allSongPanels = origami.querySelectorAll('[data-song]');
+            let bestPanel = null;
+            let smallestArea = Infinity;
+
+            for (const panel of allSongPanels) {
+                const style = getComputedStyle(panel);
+                if (parseFloat(style.opacity) < 0.5) continue;
+                if (style.pointerEvents === 'none') continue;
+                const r = panel.getBoundingClientRect();
+                if (r.width < 10 || r.height < 10) continue;
+                if (e.clientX >= r.left && e.clientX <= r.right &&
+                    e.clientY >= r.top && e.clientY <= r.bottom) {
+                    const area = r.width * r.height;
+                    if (area < smallestArea) {
+                        smallestArea = area;
+                        bestPanel = panel;
+                    }
+                }
+            }
+
+            if (bestPanel) {
+                triggerSong(parseInt(bestPanel.dataset.song));
+            }
+        });
+
+        /* =========================================================
+           STAGE 0 → STAGE 1: CORE RUPTURE
+           ========================================================= */
         function toggleRupture(e) {
-            e.stopPropagation();
-            unfolding = !unfolding;
-            const origami = document.getElementById('origami');
-            const instr = document.getElementById('instr-tag');
-            
-            if (unfolding) {
+            if (e && e.stopPropagation) e.stopPropagation();
+            if (currentFocus) return;
+            isUnfolded = !isUnfolded;
+            if (isUnfolded) {
                 origami.classList.add('unfolded');
-                instr.innerText = "[ Select a fracture point to stream ]";
+                origami.style.transform = ''; // flatten to zero tilt
+                instrTag.innerText = '[ Select a fracture point — or DIVE deeper ]';
             } else {
                 origami.classList.remove('unfolded');
-                instr.innerText = "[ Trigger the core to initiate unfolding ]";
+                instrTag.innerText = '[ Trigger the core to initiate unfolding ]';
                 closeStream();
             }
         }
 
+        /* =========================================================
+           SONG PLAYBACK
+           ========================================================= */
         function triggerSong(idx) {
-            if (activeIdx === idx) return;
+            if (!isUnfolded) return;
+            if (activeIdx === idx && !currentAudio.paused) return;
             activeIdx = idx;
             const song = songLibrary[idx];
-            
-            // Visual feedback
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-song'));
-            document.querySelectorAll('.panel')[idx + 1].classList.add('active-song'); // +1 because index 0 is center
 
-            // HUD update
-            document.getElementById('track-name').innerText = song.title;
-            document.getElementById('media-bar').classList.add('visible');
+            // Visual: mark active panel
+            document.querySelectorAll('.panel, .sub-panel').forEach(p => p.classList.remove('active-song'));
+            const allPanels = document.querySelectorAll('[onclick*="triggerSong"]');
+            allPanels.forEach(p => {
+                const match = p.getAttribute('onclick').match(/triggerSong\((\d+)\)/);
+                if (match && parseInt(match[1]) === idx) p.classList.add('active-song');
+            });
 
-            if (ytPlayer && ytPlayer.loadVideoById) {
-                ytPlayer.loadVideoById(song.id);
-                ytPlayer.playVideo();
+            // HUD
+            trackName.innerText = song.title;
+            trackNote.innerText = song.note;
+            trackNote.style.display = 'block';
+            trackStatus.innerText = '[ SIGNAL ACTIVE // RUPTURE IN PROGRESS ]';
+            mediaBar.classList.add('visible');
+
+            // Audio
+            currentAudio.src = song.file;
+            currentAudio.play().catch(() => {
+                trackStatus.innerText = '[ SIGNAL BLOCKED — CLICK TO RETRY ]';
+            });
+
+            // Camera shake
+            viewport.style.transition = 'transform 0.15s ease';
+            const baseTransform = viewport.style.transform || '';
+            viewport.style.transform += ` rotate(${Math.random() * 3 - 1.5}deg)`;
+            setTimeout(() => {
+                viewport.style.transition = 'transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)';
+                // Restore the base transform (focus class if any)
+                viewport.style.transform = '';
+            }, 180);
+        }
+
+        /* =========================================================
+           WAVEFORM ANIMATION (driven by requestAnimationFrame)
+           ========================================================= */
+        function animateWaveform() {
+            if (currentAudio.paused) return;
+            const t = currentAudio.currentTime;
+            waveBars.forEach((bar, i) => {
+                const h = Math.abs(Math.sin(t * 9 + i * 0.6)) * 26 + 4;
+                bar.style.height = h + 'px';
+                bar.style.opacity = (0.3 + (h / 30) * 0.7).toFixed(2);
+            });
+            if (currentAudio.duration) {
+                progressFill.style.width = ((t / currentAudio.duration) * 100) + '%';
             }
-
-            // Violent Camera Shake
-            const viewport = document.getElementById('viewport');
-            viewport.style.transform = `scale(0.96) rotate(${Math.random() * 4 - 2}deg)`;
-            setTimeout(() => { viewport.style.transform = `scale(1) rotate(0deg)`; }, 200);
+            waveFrameId = requestAnimationFrame(animateWaveform);
         }
 
+        currentAudio.addEventListener('play', () => {
+            if (waveFrameId) cancelAnimationFrame(waveFrameId);
+            trackStatus.innerText = '[ SIGNAL ACTIVE // RUPTURE IN PROGRESS ]';
+            animateWaveform();
+        });
+        currentAudio.addEventListener('pause', () => {
+            if (waveFrameId) cancelAnimationFrame(waveFrameId);
+            if (activeIdx >= 0) trackStatus.innerText = '[ SIGNAL PAUSED ]';
+        });
+        currentAudio.addEventListener('ended', () => {
+            if (waveFrameId) cancelAnimationFrame(waveFrameId);
+            waveBars.forEach(bar => { bar.style.height = '4px'; bar.style.opacity = '0.3'; });
+            progressFill.style.width = '0%';
+            trackStatus.innerText = '[ SIGNAL TERMINATED ]';
+        });
+
+        /* =========================================================
+           STAGE 2: DIVE INTO NOOK
+           ========================================================= */
+        function diveIntoNook(direction) {
+            if (currentFocus === direction) return;
+            currentFocus = direction;
+
+            // Camera pan
+            viewport.classList.add('focus-' + direction);
+            instrTag.innerText = '[ Exploring nook — select a sub-fracture ]';
+
+            // Delayed sub-panel unfold (after camera finishes moving)
+            setTimeout(() => {
+                origami.classList.add('nook-open-' + direction);
+            }, 400);
+
+            // HUD
+            surfaceBtn.classList.add('visible');
+            const labels = { top: 'NODE:DERMAL', right: 'NODE:PRESSURE', bottom: 'NODE:CORTICAL', left: 'NODE:STRUCTURAL' };
+            breadcrumb.innerText = 'DEPTH: // CORE // ' + labels[direction] + ' //';
+        }
+
+        /* =========================================================
+           SURFACE: RETURN TO CORE
+           ========================================================= */
+        function surfaceToCore() {
+            if (!currentFocus) return;
+            const dir = currentFocus;
+
+            // Fold sub-panels first
+            origami.classList.remove('nook-open-' + dir);
+
+            // Then retract camera after sub-panels fold
+            setTimeout(() => {
+                viewport.classList.remove('focus-' + dir);
+                currentFocus = null;
+                surfaceBtn.classList.remove('visible');
+                breadcrumb.innerText = 'DEPTH: // CORE //';
+                instrTag.innerText = '[ Select a fracture point — or DIVE deeper ]';
+            }, 500);
+        }
+
+        /* =========================================================
+           CLOSE STREAM
+           ========================================================= */
         function closeStream() {
-            document.getElementById('media-bar').classList.remove('visible');
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-song'));
-            if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
+            mediaBar.classList.remove('visible');
+            document.querySelectorAll('.panel, .sub-panel').forEach(p => p.classList.remove('active-song'));
+            currentAudio.pause();
+            currentAudio.src = '';
             activeIdx = -1;
+            if (waveFrameId) cancelAnimationFrame(waveFrameId);
+            waveBars.forEach(bar => { bar.style.height = '4px'; bar.style.opacity = '0.3'; });
+            progressFill.style.width = '0%';
+            trackName.innerText = '—';
+            trackNote.style.display = 'none';
+            trackStatus.innerText = '[ AWAITING SIGNAL ]';
         }
 
-        // Clock HUD
+        /* =========================================================
+           CLOCK & PARALLAX
+           ========================================================= */
         setInterval(() => {
             document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
         }, 1000);
 
-        // Interaction Parallax
         window.addEventListener('mousemove', (e) => {
-            if (!unfolding) {
-                const x = (e.clientX / window.innerWidth - 0.5) * 30;
-                const y = (e.clientY / window.innerHeight - 0.5) * 30;
-                document.getElementById('origami').style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
-            }
+            if (isUnfolded || currentFocus) return; // no parallax when panels are shown
+            const x = (e.clientX / window.innerWidth - 0.5) * 6;
+            const y = (e.clientY / window.innerHeight - 0.5) * 6;
+            origami.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
         });
     </script>
 </body>
