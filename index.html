@@ -329,6 +329,26 @@
             }
         }
 
+        .nav-ep-link {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            color: var(--red-500);
+            padding: 0.25rem 0.5rem;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .nav-ep-link:hover {
+            color: #fff;
+            border-color: var(--red-500);
+            box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+        }
+
         .nav-tab {
             background: none;
             border: none;
@@ -1675,8 +1695,8 @@
                     data-section="section-disco">DISCOGRAPHY</button>
                 <button class="nav-tab glitch-text" data-text="LOGS" data-section="section-logs">LOGS</button>
                 <button class="nav-tab glitch-text" data-text="WITNESS" data-section="section-witness">WITNESS</button>
-                <a href="ISLA_ALBUM.html" target="_blank" rel="noopener" class="nav-tab glitch-text" data-text="ORIGAMI EP" style="text-decoration:none; color:var(--red-500);">ORIGAMI EP</a>
             </div>
+            <a href="ISLA_ALBUM.html" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="SIDE PROJECT NOISE">▸ SIDE PROJECT NOISE</a>
             <div class="nav-pulse">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
