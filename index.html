@@ -234,10 +234,11 @@
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--border-dim);
-            padding: 1rem 1.5rem;
+            padding: 0.75rem 1.5rem;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
         }
 
         .nav-left {
@@ -315,18 +316,16 @@
         }
 
         .nav-tabs {
-            display: none;
-            gap: 2rem;
+            display: flex;
+            gap: 1.5rem;
             font-family: var(--font-mono);
             font-size: 0.6rem;
             text-transform: uppercase;
             letter-spacing: 0.15em;
         }
 
-        @media (min-width: 768px) {
-            .nav-tabs {
-                display: flex;
-            }
+        .nav-pulse {
+            margin-left: auto;
         }
 
         .nav-ep-link {
@@ -341,6 +340,49 @@
             transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
             white-space: nowrap;
             flex-shrink: 0;
+        }
+
+        /* Compact nav for narrow / mobile screens */
+        @media (max-width: 900px) {
+            .nav {
+                gap: 0.75rem;
+                padding: 0.5rem 1rem;
+            }
+            .nav-tabs {
+                gap: 0.75rem;
+                font-size: 0.5rem;
+                letter-spacing: 0.08em;
+            }
+            .nav-ep-link {
+                font-size: 0.45rem;
+                padding: 0.2rem 0.4rem;
+                letter-spacing: 0.08em;
+            }
+        }
+        @media (max-width: 600px) {
+            .nav {
+                gap: 0.5rem;
+                padding: 0.4rem 0.75rem;
+            }
+            .nav-tabs {
+                gap: 0.5rem;
+                font-size: 0.4rem;
+            }
+            .nav-ep-link {
+                font-size: 0.4rem;
+                padding: 0.15rem 0.3rem;
+            }
+            .nav-logo {
+                width: 1.75rem;
+                height: 1.75rem;
+                font-size: 0.9rem;
+            }
+            .nav-id {
+                font-size: 0.5rem;
+            }
+            .nav-pulse {
+                font-size: 0.45rem;
+            }
         }
 
         .nav-ep-link:hover {
@@ -1698,6 +1740,7 @@
                 <button class="nav-tab glitch-text" data-text="WITNESS" data-section="section-witness">WITNESS</button>
             </div>
             <a href="ISLA_ALBUM.html" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="NOISE EP">▸ NOISE EP</a>
+            <a href="https://pixelstortion.com/zones/games/Blast_Radius/" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="BLAST RADIUS">▸ BLAST RADIUS</a>
             <div class="nav-pulse">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
