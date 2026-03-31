@@ -158,7 +158,7 @@
 
         /* === DIVE BUTTON === */
         .dive-btn {
-            position: absolute; bottom: 12px; right: 12px; z-index: 20;
+            position: absolute; top: 12px; right: 12px; z-index: 20;
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.55rem; letter-spacing: 0.15em;
             color: var(--red-500); background: rgba(0,0,0,0.7);
@@ -170,6 +170,7 @@
             box-shadow: 0 0 12px rgba(220,38,38,0.2);
         }
         .unfolded .dive-btn { opacity: 1; pointer-events: auto; }
+        .panel-top .dive-btn { top: auto; bottom: 12px; }
         .dive-btn:hover {
             background: var(--red-600); color: #fff;
             box-shadow: 0 0 25px rgba(220,38,38,0.5);
@@ -595,15 +596,27 @@
                 trackStatus.innerText = '[ SIGNAL BLOCKED — CLICK TO RETRY ]';
             });
 
-            // Camera shake
-            viewport.style.transition = 'transform 0.15s ease';
-            const baseTransform = viewport.style.transform || '';
-            viewport.style.transform += ` rotate(${Math.random() * 3 - 1.5}deg)`;
-            setTimeout(() => {
-                viewport.style.transition = 'transform 0.9s cubic-bezier(0.4, 0, 0.2, 1)';
-                // Restore the base transform (focus class if any)
-                viewport.style.transform = '';
-            }, 180);
+            // Subtle selection pop (only at core level — skip inside nooks to avoid overriding focus transform)
+            if (!currentFocus) {
+                viewport.style.transition = 'transform 0.1s ease';
+                const baseTransform = viewport.style.transform || '';
+                viewport.style.transform += ` rotate(${Math.random() * 0.6 - 0.3}deg)`;
+                setTimeout(() => {
+                    viewport.style.transition = 'transform 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+                    viewport.style.transform = '';
+                }, 100);
+            } else {
+                // Nudge the clicked panel itself inside nooks
+                const activePanel = document.querySelector(`[data-song="${idx}"]`);
+                if (activePanel) {
+                    activePanel.style.transition = 'transform 0.1s ease';
+                    activePanel.style.transform = 'scale(1.04)';
+                    setTimeout(() => {
+                        activePanel.style.transition = 'transform 0.3s ease';
+                        activePanel.style.transform = '';
+                    }, 120);
+                }
+            }
         }
 
         /* =========================================================
