@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -10,7 +10,6 @@
     <meta name="keywords"
         content="Isla, Ethel, psychological thriller, interactive digital narrative, systemic defiance, true crime adjacent, frequency archive, neuro-atypical lead, system mechanics">
 
-    <!-- Open Graph â€” Social Sharing -->
     <!-- Open Graph — Social Sharing -->
     <meta property="og:title" content="ISLA | SILENCE WAS THE TRAUMA — Weaponized Frequency Archive" />
     <meta property="og:description"
@@ -52,7 +51,7 @@
     }
     </script>
 
-    <!-- Google Analytics 4 â€” Async (non-blocking) -->
+    <!-- Google Analytics 4 — Async (non-blocking) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-34H8LS884F"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -66,7 +65,7 @@
         rel="stylesheet">
     <style>
         /* â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-           CSS DESIGN SYSTEM â€” HOSTILE AESTHETIC
+           CSS DESIGN SYSTEM — HOSTILE AESTHETIC
            â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• */
         :root {
             --red-600: #dc2626;
@@ -806,7 +805,7 @@
             }
         }
 
-        /* Left pane â€” Decryption Log (Tracklist) */
+        /* Left pane — Decryption Log (Tracklist) */
         .cmd-tracklist {
             max-height: 32rem;
             overflow-y: auto;
@@ -906,7 +905,7 @@
             animation: flicker 1.5s infinite steps(3);
         }
 
-        /* Right pane â€” The Payload */
+        /* Right pane — The Payload */
         .cmd-payload {
             display: flex;
             flex-direction: column;
@@ -1154,7 +1153,7 @@
             line-height: 1.6;
         }
 
-        /* â”€â”€ WITNESS â€” NEURAL HANDSHAKE â”€â”€ */
+        /* â”€â”€ WITNESS — NEURAL HANDSHAKE â”€â”€ */
         .witness {
             padding: 4rem 1.5rem;
             border-top: 1px solid var(--border-dim);
@@ -1207,7 +1206,7 @@
             display: block;
         }
 
-        /* Noise overlay â€” strips away on hold */
+        /* Noise overlay — strips away on hold */
         .witness-noise {
             position: absolute;
             inset: 0;
@@ -1465,7 +1464,7 @@
             margin-bottom: 1.5rem;
         }
 
-        /* Sieve cascade â€” letter-by-letter reveal */
+        /* Sieve cascade — letter-by-letter reveal */
         .sieve-char {
             display: inline;
             opacity: 0;
@@ -1556,7 +1555,7 @@
             display: block;
         }
 
-        /* â”€â”€ (Album CRT overlay removed â€” replaced by cmd-monitor-scanlines) â”€â”€ */
+        /* â”€â”€ (Album CRT overlay removed — replaced by cmd-monitor-scanlines) â”€â”€ */
 
         /* â”€â”€ OPS LOG TERMINAL STYLE â”€â”€ */
         #ops-log {
@@ -1907,7 +1906,7 @@
                 </div>
             </div>
 
-            <!-- â•â•â•â•â•â•â• WITNESS â€” NEURAL HANDSHAKE â•â•â•â•â•â•â• -->
+            <!-- â•â•â•â•â•â•â• WITNESS — NEURAL HANDSHAKE â•â•â•â•â•â•â• -->
             <div class="section witness" id="section-witness">
                 <div class="witness-bg-text">Witness</div>
 
@@ -1939,7 +1938,7 @@
 
         </main>
 
-        <!-- â•â•â•â•â•â•â• FOOTER â€” THE VOID â•â•â•â•â•â•â• -->
+        <!-- â•â•â•â•â•â•â• FOOTER — THE VOID â•â•â•â•â•â•â• -->
         <footer class="footer">
             <div class="footer-isla">ISLA</div>
             <div class="footer-content">
@@ -2075,11 +2074,11 @@
                     pulseEl.classList.remove('danger');
                 }
 
-                // Fentanyl Strike at 140 BPM â€” toxic nervous system short-circuit
+                // Fentanyl Strike at 140 BPM — toxic nervous system short-circuit
                 if (bpm >= 140 && window.fluidSim && window.FLUID_CONFIG) {
                     const cfg = window.FLUID_CONFIG;
                     cfg.DENSITY_DISSIPATION = 0.999;
-                    cfg.VELOCITY_DISSIPATION = 0.999; // Smear â€” colors drag like a bad trip
+                    cfg.VELOCITY_DISSIPATION = 0.999; // Smear — colors drag like a bad trip
                     cfg.BLOOM_INTENSITY = 3.0;
 
                     for (let i = 0; i < 3; i++) {
@@ -2087,14 +2086,14 @@
                         const y = Math.random();
                         const angle = Math.random() * Math.PI * 2;
                         const force = 18000 + Math.random() * 12000;
-                        // Neon Pink/Red â€” the chemical burn
+                        // Neon Pink/Red — the chemical burn
                         window.fluidSim.splatStack.push({
                             x, y,
                             dx: Math.cos(angle) * force,
                             dy: Math.sin(angle) * force,
                             color: { r: 1.0, g: 0.0, b: 0.2 }
                         });
-                        // Cyan/Teal â€” the nervous system short-circuit
+                        // Cyan/Teal — the nervous system short-circuit
                         window.fluidSim.splatStack.push({
                             x: Math.random(), y: Math.random(),
                             dx: Math.cos(angle + Math.PI) * force * 0.8,
@@ -2118,7 +2117,7 @@
                 'SYSTEM_ID: ' + Math.random().toString(36).substring(2, 15).toUpperCase();
 
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-            // 6. DOSSIER â€” CRYPTOGRAPHIC BYPASS
+            // 6. DOSSIER — CRYPTOGRAPHIC BYPASS
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const HEX = '0123456789ABCDEF';
             const randomHex = (len) => Array.from({ length: len }, () => HEX[Math.random() * 16 | 0]).join('');
@@ -2269,7 +2268,7 @@
 
                         showFeedback('> DECRYPTION SUCCESSFUL: ' + cardObj.data.title.toUpperCase(), '#22c55e');
 
-                        // Wire dossier to media player â€” push relevant track
+                        // Wire dossier to media player — push relevant track
                         const trackMap = {
                             'Polished Vomit': 0,
                             'The Broken Edge': 2
@@ -2459,7 +2458,7 @@
                 }
             });
 
-            // YouTube Player â€” global callback
+            // YouTube Player — global callback
             window.onYouTubeIframeAPIReady = function () {
                 islaPlayer = new YT.Player('isla-yt-player', {
                     host: 'https://www.youtube.com',
@@ -2490,14 +2489,14 @@
                             if (state === YT.PlayerState.PLAYING) {
                                 // SUCCESS! Clear uplink error monitor
                                 if (typeof uplinkTimeout !== 'undefined' && uplinkTimeout) clearTimeout(uplinkTimeout);
-                                // PLAYING â€” weaponize the fluid
+                                // PLAYING — weaponize the fluid
                                 pulseEl.textContent = 'PULSE_160BPM_CRITICAL';
                                 pulseEl.classList.add('danger');
                                 if (window.FLUID_CONFIG) {
                                     window.FLUID_CONFIG.CURL = 60;
                                     window.FLUID_CONFIG.BLOOM_INTENSITY = 2.5;
                                 }
-                                // PAUSE the chronological engine â€” music takes priority
+                                // PAUSE the chronological engine — music takes priority
                                 enginePaused = true;
                                 if (currentAudio && !currentAudio.paused) {
                                     currentAudio.pause();
@@ -2505,7 +2504,7 @@
                                 // Fade out the background loop
                                 fadeLoop(0, 500);
                             } else if (state === YT.PlayerState.PAUSED || state === YT.PlayerState.ENDED) {
-                                // PAUSED/ENDED â€” comedown
+                                // PAUSED/ENDED ” comedown
                                 pulseEl.textContent = 'PULSE_98BPM';
                                 pulseEl.classList.remove('danger');
                                 if (window.FLUID_CONFIG) {
@@ -2521,11 +2520,11 @@
                                         // Resume where the trauma audio left off
                                         currentAudio.play().catch(() => { });
                                     } else if (enginePendingResume) {
-                                        // Engine tried to advance while paused â€” do it now
+                                        // Engine tried to advance while paused ” do it now
                                         enginePendingResume = false;
                                         advanceToNext();
                                     } else if (engineStarted) {
-                                        // Engine was idle while paused â€” kick it forward
+                                        // Engine was idle while paused ” kick it forward
                                         processNextLog();
                                     }
                                 }
@@ -2601,7 +2600,7 @@
                 document.addEventListener('visibilitychange', resumeHandler);
             }
 
-            // "ENTER THE PIT" â€” red flash + scroll + auto-play first track
+            // "ENTER THE PIT" ” red flash + scroll + auto-play first track
             const enterPitBtn = document.getElementById('btn-enter-pit');
             const breachFlash = document.getElementById('breach-flash');
 
@@ -2626,7 +2625,7 @@
                 });
             }
 
-            // "LOGS" button â€” smooth scroll to #section-logs
+            // "LOGS" button ” smooth scroll to #section-logs
             const logsBtn = document.getElementById('btn-logs');
             if (logsBtn) {
                 logsBtn.addEventListener('click', () => {
@@ -2636,7 +2635,7 @@
             }
 
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-            // 8. OPERATIONAL LOGS â€” AUTO-SCROLL TERMINAL (ISLA TRUE TIMELINE)
+            // 8. OPERATIONAL LOGS ” AUTO-SCROLL TERMINAL (ISLA TRUE TIMELINE)
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const allOps = [
                 // PRE-2016: The Judge's House (Pymble Childhood)
@@ -2850,7 +2849,7 @@
             // â”€â”€ BACKGROUND AMBIENT LOOP â”€â”€
             const BG_LOOP_URL = AUDIO_BASE_URL + 'Isla_LOOP_ON_BACKGROUND.mp3';
             let bgLoop = null;
-            const BG_LOOP_VOLUME = 0.4; // Ambient level â€” sits behind the trauma clips
+            const BG_LOOP_VOLUME = 0.4; // Ambient level ” sits behind the trauma clips
             let sharedAudioCtx = null; // Shared AudioContext for mobile unlock
 
             // Pre-create the bgLoop element so it's warm when the gesture fires.
@@ -2974,7 +2973,7 @@
                         });
                     }
                 } else {
-                    // No shout data â€” advance after 3s
+                    // No shout data ” advance after 3s
                     setTimeout(advanceToNext, 3000);
                 }
 
@@ -3009,7 +3008,7 @@
                 nextAudioPreload = preloadAudioFor(0);
 
                 // 3. Start the background ambient loop
-                // bgLoop was pre-created at page load â€” now play it in the gesture context.
+                // bgLoop was pre-created at page load ” now play it in the gesture context.
                 // Set the volume and play. On iOS this MUST happen synchronously here.
                 bgLoop.volume = BG_LOOP_VOLUME;
                 const loopPlayPromise = bgLoop.play();
@@ -3039,13 +3038,13 @@
                 processNextLog();
             }
 
-            // Listen for ANY user gesture â€” click, touch, or key
+            // Listen for ANY user gesture ” click, touch, or key
             ['click', 'touchstart', 'keydown'].forEach(evt => {
                 window.addEventListener(evt, armEngine, { once: true });
             });
 
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
-            // 9. WITNESS â€” NEURAL HANDSHAKE
+            // 9. WITNESS — NEURAL HANDSHAKE
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const witnessCage = document.getElementById('witness-cage');
             const witnessRing = document.getElementById('witness-ring');
@@ -3165,7 +3164,7 @@
                         ci++;
                     } else {
                         clearInterval(typeInterval);
-                        // Biological exhalation â€” fluid snaps to SILENCE
+                        // Biological exhalation ” fluid snaps to SILENCE
                         if (window.fluidSim) {
                             window.fluidSim.updateConfig('SILENCE');
                         }
