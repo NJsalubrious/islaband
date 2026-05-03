@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -251,15 +251,24 @@
         }
 
         /* â”€â”€ PIXELSTORTION MANAGEMENT BRAND â”€â”€ */
+        .brand-dropdown-container {
+            position: relative;
+        }
+
         .ps-brand {
             font-family: var(--font-mono);
-            font-size: 0.5rem;
+            font-size: 0.75rem;
             letter-spacing: 0.25em;
             text-transform: uppercase;
             color: var(--text-ghost);
             text-decoration: none;
             transition: color 0.2s, text-shadow 0.2s;
             position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            display: inline-block;
         }
 
         .ps-brand:hover {
@@ -282,6 +291,103 @@
         .ps-brand:hover::after {
             opacity: 0.6;
             transform: scaleX(1);
+        }
+
+        .brand-dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 10px;
+            background: rgba(5, 5, 5, 0.95);
+            border: 1px solid #333;
+            min-width: 140px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+        }
+
+        .brand-dropdown-menu.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .menu-category-wrapper {
+            position: relative;
+        }
+
+        .menu-category {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #888;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            padding: 10px 12px;
+            border-bottom: 1px solid #222;
+            background: rgba(0,0,0,0.5);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .menu-category:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: #bbb;
+        }
+
+        .submenu {
+            position: absolute;
+            left: 100%;
+            top: 0;
+            margin-left: 2px;
+            background: rgba(5, 5, 5, 0.95);
+            border: 1px solid #333;
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(-5px);
+            transition: all 0.2s ease;
+            backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            z-index: 10001;
+            padding: 4px 0;
+        }
+
+        .menu-category-wrapper:hover > .submenu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+        }
+
+        .brand-dropdown-item {
+            display: block;
+            padding: 8px 16px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: #666;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+            white-space: nowrap;
+        }
+
+        .brand-dropdown-item:hover {
+            color: #aaa;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #555;
+            padding-left: 20px;
         }
 
         .nav-id-group {
@@ -353,7 +459,7 @@
             }
             .nav-tabs {
                 gap: 0.75rem;
-                font-size: 0.5rem;
+                font-size: 0.75rem;
                 letter-spacing: 0.08em;
             }
             .nav-ep-link {
@@ -381,7 +487,7 @@
                 font-size: 0.9rem;
             }
             .nav-id {
-                font-size: 0.5rem;
+                font-size: 0.75rem;
             }
             .nav-pulse {
                 font-size: 0.45rem;
@@ -1726,12 +1832,49 @@
             <div class="nav-left">
                 <div class="nav-logo">I</div>
                 <div class="nav-id-group">
-                    <a href="https://pixelstortion.com" target="_blank" rel="noopener"
-                        class="ps-brand">PIXELSTORTION</a>
-                    <div class="nav-id">
-                        <div class="nav-id-name">Subject: ISLA</div>
-                        <div class="nav-id-status">STATUS: OPERATIONAL</div>
+                    <div class="brand-dropdown-container">
+                        <button onclick="toggleBrandMenu(event)" class="brand-trigger text-left" style="background: none; border: none; cursor: pointer; text-decoration: none; padding: 0;">
+                            <span class="ps-brand">PIXELSTORTION</span>
+                        </button>
+                        <div id="brandDropdown" class="brand-dropdown-menu" onclick="event.stopPropagation()">
+                        <a href="https://silenceisthetrauma.com/veX_social_network/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">veX: Social Network</a>
+                        <a href="https://pixelstortion.com/bio/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">BIO</a>
+                        
+                        <div class="menu-category-wrapper">
+                            <div class="menu-category" style="cursor:default;">Silence is the trauma : <span style="opacity:0.5">&#x25B8;</span></div>
+                            <div class="submenu">
+                                <a href="https://pixelstortion.com/zones/silence/" class="brand-dropdown-item">Main Site</a>
+                                
+                                <div class="menu-category-wrapper">
+                                    <div class="menu-category" style="cursor:default; font-size:11px; padding:8px 16px; background:rgba(0,0,0,0.5); border-bottom:1px solid #222;">Isla : <span style="opacity:0.5">&#x25B8;</span></div>
+                                    <div class="submenu" style="left:100%; top:0; margin-left:2px;">
+                                        <a href="https://islaband.com" class="brand-dropdown-item">Music Site</a>
+                                        <a href="https://islaband.com/ISLA_ALBUM" class="brand-dropdown-item">Isla ear splitting</a>
+                                    </div>
+                                </div>
+                                
+                                <a href="https://ethelryker.com" class="brand-dropdown-item">Ethel Ryker : Blog</a>
+                                <a href="https://dominicryker.com" class="brand-dropdown-item">Dominic Ryker : Structure</a>
+                                
+                                <div class="menu-category-wrapper">
+                                    <div class="menu-category" style="cursor:default; font-size:11px; padding:8px 16px; background:rgba(0,0,0,0.5); border-bottom:1px solid #222;">ART : <span style="opacity:0.5">&#x25B8;</span></div>
+                                    <div class="submenu" style="left:100%; top:0; margin-left:2px;">
+                                        <a href="https://pixelstortion.com/zones/silentcinema/" class="brand-dropdown-item">Cinema</a>
+                                        <a href="https://pixelstortion.com/zones/ethel_gallery/" class="brand-dropdown-item">Poetry</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="menu-category-wrapper">
+                            <div class="menu-category" style="cursor:default;">Nalani : <span style="opacity:0.5">&#x25B8;</span></div>
+                            <div class="submenu">
+                                <a href="https://pixelstortion.com/zones/mataala/" class="brand-dropdown-item">Mataala</a>
+                            </div>
+                        </div>
                     </div>
+                    </div>
+
                 </div>
             </div>
             <div class="nav-tabs" id="nav-tabs">
@@ -1744,7 +1887,6 @@
             </div>
             <a href="ISLA_ALBUM.html" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="NOISE EP">▸ NOISE EP</a>
             <a href="https://pixelstortion.com/zones/games/Blast_Radius/" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="BLAST RADIUS">▸ BLAST RADIUS</a>
-            <a href="https://ethelryker.com" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="ETHEL_RYKER">▸ ETHEL_RYKER</a>
             <div class="nav-pulse">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -3220,6 +3362,133 @@
             witnessObserver.observe(document.getElementById('section-witness'));
 
         })();
+
+        // ============================================================
+        // BRANDING DROPDOWN JS
+        // ============================================================
+        class BrandingGlitch {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\\\/[]{}-=+*^?#_01';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 15);
+                    const end = start + Math.floor(Math.random() * 15);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += char;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerText = output;
+                this.el.setAttribute('data-text', output);
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const brandEl = document.querySelector('.ps-brand');
+            if (brandEl) {
+                const brandFx = new BrandingGlitch(brandEl);
+                const brandWords = [
+                    'PIXELSTORTION', 'PROJECTS', 'BIO', 'SILENCE', 'MATAALA', 
+                    'CINEMA', 'MUSIC', 'VEX', 'SOCIAL NETWORK', 'PIXELSTORTION', 
+                    'NALANI', 'REDFERN', 'TURNBULL', 'PIXELSTORTION', 
+                    'ETHEL', 'ISLA', 'DOMINIC', 'STICKY', 'KINLEY', 'PIXELSTORTION'
+                ];
+                let wordIndex = 0;
+
+                function nextBrandWord() {
+                    wordIndex = (wordIndex + 1) % brandWords.length;
+                    brandFx.setText(brandWords[wordIndex]).then(() => {
+                        let delay = 1500;
+                        if (brandWords[wordIndex] === 'PIXELSTORTION') delay = 6000;
+                        setTimeout(nextBrandWord, delay);
+                    });
+                }
+                setTimeout(nextBrandWord, 6000);
+            }
+
+            // Highlight Active Link (Universal Matcher)
+            const currentUrl = window.location.href.toLowerCase();
+            const dropdownLinks = document.querySelectorAll('.brand-dropdown-item');
+
+            dropdownLinks.forEach(link => {
+                let href = link.getAttribute('href');
+                if (!href) return;
+                href = href.toLowerCase();
+                
+                let isMatch = false;
+                if (href.includes('vex_social_network') && currentUrl.includes('vex_social_network')) isMatch = true;
+                else if (href.includes('ethelryker.com') && currentUrl.includes('ethelryker')) isMatch = true;
+                else if (href.includes('dominicryker.com') && currentUrl.includes('dominicryker')) isMatch = true;
+                else if (href.includes('isla_album') && currentUrl.includes('isla_album')) isMatch = true;
+                else if (href === 'https://islaband.com' && currentUrl.includes('islaband') && !currentUrl.includes('isla_album')) isMatch = true;
+                else if (href.includes('zones/silence') && currentUrl.includes('silence') && !currentUrl.includes('silenceisthetrauma')) isMatch = true;
+                else if (href === 'https://silenceisthetrauma.com' && currentUrl.includes('silenceisthetrauma') && !currentUrl.includes('vex_social_network')) isMatch = true;
+                else if (href.includes('zones/mataala') && currentUrl.includes('mataala')) isMatch = true;
+                else if (href.includes('ethel_gallery') && currentUrl.includes('ethel_gallery')) isMatch = true;
+                else if (href.includes('silentcinema') && currentUrl.includes('silentcinema')) isMatch = true;
+                else if (href.includes('bio') && currentUrl.includes('bio')) isMatch = true;
+
+                if (isMatch) {
+                    link.removeAttribute('href');
+                    link.style.opacity = '0.4';
+                    link.style.cursor = 'default';
+                    link.style.pointerEvents = 'none';
+                    link.innerHTML += ' <span style="font-size:9px; letter-spacing:1px; margin-left:8px; color:#666;">[ACTIVE]</span>';
+                }
+            });
+        });
+
+        window.toggleBrandMenu = function(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('brandDropdown');
+            if (menu) menu.classList.toggle('active');
+        };
+
+        document.addEventListener('click', (e) => {
+            const menu = document.getElementById('brandDropdown');
+            if (menu && menu.classList.contains('active')) {
+                menu.classList.remove('active');
+            }
+        });
+
     </script>
 
 </body>
