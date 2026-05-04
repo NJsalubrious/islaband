@@ -135,7 +135,7 @@
             inset: 0;
             z-index: 200;
             background: #000;
-            display: flex;
+            display: none;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -218,9 +218,9 @@
         #main-content {
             position: relative;
             z-index: 1;
-            opacity: 0;
+            opacity: 1;
             transition: opacity 1.2s ease;
-            display: none;
+            display: block;
         }
 
         #main-content.visible {
@@ -253,6 +253,7 @@
         /* â”€â”€ PIXELSTORTION MANAGEMENT BRAND â”€â”€ */
         .brand-dropdown-container {
             position: relative;
+            width: 160px;
         }
 
         .ps-brand {
@@ -498,6 +499,68 @@
             color: #fff;
             border-color: var(--red-500);
             box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+        }
+
+        /* ── GAMES DROPDOWN ── */
+        .games-dropdown-container {
+            position: relative;
+            display: inline-block;
+        }
+        .games-trigger {
+            font-family: var(--font-mono);
+            font-size: 0.55rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--red-500);
+            padding: 0.25rem 0.5rem;
+            border: 1px solid rgba(220, 38, 38, 0.3);
+            transition: color 0.3s, border-color 0.3s, box-shadow 0.3s;
+            white-space: nowrap;
+            flex-shrink: 0;
+            background: none;
+            cursor: pointer;
+        }
+        .games-trigger:hover {
+            color: #fff;
+            border-color: var(--red-500);
+            box-shadow: 0 0 12px rgba(220, 38, 38, 0.4);
+        }
+        .games-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            margin-top: 4px;
+            background: rgba(10, 10, 10, 0.95);
+            border: 1px solid rgba(220, 38, 38, 0.25);
+            backdrop-filter: blur(12px);
+            z-index: 120;
+            min-width: 180px;
+            padding: 4px 0;
+        }
+        .games-dropdown-menu.active {
+            display: block;
+        }
+        .games-dropdown-item {
+            display: block;
+            padding: 8px 14px;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #aaa;
+            text-decoration: none;
+            transition: color 0.2s, background 0.2s;
+        }
+        .games-dropdown-item:hover {
+            color: var(--red-500);
+            background: rgba(220, 38, 38, 0.08);
+        }
+        @media (max-width: 900px) {
+            .games-trigger { font-size: 0.45rem; padding: 0.2rem 0.4rem; letter-spacing: 0.08em; }
+        }
+        @media (max-width: 600px) {
+            .games-trigger { font-size: 0.4rem; padding: 0.15rem 0.3rem; }
         }
 
         .nav-tab {
@@ -1838,40 +1901,12 @@
                         </button>
                         <div id="brandDropdown" class="brand-dropdown-menu" onclick="event.stopPropagation()">
                         <a href="https://silenceisthetrauma.com/veX_social_network/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">veX: Social Network</a>
+                        <a href="https://pixelstortion.com/zones/silence/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Silence is the trauma</a>
+                        <span class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px; opacity: 0.5; cursor: default; pointer-events: none;">Isla</span>
+                        <a href="https://ethelryker.com/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Ethel Ryker</a>
+                        <a href="https://dominicryker.com/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Dominic Ryker</a>
+                        <a href="https://pixelstortion.com/zones/mataala/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Nalani</a>
                         <a href="https://pixelstortion.com/bio/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">BIO</a>
-                        
-                        <div class="menu-category-wrapper">
-                            <div class="menu-category" style="cursor:default;">Silence is the trauma : <span style="opacity:0.5">&#x25B8;</span></div>
-                            <div class="submenu">
-                                <a href="https://pixelstortion.com/zones/silence/" class="brand-dropdown-item">Main Site</a>
-                                
-                                <div class="menu-category-wrapper">
-                                    <div class="menu-category" style="cursor:default; font-size:11px; padding:8px 16px; background:rgba(0,0,0,0.5); border-bottom:1px solid #222;">Isla : <span style="opacity:0.5">&#x25B8;</span></div>
-                                    <div class="submenu" style="left:100%; top:0; margin-left:2px;">
-                                        <a href="https://islaband.com" class="brand-dropdown-item">Music Site</a>
-                                        <a href="https://islaband.com/ISLA_ALBUM" class="brand-dropdown-item">Isla ear splitting</a>
-                                    </div>
-                                </div>
-                                
-                                <a href="https://ethelryker.com" class="brand-dropdown-item">Ethel Ryker : Blog</a>
-                                <a href="https://dominicryker.com" class="brand-dropdown-item">Dominic Ryker : Structure</a>
-                                
-                                <div class="menu-category-wrapper">
-                                    <div class="menu-category" style="cursor:default; font-size:11px; padding:8px 16px; background:rgba(0,0,0,0.5); border-bottom:1px solid #222;">ART : <span style="opacity:0.5">&#x25B8;</span></div>
-                                    <div class="submenu" style="left:100%; top:0; margin-left:2px;">
-                                        <a href="https://pixelstortion.com/zones/silentcinema/" class="brand-dropdown-item">Cinema</a>
-                                        <a href="https://pixelstortion.com/zones/ethel_gallery/" class="brand-dropdown-item">Poetry</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="menu-category-wrapper">
-                            <div class="menu-category" style="cursor:default;">Nalani : <span style="opacity:0.5">&#x25B8;</span></div>
-                            <div class="submenu">
-                                <a href="https://pixelstortion.com/zones/mataala/" class="brand-dropdown-item">Mataala</a>
-                            </div>
-                        </div>
                     </div>
                     </div>
 
@@ -1885,8 +1920,13 @@
                 <button class="nav-tab glitch-text" data-text="LOGS" data-section="section-logs">LOGS</button>
                 <button class="nav-tab glitch-text" data-text="WITNESS" data-section="section-witness">WITNESS</button>
             </div>
-            <a href="ISLA_ALBUM.html" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="NOISE EP">▸ NOISE EP</a>
-            <a href="https://pixelstortion.com/zones/games/Blast_Radius/" target="_blank" rel="noopener" class="nav-ep-link glitch-text" data-text="BLAST RADIUS">▸ BLAST RADIUS</a>
+            <div class="games-dropdown-container">
+                <button class="games-trigger glitch-text" data-text="GAMES" onclick="toggleGamesMenu(event)">▸ GAMES</button>
+                <div id="gamesDropdown" class="games-dropdown-menu" onclick="event.stopPropagation()">
+                    <a href="https://pixelstortion.com/zones/games/Blast_Radius/" target="_blank" rel="noopener" class="games-dropdown-item">Isla's Jokie</a>
+                    <a href="https://pixelstortion.com/zones/games/Isla_pinball.html" target="_blank" rel="noopener" class="games-dropdown-item">Isla's Pinball</a>
+                </div>
+            </div>
             <div class="nav-pulse">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
@@ -1946,31 +1986,7 @@
             </div>
 
             <!-- â•â•â•â•â•â•â• DOSSIER â•â•â•â•â•â•â• -->
-            <div class="section" id="section-dossier">
-                <div class="section-header">
-                    <div class="section-meta">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <polyline points="4 17 10 11 4 5"></polyline>
-                            <line x1="12" y1="19" x2="20" y2="19"></line>
-                        </svg>
-                        <span>Partition // 0x742</span>
-                    </div>
-                    <h2 class="section-title">THE DOSSIER</h2>
-                    <p class="section-subtitle">Forensics of a Pymble childhood.</p>
-                </div>
-                <div class="dossier-grid" id="dossier-grid"></div>
-            </div>
-
-            <!-- TERMINAL PROMPT BAR -->
-            <div class="terminal-prompt-bar" id="terminal-bar">
-                <span class="terminal-prefix">isla_root@pymble_archive:~$&nbsp;</span>
-                <input class="terminal-input" id="terminal-input" type="text" autocomplete="off" spellcheck="false"
-                    placeholder="ENTER ACCESS CODE...">
-            </div>
-            <div class="terminal-feedback" id="terminal-feedback"></div>
-
-            <!-- â•â•â•â•â•â•â• DISCOGRAPHY â•â•â•â•â•â•â• -->
+            <!-- â• â• â• â• â• â• â•  DISCOGRAPHY â• â• â• â• â• â• â•  -->
             <div class="section" id="section-disco">
                 <div class="section-header">
                     <div class="section-meta">
@@ -2014,6 +2030,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- ═══════ ACOUSTIC DEGLOVING ALBUM BANNER ═══════ -->
+            <div class="section" style="text-align: center; margin: 4rem auto; max-width: 900px; padding: 0 1.5rem;">
+                <a href="ISLA_ALBUM.html" style="text-decoration: none; display: block; transition: transform 0.3s ease, filter 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'; this.style.filter='brightness(1.1)'" onmouseout="this.style.transform='scale(1)'; this.style.filter='brightness(1)'">
+                    <h2 class="section-title" style="margin-bottom: 1.5rem; text-align: center; border: none; padding: 0; font-size: clamp(1.2rem, 3vw, 1.8rem); text-shadow: 0 0 10px rgba(255,255,255,0.2);">ACOUSTIC DEGLOVING IS ONLY RELEASED HERE</h2>
+                    
+                    <div style="border: 2px solid #2854b3; padding: 2px; display: inline-block; box-shadow: 0 0 30px rgba(0,0,0,0.8);">
+                        <img src="Cover_Images/Acoustic_degloving_noise_album.jpg" alt="Acoustic Degloving Album Cover" style="max-width: 100%; height: auto; display: block;">
+                    </div>
+                    
+                    <h2 class="section-title" style="margin-top: 1.5rem; text-align: center; border: none; padding: 0; font-size: clamp(1.5rem, 3.5vw, 2.2rem); text-shadow: 0 0 10px rgba(255,255,255,0.2);">CLICK TO UNFOLD</h2>
+                </a>
+            </div>
+
+            <div class="section" id="section-dossier">
+                <div class="section-header">
+                    <div class="section-meta">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="4 17 10 11 4 5"></polyline>
+                            <line x1="12" y1="19" x2="20" y2="19"></line>
+                        </svg>
+                        <span>Partition // 0x742</span>
+                    </div>
+                    <h2 class="section-title">THE DOSSIER</h2>
+                    <p class="section-subtitle">Forensics of a Pymble childhood.</p>
+                </div>
+                <div class="dossier-grid" id="dossier-grid"></div>
+            </div>
+
+            <!-- TERMINAL PROMPT BAR -->
+            <div class="terminal-prompt-bar" id="terminal-bar">
+                <span class="terminal-prefix">isla_root@pymble_archive:~$&nbsp;</span>
+                <input class="terminal-input" id="terminal-input" type="text" autocomplete="off" spellcheck="false"
+                    placeholder="ENTER ACCESS CODE...">
+            </div>
+            <div class="terminal-feedback" id="terminal-feedback"></div>
+
+            <!-- â•â•â•â•â•â•â• DISCOGRAPHY â•â•â•â•â•â•â• -->
+
 
             <!-- â•â•â•â•â•â•â• OPERATIONAL LOGS â•â•â•â•â•â•â• -->
             <div class="section" id="section-logs">
@@ -2134,29 +2190,12 @@
             const lineEls = bootContainer.querySelectorAll('.line');
             let bootStep = 0;
 
-            const bootInterval = setInterval(() => {
-                if (bootStep < lineEls.length) {
-                    const el = lineEls[bootStep];
-                    el.classList.add('visible');
-                    if (bootStep === lineEls.length - 1) el.classList.add('success');
-                    bootStep++;
-                } else {
-                    clearInterval(bootInterval);
-                    setTimeout(() => {
-                        const bootScreen = document.getElementById('boot-screen');
-                        const mainContent = document.getElementById('main-content');
-                        bootScreen.style.opacity = '0';
-                        setTimeout(() => {
-                            bootScreen.style.display = 'none';
-                            mainContent.style.display = 'block';
-                            requestAnimationFrame(() => {
-                                mainContent.classList.add('visible');
-                                initFluid();
-                            });
-                        }, 800);
-                    }, 600);
-                }
-            }, 500);
+            const bootScreen = document.getElementById('boot-screen');
+            const mainContent = document.getElementById('main-content');
+            bootScreen.style.display = 'none';
+            mainContent.style.display = 'block';
+            mainContent.classList.add('visible');
+            initFluid();
 
             // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
             // 2. FLUID SIMULATOR INIT
@@ -3480,12 +3519,28 @@
             e.stopPropagation();
             const menu = document.getElementById('brandDropdown');
             if (menu) menu.classList.toggle('active');
+            // Close games menu if open
+            const gMenu = document.getElementById('gamesDropdown');
+            if (gMenu) gMenu.classList.remove('active');
+        };
+
+        window.toggleGamesMenu = function(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('gamesDropdown');
+            if (menu) menu.classList.toggle('active');
+            // Close brand menu if open
+            const bMenu = document.getElementById('brandDropdown');
+            if (bMenu) bMenu.classList.remove('active');
         };
 
         document.addEventListener('click', (e) => {
             const menu = document.getElementById('brandDropdown');
             if (menu && menu.classList.contains('active')) {
                 menu.classList.remove('active');
+            }
+            const gMenu = document.getElementById('gamesDropdown');
+            if (gMenu && gMenu.classList.contains('active')) {
+                gMenu.classList.remove('active');
             }
         });
 
@@ -3494,3 +3549,5 @@
 </body>
 
 </html>
+
+
