@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+   islaband.com sitemap. Lists the live human-facing pages.
+   ISLA_ALBUM.html is the underground metal album "ORIGAMI" — 10 tracks
+   only available on her site. High-priority content.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://islaband.com/</loc>
     <lastmod>2026-05-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://islaband.com/ISLA_ALBUM.html</loc>
+    <lastmod>2026-05-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
   </url>
 </urlset>

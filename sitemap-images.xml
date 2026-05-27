@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <url>
+    <loc>https://islaband.com/</loc>
+    <image:image>
+      <image:loc>https://islaband.com/ISLABAND.jpg</image:loc>
+      <image:title>ISLABAND</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/ISLABAND_ACOUSTIC_DEGLOVING.jpg</image:loc>
+      <image:title>ISLABAND_ACOUSTIC_DEGLOVING</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/POLISHED_VOMIT.png</image:loc>
+      <image:title>POLISHED_VOMIT</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/Cover_Images/Acoustic_degloving_noise_album.jpg</image:loc>
+      <image:title>Acoustic_degloving_noise_album</image:title>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://islaband.com/ISLA_ALBUM.html</loc>
+    <image:image>
+      <image:loc>https://islaband.com/Cover_Images/COVERS_0000_ISLA_Cover.jpg</image:loc>
+      <image:title>COVERS_0000_ISLA_Cover</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/1. ACOUSTIC_DEGLOVING__MP3.png</image:loc>
+      <image:title>1. ACOUSTIC_DEGLOVING__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD.png</image:loc>
+      <image:title>10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/2. ANECHOIC_OVERPRESSURE.png</image:loc>
+      <image:title>2. ANECHOIC_OVERPRESSURE</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/3. YOUR_PREFRONTAL_LOBE_IS_FUCKED.png</image:loc>
+      <image:title>3. YOUR_PREFRONTAL_LOBE_IS_FUCKED</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3.png</image:loc>
+      <image:title>4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/5. CANTILEVERED_RUPTURE__MP3.png</image:loc>
+      <image:title>5. CANTILEVERED_RUPTURE__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/6. JURISDICTIONAL_LIVIDITY__MP3.png</image:loc>
+      <image:title>6. JURISDICTIONAL_LIVIDITY__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3.png</image:loc>
+      <image:title>7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/8. SHEER_FORCE__MP3.png</image:loc>
+      <image:title>8. SHEER_FORCE__MP3</image:title>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/9. LOAD-BEARING SILENCE__MP3.png</image:loc>
+      <image:title>9. LOAD-BEARING SILENCE__MP3</image:title>
+    </image:image>
+  </url>
+</urlset>
