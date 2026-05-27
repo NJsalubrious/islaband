@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- islaband video sitemap. 19 YouTube-embedded songs on islaband.com. -->
+<!-- player_loc uses youtube-nocookie.com for privacy-restricted browsers. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+
+  <url>
+    <loc>https://islaband.com/</loc>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/MhEeDcdscrs/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Polished Vomit - ISLA</video:title>
+      <video:description>'Polished Vomit' by ISLA. Fictional musical work in Silence Is The Trauma. Released FEB 14, 2019 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/MhEeDcdscrs</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/qbFxG7sK0pE/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>PEEK-A-BOO - ISLA</video:title>
+      <video:description>'PEEK-A-BOO' by ISLA. Fictional musical work in Silence Is The Trauma. Released FEB 14, 2019 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/qbFxG7sK0pE</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/sXKAs0U8eO8/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Isla Doesn't Like Married Bankers - ISLA</video:title>
+      <video:description>'Isla Doesn't Like Married Bankers' by ISLA. Fictional musical work in Silence Is The Trauma. Released MAY 11, 2024 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/sXKAs0U8eO8</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/nVKkwb4EnRc/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Burning Dominic's Bridge - ISLA</video:title>
+      <video:description>'Burning Dominic's Bridge' by ISLA. Fictional musical work in Silence Is The Trauma. Released AUG 2024 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/nVKkwb4EnRc</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/_gvv_W5_x10/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Broken Edge - ISLA</video:title>
+      <video:description>'Broken Edge' by ISLA. Fictional musical work in Silence Is The Trauma. Released OCT 2024 (video).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/_gvv_W5_x10</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/0tzOaukuBns/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>This Isn't Therapy - ISLA</video:title>
+      <video:description>'This Isn't Therapy' by ISLA. Fictional musical work in Silence Is The Trauma. Released AUG 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/0tzOaukuBns</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/-3m2_zUNBlo/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Stanmore Farewell - ISLA</video:title>
+      <video:description>'Stanmore Farewell' by ISLA. Fictional musical work in Silence Is The Trauma. Released AUG 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/-3m2_zUNBlo</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/xK-40zagx7k/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Raise The Fourth - ISLA</video:title>
+      <video:description>'Raise The Fourth' by ISLA. Fictional musical work in Silence Is The Trauma. Released AUG 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/xK-40zagx7k</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/fNVKsxe_EcM/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>The Porcelain Lie - ISLA</video:title>
+      <video:description>'The Porcelain Lie' by ISLA. Fictional musical work in Silence Is The Trauma. Released AUG 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/fNVKsxe_EcM</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/UFZeKCcSMoE/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Shiny Headed Radio Man - ISLA</video:title>
+      <video:description>'Shiny Headed Radio Man' by ISLA. Fictional musical work in Silence Is The Trauma. Released SEP 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/UFZeKCcSMoE</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/NwqHLFYR1mA/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Don't Wake Him Yet - ISLA</video:title>
+      <video:description>'Don't Wake Him Yet' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/NwqHLFYR1mA</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/nk4Re7OjTTM/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Memory Under Water - ISLA</video:title>
+      <video:description>'Memory Under Water' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/nk4Re7OjTTM</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/ey20cJsY82M/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Raise The Fourth (Retrospect) - ISLA</video:title>
+      <video:description>'Raise The Fourth (Retrospect)' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/ey20cJsY82M</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/Aw2ZAkxp6b0/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Give It Back - ISLA</video:title>
+      <video:description>'Give It Back' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/Aw2ZAkxp6b0</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/Y4VC6mh37NI/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>What You Don't See - ISLA</video:title>
+      <video:description>'What You Don't See' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (video).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/Y4VC6mh37NI</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/a4TpIhna55k/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Melody of Normality - ISLA</video:title>
+      <video:description>'Melody of Normality' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (video).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/a4TpIhna55k</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/hm2kp7LOhsg/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>What You Don't See (Symphony) - ISLA</video:title>
+      <video:description>'What You Don't See (Symphony)' by ISLA. Fictional musical work in Silence Is The Trauma. Released OCT 21, 2025 (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/hm2kp7LOhsg</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/7UOZCk5vvbA/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>Drop From the Fourth (Symphony) - ISLA</video:title>
+      <video:description>'Drop From the Fourth (Symphony)' by ISLA. Fictional musical work in Silence Is The Trauma. Released OCT 21, 2025 (video).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/7UOZCk5vvbA</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+    <video:video>
+      <video:thumbnail_loc>https://i.ytimg.com/vi/X9EUb1_QC9c/maxresdefault.jpg</video:thumbnail_loc>
+      <video:title>What This Was Always For - ISLA</video:title>
+      <video:description>'What This Was Always For' by ISLA. Fictional musical work in Silence Is The Trauma. Released Retrospect (audio).</video:description>
+      <video:player_loc allow_embed="yes">https://www.youtube-nocookie.com/embed/X9EUb1_QC9c</video:player_loc>
+      <video:family_friendly>yes</video:family_friendly>
+    </video:video>
+  </url>
+</urlset>

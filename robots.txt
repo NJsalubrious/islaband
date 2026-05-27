@@ -28,3 +28,4 @@ Disallow: /_worker.js
 
 Sitemap: https://islaband.com/sitemap.xml
 Sitemap: https://islaband.com/sitemap-images.xml
+Sitemap: https://islaband.com/sitemap-video.xml
