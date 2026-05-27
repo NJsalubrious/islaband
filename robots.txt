@@ -1,0 +1,39 @@
+# islaband.com — character site for Isla
+# Crawler policy: open by default. The story should be findable.
+
+User-agent: *
+Allow: /
+
+# Explicit allow for AI search crawlers
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# Exclude operational / backup files (no public-facing value)
+Disallow: /_worker.js
+
+
+Sitemap: https://islaband.com/sitemap.xml
