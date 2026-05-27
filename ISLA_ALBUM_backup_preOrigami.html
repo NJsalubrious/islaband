@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISLA // ORIGAMI RUPTURE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --red-600: #dc2626;
+            --red-500: #ef4444;
+            --cyan-500: #06b6d4;
+            --bg-void: #050505;
+        }
+
+        body {
+            background-color: var(--bg-void);
+            color: #a1a1aa;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            perspective: 2000px; /* Deeper perspective for fold drama */
+        }
+
+        .mono { font-family: 'JetBrains Mono', monospace; }
+
+        /* Scanline Overlay */
+        .scanlines {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 100;
+            opacity: 0.08;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                        linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+        }
+
+        .origami-viewport {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* The Box */
+        .origami-box {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+
+        /* Shared Panel Styling */
+        .panel {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            background: #0a0a0a;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            backface-visibility: hidden; /* Hide the back during the flip */
+            transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s;
+            cursor: pointer;
+            overflow: hidden;
+            box-shadow: 0 0 40px rgba(0,0,0,0.8);
+        }
+
+        /* Simulated Paper Crease Effect */
+        .panel::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 50%, rgba(0,0,0,0.2) 100%);
+            pointer-events: none;
+        }
+
+        .panel-image {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1) contrast(1.5) brightness(0.4);
+            transition: filter 0.4s ease, transform 0.4s ease;
+            opacity: 0.6;
+        }
+
+        .panel:hover .panel-image {
+            filter: grayscale(0.2) contrast(1.2) brightness(0.6);
+            transform: scale(1.05);
+            opacity: 0.8;
+        }
+
+        .panel-content {
+            position: relative;
+            z-index: 10;
+            padding: 2rem;
+            text-align: center;
+            pointer-events: none;
+        }
+
+        /* --- FOLD LOGIC --- */
+        
+        /* The Core (Center) */
+        .panel-center {
+            z-index: 50;
+            border: 1px solid var(--red-600);
+            background: #000;
+        }
+
+        /* Top: Folds backward from the top edge of center */
+        .panel-top {
+            top: -320px;
+            transform-origin: bottom;
+            transform: rotateX(-100deg);
+            opacity: 0;
+            z-index: 40;
+        }
+
+        /* Bottom: Folds backward from bottom edge of center */
+        .panel-bottom {
+            bottom: -320px;
+            transform-origin: top;
+            transform: rotateX(100deg);
+            opacity: 0;
+            z-index: 40;
+        }
+
+        /* Left: Folds backward from left edge of center */
+        .panel-left {
+            left: -320px;
+            transform-origin: right;
+            transform: rotateY(100deg);
+            opacity: 0;
+            z-index: 40;
+        }
+
+        /* Right: Folds backward from right edge of center */
+        .panel-right {
+            right: -320px;
+            transform-origin: left;
+            transform: rotateY(-100deg);
+            opacity: 0;
+            z-index: 40;
+        }
+
+        /* UNFOLDED STATES - Sequential timing via JS or CSS Delays */
+        .unfolded .panel-top { transform: rotateX(0deg); opacity: 1; transition-delay: 0.1s; }
+        .unfolded .panel-right { transform: rotateY(0deg); opacity: 1; transition-delay: 0.25s; }
+        .unfolded .panel-bottom { transform: rotateX(0deg); opacity: 1; transition-delay: 0.4s; }
+        .unfolded .panel-left { transform: rotateY(0deg); opacity: 1; transition-delay: 0.55s; }
+
+        /* ACTIVE SONG EFFECT */
+        .panel.active-song {
+            border: 2px solid var(--red-500);
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.4);
+        }
+        .panel.active-song .panel-image {
+            filter: grayscale(0) contrast(1) brightness(0.8);
+            opacity: 1;
+        }
+
+        /* AUDIO PLAYER HUD */
+        #media-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(5,5,5,0.98);
+            border-top: 1px solid rgba(220, 38, 38, 0.3);
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transform: translateY(100%);
+            transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            z-index: 200;
+            backdrop-filter: blur(10px);
+        }
+
+        #media-bar.visible { transform: translateY(0); }
+
+        .waveform-container {
+            flex: 1;
+            margin: 0 3rem;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .wave-bar {
+            width: 4px;
+            height: 10px;
+            background: var(--red-600);
+            border-radius: 2px;
+        }
+
+        .wave-bar.animating {
+            animation: pulse-wave 0.8s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulse-wave {
+            0% { height: 4px; opacity: 0.3; }
+            100% { height: 30px; opacity: 1; }
+        }
+
+        /* MOBILE TWEAKS */
+        @media (max-width: 768px) {
+            .origami-box, .panel { width: 160px; height: 160px; }
+            .panel-top { top: -160px; }
+            .panel-bottom { bottom: -160px; }
+            .panel-left { left: -160px; }
+            .panel-right { right: -160px; }
+            .panel-content h3 { font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body class="bg-black select-none">
+
+    <div class="scanlines"></div>
+
+    <!-- HUD OVERLAY -->
+    <header class="fixed top-0 left-0 w-full p-8 flex justify-between items-start z-[150] pointer-events-none">
+        <div>
+            <h1 class="text-3xl font-black tracking-tighter text-white glitch-hover">ISLA // ORIGAMI</h1>
+            <p class="mono text-[0.6rem] text-red-600 uppercase tracking-[0.3em] mt-1">Structural Rupture Sequence // v.4.2</p>
+        </div>
+        <div class="text-right mono text-[0.65rem] text-zinc-500 uppercase leading-relaxed pointer-events-auto bg-black/50 p-2 border-l border-red-900">
+            <p>Auth: Cipher_Root</p>
+            <p>System: Operational</p>
+            <p id="clock">00:00:00</p>
+        </div>
+    </header>
+
+    <!-- CENTER INSTRUCTIONS -->
+    <div id="instr-tag" class="fixed bottom-12 left-1/2 -translate-x-1/2 mono text-[0.7rem] text-zinc-600 uppercase tracking-[0.2em] z-[150] animate-pulse">
+        [ Trigger the core to initiate unfolding ]
+    </div>
+
+    <!-- VIEWPORT -->
+    <div class="origami-viewport" id="viewport">
+        <div class="origami-box" id="origami">
+            
+            <!-- CORE -->
+            <div class="panel panel-center" onclick="toggleRupture(event)">
+                <img src="Cover_Images/COVERS_0000_ISLA_Cover.jpg" class="panel-image">
+                <div class="panel-content">
+                    <h2 class="text-4xl font-black italic tracking-tighter text-white">ISLA</h2>
+                    <div class="h-px w-12 bg-red-600 mx-auto my-4"></div>
+                    <p class="mono text-[0.55rem] text-red-500 tracking-widest">BREAK THE SEAL</p>
+                </div>
+            </div>
+
+            <!-- SEQUENTIAL PANELS -->
+            <div class="panel panel-top" onclick="triggerSong(0)">
+                <img src="Cover_Images/COVERS_0004_ISLA_Face_media.jpg" class="panel-image">
+                <div class="panel-content">
+                    <span class="mono text-[0.5rem] text-zinc-500">01 // AUDITORY</span>
+                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">INTACT</h3>
+                </div>
+            </div>
+
+            <div class="panel panel-right" onclick="triggerSong(1)">
+                <img src="Cover_Images/COVERS_0002_ISLA_explosion.jpg" class="panel-image">
+                <div class="panel-content">
+                    <span class="mono text-[0.5rem] text-zinc-500">02 // PRESSURE</span>
+                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">TEAR IT THROUGH</h3>
+                </div>
+            </div>
+
+            <div class="panel panel-bottom" onclick="triggerSong(2)">
+                <img src="Cover_Images/COVERS_0003_ISLA_liveScream_Sing.jpg" class="panel-image">
+                <div class="panel-content">
+                    <span class="mono text-[0.5rem] text-zinc-500">03 // GRIEF</span>
+                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">ABANDONMENT</h3>
+                </div>
+            </div>
+
+            <div class="panel panel-left" onclick="triggerSong(3)">
+                <img src="Cover_Images/COVERS_0001_ISLA_spine.jpg" class="panel-image">
+                <div class="panel-content">
+                    <span class="mono text-[0.5rem] text-zinc-500">04 // RUPTURE</span>
+                    <h3 class="text-xl font-black tracking-tighter text-white uppercase mt-1">CANTILEVERED</h3>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- MEDIA BAR HUD -->
+    <div id="media-bar">
+        <div class="flex-shrink-0">
+            <h4 id="track-name" class="text-2xl font-black tracking-tighter text-white uppercase italic">INTACT</h4>
+            <p id="track-status" class="mono text-[0.6rem] text-red-500 mt-1 uppercase">[ SIGNAL DECODING... ]</p>
+        </div>
+        <div class="waveform-container" id="waveform"></div>
+        <button onclick="closeStream()" class="mono text-[0.65rem] text-zinc-500 hover:text-white transition-colors border border-zinc-800 px-4 py-2 uppercase">
+            Terminate Uplink
+        </button>
+    </div>
+
+    <div id="player-container" class="hidden">
+        <div id="yt-player"></div>
+    </div>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+
+    <script>
+        const songLibrary = [
+            { title: "INTACT", id: "MhEeDcdscrs", note: "No breach of surface. No visible event." },
+            { title: "TEAR IT THROUGH", id: "_gvv_W5_x10", note: "Frequency pushed through bone and nerve." },
+            { title: "ACUTE ABANDONMENT RESPONSE", id: "nk4Re7OjTTM", note: "I stayed. I stayed. I stayed." },
+            { title: "CANTILEVERED RUPTURE", id: "0tzOaukuBns", note: "Load bearing fracture. Sheer force." }
+        ];
+
+        let unfolding = false;
+        let ytPlayer;
+        let activeIdx = -1;
+
+        // Waveform Gen
+        const wave = document.getElementById('waveform');
+        for(let i=0; i<40; i++) {
+            const b = document.createElement('div');
+            b.className = 'wave-bar';
+            b.style.animationDelay = `${i * 0.05}s`;
+            wave.appendChild(b);
+        }
+
+        function onYouTubeIframeAPIReady() {
+            ytPlayer = new YT.Player('yt-player', {
+                height: '0', width: '0',
+                videoId: songLibrary[0].id,
+                events: { 'onStateChange': onStateChange }
+            });
+        }
+
+        function onStateChange(e) {
+            const bars = document.querySelectorAll('.wave-bar');
+            if (e.data == YT.PlayerState.PLAYING) {
+                bars.forEach(b => b.classList.add('animating'));
+                document.getElementById('track-status').innerText = "[ SIGNAL ACTIVE // RUPTURE IN PROGRESS ]";
+            } else {
+                bars.forEach(b => b.classList.remove('animating'));
+                document.getElementById('track-status').innerText = "[ SIGNAL PAUSED ]";
+            }
+        }
+
+        function toggleRupture(e) {
+            e.stopPropagation();
+            unfolding = !unfolding;
+            const origami = document.getElementById('origami');
+            const instr = document.getElementById('instr-tag');
+            
+            if (unfolding) {
+                origami.classList.add('unfolded');
+                instr.innerText = "[ Select a fracture point to stream ]";
+            } else {
+                origami.classList.remove('unfolded');
+                instr.innerText = "[ Trigger the core to initiate unfolding ]";
+                closeStream();
+            }
+        }
+
+        function triggerSong(idx) {
+            if (activeIdx === idx) return;
+            activeIdx = idx;
+            const song = songLibrary[idx];
+            
+            // Visual feedback
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-song'));
+            document.querySelectorAll('.panel')[idx + 1].classList.add('active-song'); // +1 because index 0 is center
+
+            // HUD update
+            document.getElementById('track-name').innerText = song.title;
+            document.getElementById('media-bar').classList.add('visible');
+
+            if (ytPlayer && ytPlayer.loadVideoById) {
+                ytPlayer.loadVideoById(song.id);
+                ytPlayer.playVideo();
+            }
+
+            // Violent Camera Shake
+            const viewport = document.getElementById('viewport');
+            viewport.style.transform = `scale(0.96) rotate(${Math.random() * 4 - 2}deg)`;
+            setTimeout(() => { viewport.style.transform = `scale(1) rotate(0deg)`; }, 200);
+        }
+
+        function closeStream() {
+            document.getElementById('media-bar').classList.remove('visible');
+            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active-song'));
+            if (ytPlayer && ytPlayer.stopVideo) ytPlayer.stopVideo();
+            activeIdx = -1;
+        }
+
+        // Clock HUD
+        setInterval(() => {
+            document.getElementById('clock').innerText = new Date().toTimeString().split(' ')[0];
+        }, 1000);
+
+        // Interaction Parallax
+        window.addEventListener('mousemove', (e) => {
+            if (!unfolding) {
+                const x = (e.clientX / window.innerWidth - 0.5) * 30;
+                const y = (e.clientY / window.innerHeight - 0.5) * 30;
+                document.getElementById('origami').style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
+            }
+        });
+    </script>
+</body>
+</html>
