@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- islaband image sitemap. ISLA // ORIGAMI album: 10 tracks of -->
+<!-- underground metal, only available on islaband.com. -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 
@@ -6,67 +8,77 @@
     <loc>https://islaband.com/</loc>
     <image:image>
       <image:loc>https://islaband.com/ISLABAND.jpg</image:loc>
-      <image:title>ISLABAND</image:title>
+      <image:title>ISLA - portrait</image:title>
+      <image:caption>Fictional musician ISLA from Silence Is The Trauma.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/ISLABAND_ACOUSTIC_DEGLOVING.jpg</image:loc>
-      <image:title>ISLABAND_ACOUSTIC_DEGLOVING</image:title>
+      <image:title>ISLA // ORIGAMI - album cover</image:title>
+      <image:caption>Cover art for the ISLA // ORIGAMI album. Fictional.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/POLISHED_VOMIT.png</image:loc>
-      <image:title>POLISHED_VOMIT</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://islaband.com/Cover_Images/Acoustic_degloving_noise_album.jpg</image:loc>
-      <image:title>Acoustic_degloving_noise_album</image:title>
+      <image:title>Polished Vomit reference image</image:title>
+      <image:caption>Polished Vomit, key visual asset. Fictional character art.</image:caption>
     </image:image>
   </url>
 
   <url>
     <loc>https://islaband.com/ISLA_ALBUM.html</loc>
     <image:image>
-      <image:loc>https://islaband.com/Cover_Images/COVERS_0000_ISLA_Cover.jpg</image:loc>
-      <image:title>COVERS_0000_ISLA_Cover</image:title>
+      <image:loc>https://islaband.com/Cover_Images/Acoustic_degloving_noise_album.jpg</image:loc>
+      <image:title>ISLA // ORIGAMI - album hero</image:title>
+      <image:caption>Hero cover for the ISLA // ORIGAMI noise album.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/1. ACOUSTIC_DEGLOVING__MP3.png</image:loc>
-      <image:title>1. ACOUSTIC_DEGLOVING__MP3</image:title>
-    </image:image>
-    <image:image>
-      <image:loc>https://islaband.com/albumMP3/10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD.png</image:loc>
-      <image:title>10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD</image:title>
+      <image:title>Track 1: Acoustic Degloving - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 1 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/2. ANECHOIC_OVERPRESSURE.png</image:loc>
-      <image:title>2. ANECHOIC_OVERPRESSURE</image:title>
+      <image:title>Track 2: Anechoic Overpressure - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 2 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/3. YOUR_PREFRONTAL_LOBE_IS_FUCKED.png</image:loc>
-      <image:title>3. YOUR_PREFRONTAL_LOBE_IS_FUCKED</image:title>
+      <image:title>Track 3: Your Prefrontal Lobe Is Fucked - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 3 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3.png</image:loc>
-      <image:title>4. CONTROLLED_DEMOLITION_(OCCUPIED)__MP3</image:title>
+      <image:title>Track 4: Controlled Demolition (Occupied) - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 4 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/5. CANTILEVERED_RUPTURE__MP3.png</image:loc>
-      <image:title>5. CANTILEVERED_RUPTURE__MP3</image:title>
+      <image:title>Track 5: Cantilevered Rupture - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 5 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/6. JURISDICTIONAL_LIVIDITY__MP3.png</image:loc>
-      <image:title>6. JURISDICTIONAL_LIVIDITY__MP3</image:title>
+      <image:title>Track 6: Jurisdictional Lividity - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 6 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3.png</image:loc>
-      <image:title>7. ELECTIVE PROCEDURE WITHOUT ANAESTHESIA__MP3</image:title>
+      <image:title>Track 7: Elective Procedure Without Anaesthesia - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 7 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/8. SHEER_FORCE__MP3.png</image:loc>
-      <image:title>8. SHEER_FORCE__MP3</image:title>
+      <image:title>Track 8: Sheer Force - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 8 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
     <image:image>
       <image:loc>https://islaband.com/albumMP3/9. LOAD-BEARING SILENCE__MP3.png</image:loc>
-      <image:title>9. LOAD-BEARING SILENCE__MP3</image:title>
+      <image:title>Track 9: Load-Bearing Silence - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 9 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://islaband.com/albumMP3/10. YOUR_A_FUCKING_SNAKE-CUT_THE_HEAD.png</image:loc>
+      <image:title>Track 10: You're a Fucking Snake — Cut the Head - ISLA // ORIGAMI</image:title>
+      <image:caption>Track 10 on the ISLA // ORIGAMI album. Fictional musical work by ISLA.</image:caption>
     </image:image>
   </url>
 </urlset>
