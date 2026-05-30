@@ -12,6 +12,15 @@ export default {
             return response;
         }
 
+        // ── SITT ENGINE KILL-SWITCH ──
+        // While false, this worker serves the site's own static <title>/<meta>
+        // and does NOT inject anything from the SITT_DAILY_TRENDS KV payload.
+        // Flip to true to re-enable AI metadata injection when the engine is back on.
+        const SITT_ENGINE_ENABLED = false;
+        if (!SITT_ENGINE_ENABLED) {
+            return response;
+        }
+
         try {
             // 2. Pull the master brain from the database
             const kvData = await env.SITT_DAILY_TRENDS.get("current_ecosystem_payload");
