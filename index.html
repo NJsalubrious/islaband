@@ -2126,9 +2126,10 @@
         }
     </style>
     <link rel="canonical" href="https://islaband.com/" />
+<link rel="stylesheet" href="assets/style-options/isla-options.css">
 </head>
 
-<body>
+<body class="isla-study study-witness">
 
     <!-- FLUID CANVAS (BACKGROUND) -->
     <canvas id="fluid-canvas"></canvas>
@@ -2162,7 +2163,7 @@
                             <span class="ps-brand">PIXELSTORTION</span>
                         </button>
                         <div id="brandDropdown" class="brand-dropdown-menu" onclick="event.stopPropagation()">
-                        <a href="https://silenceisthetrauma.com/veX_social_network/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">veX: Social Network</a>
+                        <a href="https://silenceisthetrauma.com/veX_social_network/#isla_band" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">veX: Social Network</a>
                         <a href="https://silenceisthetrauma.com/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Silence is the trauma</a>
                         <span class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px; opacity: 0.5; cursor: default; pointer-events: none;">Isla</span>
                         <a href="https://ethelryker.com/" class="brand-dropdown-item" style="border-bottom: 1px solid #222; margin-bottom: 4px;">Ethel Ryker</a>
@@ -2201,21 +2202,13 @@
         <main class="page-content">
 
             <!-- â•â•â•â•â•â•â• HERO â•â•â•â•â•â•â• -->
-            <div class="hero">
-                <div class="hero-text">
-                    <div class="hero-badge">Heritage: REJECTED // <a href="https://pixelstortion.com" target="_blank"
-                            rel="noopener" style="color:var(--red-500);text-decoration:none;">pixelstortion.com</a>
-                    </div>
-                    <h1 class="hero-title">
-                        <span class="glitch-text" data-text="SILENCE WAS">SILENCE WAS</span>
-                        <br>
-                        <span class="hero-title-sub">THE TRAUMA</span>
-                    </h1>
-                    <p class="hero-quote">
-                        "My mother was an anesthetist jailed for malpractice.
-                        I turned her silence into a frequency that shatters glass."
-                    </p>
-                    <div class="hero-buttons">
+<div class="hero study-hero">
+ <div class="hero-text">
+ <div class="hero-badge">ISLA BAND / SYDNEY / TURN IT UP <a href="https://pixelstortion.com" target="_blank" rel="noopener">/ PIXELSTORTION</a></div>
+ <h1 class="hero-title">ISLA</h1>
+ <p class="study-line">The witness box.<br>At 140 decibels.</p>
+ <p class="hero-quote">The songs are public. The rest is hers.</p>
+                     <div class="hero-buttons">
                         <button class="btn btn-primary" id="btn-enter-pit">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
                                 stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -2234,22 +2227,12 @@
                             LOGS
                         </button>
                     </div>
-                </div>
-                <div class="hero-image-wrap">
-                    <div class="hero-glow"></div>
-                    <img src="https://raw.githubusercontent.com/NJsalubrious/pixelstortion-assets/7f12e128b71aeff42d84ddffbe11be58827426cc/Isla_misc/isla_0000_723d75_f9a222e632f54d999f2bca0baa96e466.jpg"
-                        alt="Young Isla playing bass guitar at a Gordon community center in Sydney. An early, raw performance capturing her rebellion against the polished vomit of elite society, weaponizing frequency to break systemic silence.">
-                    <div class="hero-meta">
-                        <div class="hero-meta-label">METADATA EXTRACT</div>
-                        <div class="hero-meta-file">Young ISLA</div>
-                        <div class="hero-meta-flag">ENCRYPTED ORIGIN</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- â•â•â•â•â•â•â• DOSSIER â•â•â•â•â•â•â• -->
-            <!-- â• â• â• â• â• â• â•  DISCOGRAPHY â• â• â• â• â• â• â•  -->
-            <div class="section" id="section-disco">
+ </div>
+ <div class="hero-image-wrap"><img src="library/images/isla-stage.jpg" alt="Isla on stage, gripping the microphone, dark hair falling across her face." fetchpriority="high"><span class="study-caption">ISLA / THE WITNESS BOX AT 140 DECIBELS</span></div>
+ <div class="study-foot"><span>THE MUSIC IS A WAY THROUGH.</span><a href="https://silenceisthetrauma.com/veX_social_network/#isla_band">veX / Follow the world ↗</a></div>
+ </div>
+ <div class="study-context"><span>THE PERSON BEHIND THE VOLUME</span><p>Isla developed those survival mechanisms long before she had a stage. Call them what you will. They kept her alive. The music carries that history. The rest is hers.</p></div>
+             <div class="section" id="section-disco">
                 <div class="section-header">
                     <div class="section-meta">
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor"
@@ -2767,6 +2750,7 @@
             // â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
             const ISLA_TRACKS = [
                 { id: "MhEeDcdscrs", title: "Polished Vomit", date: "FEB 14, 2019", type: "AUDIO", lyric: "Mother's his mirror. Napkin smile. Polished vomit. I shine mine too." },
+                { id: "5yGDrqJh5J4", title: "Prognosis Good", date: "EARLY 2017 (ELEVEN WEEKS)", type: "VIDEO", lyric: "Fear that fits the facts. The file as a weapon. Telling them what they want to hear." },
                 { id: "qbFxG7sK0pE", title: "PEEK-A-BOO", date: "FEB 14, 2019", type: "AUDIO", lyric: "For my sister-in-arms. I tried to split you. Seems we spit your old man instead." },
                 { id: "sXKAs0U8eO8", title: "Isla Doesn't Like Married Bankers", date: "MAY 11, 2024", type: "AUDIO", lyric: "He thought she owed him a narrative. I gave him my game." },
                 { id: "nVKkwb4EnRc", title: "Burning Dominic's Bridge", date: "AUG 2024", type: "AUDIO", lyric: "He bought me out in needles... Inside, my hands ran the system. Every click mine." },

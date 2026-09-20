@@ -1,0 +1,99 @@
+/* Additive preview styling only. All existing interactive IDs and scripts remain in place. */
+.isla-study{--red-600:#ac604b;--red-500:#d38e70;--cyan-500:#d5c7b5;--text-primary:#eee9df;--text-secondary:#c5beb4;--text-muted:#a69e94;--border-dim:#e5dbc525;background:#100f0e;color:var(--text-secondary);user-select:text;-webkit-user-select:text}
+.isla-study #fluid-canvas{opacity:.035;pointer-events:none}
+.isla-study>.scanlines{display:none}
+.isla-study .nav{background:#100f0ef5;border-bottom:1px solid #e5dbc529;backdrop-filter:blur(12px)}
+.isla-study .nav-logo{background:transparent;border:1px solid #947c67;color:#e6d6bb}
+.isla-study .nav-tab,.isla-study .games-trigger{font-size:10px;letter-spacing:.08em}
+.isla-study .nav .ps-brand{color:#d3c8b8}
+.isla-study .nav .nav-tab{color:#bfb5a6}
+.isla-study .nav-tab.active{color:#e6c1a2;border-color:#ac604b}
+.isla-study .glitch-text::before,.isla-study .glitch-text::after{display:none}
+.isla-study .page-content{max-width:none;padding:80px 5% 40px}
+.isla-study .section{max-width:1220px;margin:0 auto 80px;scroll-margin-top:110px}
+.isla-study .hero{position:relative;isolation:isolate;min-height:680px;margin:0 -5.56% 0;padding:80px 6% 100px;gap:0;align-items:center}
+.isla-study .hero-text{position:relative;z-index:2;max-width:580px;flex:none}
+.isla-study .hero-badge{font:10px/1.6 var(--font-mono);letter-spacing:.1em;padding:0;background:none;color:#d6b598;margin:0 0 30px}
+.isla-study .hero-badge a{color:inherit;text-decoration:none}
+.isla-study .hero-title{font:900 clamp(90px,13vw,190px)/.82 var(--font-sans);letter-spacing:-.065em;margin-bottom:32px;color:#eee9df}
+.isla-study .study-line{font:400 clamp(32px,3.7vw,54px)/1.08 Georgia,serif;letter-spacing:-.04em;color:#eee9df}
+.isla-study .hero-quote{font:400 16px/1.7 var(--font-sans);max-width:355px;margin:25px 0 0;color:#cec7bc}
+.isla-study .hero-buttons{margin-top:30px;gap:12px}
+.isla-study .btn{font:700 11px/1.3 var(--font-mono);padding:17px 21px;min-height:50px;letter-spacing:.07em}
+.isla-study .btn-primary{background:#e5ddce;color:#171310}
+.isla-study .btn-outline{border-color:#a9947e;color:#e5ddce;background:#100f0e66}
+.isla-study .btn:hover{transform:none;background:#a45d49;color:white}
+.isla-study .hero-image-wrap{position:absolute;inset:0 0 0 32%;z-index:0}
+.isla-study .hero-image-wrap img{height:100%;width:100%;object-fit:cover;object-position:50% 28%;filter:saturate(.58) brightness(.82);border:0;box-shadow:none}
+.isla-study .hero-image-wrap::after{content:'';position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,#100f0e,transparent 50%),linear-gradient(0deg,#100f0e,transparent 30%)}
+.isla-study .study-caption{position:absolute;right:6%;top:30px;z-index:2;writing-mode:vertical-rl;font:9px var(--font-mono);letter-spacing:.14em;color:#d3c6b0}
+.isla-study .study-foot{position:absolute;bottom:30px;left:6%;right:6%;z-index:3;display:flex;justify-content:space-between;gap:20px;padding-top:18px;border-top:1px solid #e5dbc530;font:10px/1.5 var(--font-mono);letter-spacing:.1em}
+.isla-study .study-foot a{color:#e7c2a7;text-decoration:none}
+.isla-study .study-context{max-width:1220px;margin:0 auto 75px;padding:40px 0;border-bottom:1px solid #e5dbc530;display:grid;grid-template-columns:1fr 2fr;gap:40px}
+.isla-study .study-context>span{font:10px/1.6 var(--font-mono);color:#d38e70;letter-spacing:.12em}
+.isla-study .study-context p{font:24px/1.45 Georgia,serif;max-width:660px;color:#c7beb0}
+.isla-study .section-title{letter-spacing:-.03em;color:var(--text-primary)}
+.isla-study .section-header{border-left-width:2px}
+.isla-study .cmd-player{border-color:#77634a}
+.isla-study .terminal-prompt-bar{max-width:1220px;margin-inline:auto}
+.isla-study .study-preview{max-width:1220px;margin:40px auto;display:flex;gap:24px;flex-wrap:wrap;border-top:1px solid #665647;padding-top:20px;font:11px/1.6 var(--font-mono)}
+.isla-study .study-preview a{color:#deb99b}
+.isla-study a:focus-visible,.isla-study button:focus-visible{outline:2px solid #e8c8a3;outline-offset:5px}
+/* Friction: printed poster, offset image, hard ink and warm paper. */
+.study-friction{background:#d6ccba;--text-primary:#211d19;--text-secondary:#51483e;--text-muted:#63594c}
+.study-friction .hero{background:#d6ccba;min-height:780px;padding-top:65px;align-items:flex-start;border-bottom:10px solid #29231d}
+.study-friction .hero-text{max-width:58%;padding-top:18px}
+.study-friction .hero-title{font-size:clamp(120px,19vw,275px);color:#241f1b;letter-spacing:-.09em;margin:0 0 28px}
+.study-friction .hero-badge{color:#803d2d;max-width:420px}
+.study-friction .study-line{font-family:var(--font-sans);font-weight:900;text-transform:uppercase;font-size:clamp(34px,4vw,62px);line-height:.96;color:#803d2d;letter-spacing:-.055em}
+.study-friction .hero-quote{color:#41382d;max-width:310px}
+.study-friction .hero-image-wrap{inset:36px 5% 90px 53%;transform:rotate(2deg);border:9px solid #eee4d1;box-shadow:0 5px 20px #21180c33}
+.study-friction .hero-image-wrap img{filter:grayscale(1) contrast(1.12);object-position:51% 35%}
+.study-friction .hero-image-wrap::after{background:linear-gradient(0deg,#16131066,transparent 40%)}
+.study-friction .study-caption{top:auto;bottom:20px;writing-mode:horizontal-tb;font-size:8px;color:#eee3ce}
+.study-friction .btn-primary{background:#25201b;color:#eee4d1}
+.study-friction .btn-outline{background:transparent;border-color:#615140;color:#211d19}
+.study-friction .study-foot{border-color:#62503b;color:#42382d}
+.study-friction .study-foot a{color:#803d2d}
+.study-friction .study-context{border-color:#857762}
+.study-friction .study-context p{color:#41372c}
+.study-friction .study-context>span{color:#803d2d}
+.study-friction .section{background:#171513;padding:28px;color:#c6beb1;--text-primary:#eee9df;--text-secondary:#c5beb4;--text-muted:#a69e94}
+.study-friction .study-preview a{color:#803d2d}
+/* After the Noise: a still photograph beside an unhurried character study. */
+.study-aftermath .hero{min-height:720px;display:grid;grid-template-columns:46% 54%;padding:50px 6% 95px;gap:0}
+.study-aftermath .hero-text{grid-column:2;padding:0 0 0 12%;max-width:none}
+.study-aftermath .hero-image-wrap{inset:50px 54% 95px 6%}
+.study-aftermath .hero-image-wrap img{filter:saturate(.32) brightness(.8);object-position:48% 35%}
+.study-aftermath .hero-image-wrap::after{background:linear-gradient(0deg,#100f0e88,transparent 35%)}
+.study-aftermath .hero-title{font-family:Georgia,serif;font-weight:400;font-size:clamp(90px,10vw,150px);letter-spacing:-.08em}
+.study-aftermath .study-line{font-size:clamp(30px,3.1vw,46px)}
+.study-aftermath .hero-badge{max-width:350px}
+@media(max-width:767px){
+ .isla-study .page-content{padding:96px 6% 30px}
+ .isla-study .nav{padding-inline:14px}
+ .isla-study .hero{display:block;min-height:0;padding:340px 6% 100px;margin-inline:-6.82%}
+ .isla-study .hero-text,.study-friction .hero-text,.study-aftermath .hero-text{max-width:none;padding:0}
+ .isla-study .hero-image-wrap,.study-aftermath .hero-image-wrap{inset:0 0 auto;height:390px}
+ .isla-study .hero-image-wrap img{object-position:50% 26%}
+ .isla-study .hero-image-wrap::after{background:linear-gradient(0deg,#100f0e,transparent 65%)}
+ .isla-study .hero-badge{font-size:8px;max-width:260px;margin-bottom:20px}
+ .isla-study .hero-title{font-size:100px;margin-bottom:24px}
+ .isla-study .study-line{font-size:36px}
+ .isla-study .hero-quote{font-size:14px;margin-top:20px}
+ .isla-study .hero-buttons{margin-top:24px;gap:8px}
+ .isla-study .btn{padding:15px 13px;font-size:10px}
+ .isla-study .study-foot{font-size:8px;letter-spacing:0;bottom:24px;align-items:center}
+ .isla-study .study-context{grid-template-columns:1fr;gap:16px;margin-bottom:45px;padding:28px 0}
+ .isla-study .study-context p{font-size:22px}
+ .isla-study .section{margin-bottom:50px;scroll-margin-top:130px}
+ .study-friction .hero{padding-top:340px}
+ .study-friction .hero-image-wrap{inset:12px 8% auto;height:310px;transform:rotate(1.5deg);border-width:6px}
+ .study-friction .hero-image-wrap::after{background:none}
+ .study-friction .hero-title{font-size:120px}
+ .study-friction .study-line{font-size:38px}
+ .study-friction .section{padding:18px}
+ .study-aftermath .hero-image-wrap{inset:10px 6% auto;height:310px}
+ .study-aftermath .hero{padding-top:350px}
+}
+@media(prefers-reduced-motion:reduce){.isla-study *{scroll-behavior:auto!important;animation:none!important;transition:none!important}}
