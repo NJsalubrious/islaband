@@ -1,0 +1,20 @@
+/* Separate sandbox experiment: restore the original fluid simulation's visibility. */
+.study-fluid #fluid-canvas{
+ opacity:.65;pointer-events:none;
+ /* The viewport positions follow the hero as the page scrolls. */
+ -webkit-mask-image:linear-gradient(180deg,transparent var(--fluid-start,100vh),#000 var(--fluid-full,120vh));
+ mask-image:linear-gradient(180deg,transparent var(--fluid-start,100vh),#000 var(--fluid-full,120vh));
+}
+/* Keep the portrait, faded edges and readable content above the moving canvas. */
+.study-fluid .hero-text{text-shadow:0 2px 18px #0009}
+.study-fluid .hero-buttons{text-shadow:none}
+/* Fluid gestures should not select page copy or drag artwork. */
+.study-fluid,.study-fluid *{
+ -webkit-user-select:none;
+ user-select:none;
+}
+.study-fluid :is(input,textarea,[contenteditable="true"]){
+ -webkit-user-select:text;
+ user-select:text;
+}
+.study-fluid :is(img,a){-webkit-user-drag:none}

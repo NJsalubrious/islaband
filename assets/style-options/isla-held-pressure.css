@@ -1,0 +1,10 @@
+.study-pressure #fluid-canvas{opacity:.8}
+.study-pressure .study-context{
+ background:linear-gradient(90deg,transparent,#100f0ebf 25%,#100f0ed9 75%,transparent);
+}
+.study-pressure .section-header{
+ background:linear-gradient(90deg,#100f0ed9,#100f0e80 65%,transparent);
+ padding-block:16px;
+}
+.study-pressure .hero-text{text-shadow:none}
+@media(prefers-reduced-motion:reduce){.study-pressure #fluid-canvas{opacity:0}}
